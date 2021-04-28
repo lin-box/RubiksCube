@@ -57,14 +57,6 @@ namespace myOpenGL
             {
                 cGL.rubiksCube.Rotate(5, 0, 0);
             }
-            else if (e.KeyCode == Keys.I)
-            {
-                cGL.rubiksCube.Rotate(5, 0, 0);
-            }
-            else if (e.KeyCode == Keys.O)
-            {
-                cGL.rubiksCube.Rotate(5, 0, 0);
-            }
             cGL.Draw();
         }
 
