@@ -72,72 +72,84 @@ namespace myOpenGL
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Clockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnSecondXUp_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Clockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnThirdXUp_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Clockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnFirstYRight_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnSecondYRight_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnThirdYRight_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnThirdXDown_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Anticlockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnSecondXDown_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Anticlockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnFirstXDown_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Anticlockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnThirdYLeft_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnSecondYLeft_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
 
         private void btnFirstYLeft_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
+            cGL.Draw();
         }
     }
 }

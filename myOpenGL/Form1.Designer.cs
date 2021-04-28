@@ -61,6 +61,7 @@ namespace myOpenGL
             this.btnThirdXDown.TabIndex = 29;
             this.btnThirdXDown.Text = "\\/";
             this.btnThirdXDown.UseVisualStyleBackColor = true;
+            this.btnThirdXDown.Click += new System.EventHandler(this.btnThirdXDown_Click);
             // 
             // btnSecondXDown
             // 
@@ -70,6 +71,7 @@ namespace myOpenGL
             this.btnSecondXDown.TabIndex = 28;
             this.btnSecondXDown.Text = "\\/";
             this.btnSecondXDown.UseVisualStyleBackColor = true;
+            this.btnSecondXDown.Click += new System.EventHandler(this.btnSecondXDown_Click);
             // 
             // btnThirdYRight
             // 
@@ -79,6 +81,7 @@ namespace myOpenGL
             this.btnThirdYRight.TabIndex = 27;
             this.btnThirdYRight.Text = ">";
             this.btnThirdYRight.UseVisualStyleBackColor = true;
+            this.btnThirdYRight.Click += new System.EventHandler(this.btnThirdYRight_Click);
             // 
             // btnFirstYRight
             // 
@@ -88,6 +91,7 @@ namespace myOpenGL
             this.btnFirstYRight.TabIndex = 26;
             this.btnFirstYRight.Text = ">";
             this.btnFirstYRight.UseVisualStyleBackColor = true;
+            this.btnFirstYRight.Click += new System.EventHandler(this.btnFirstYRight_Click);
             // 
             // btnSecondYRight
             // 
@@ -97,6 +101,7 @@ namespace myOpenGL
             this.btnSecondYRight.TabIndex = 25;
             this.btnSecondYRight.Text = ">";
             this.btnSecondYRight.UseVisualStyleBackColor = true;
+            this.btnSecondYRight.Click += new System.EventHandler(this.btnSecondYRight_Click);
             // 
             // btnThirdYLeft
             // 
@@ -106,6 +111,7 @@ namespace myOpenGL
             this.btnThirdYLeft.TabIndex = 24;
             this.btnThirdYLeft.Text = "<";
             this.btnThirdYLeft.UseVisualStyleBackColor = true;
+            this.btnThirdYLeft.Click += new System.EventHandler(this.btnThirdYLeft_Click);
             // 
             // btnFirstYLeft
             // 
@@ -115,6 +121,7 @@ namespace myOpenGL
             this.btnFirstYLeft.TabIndex = 23;
             this.btnFirstYLeft.Text = "<";
             this.btnFirstYLeft.UseVisualStyleBackColor = true;
+            this.btnFirstYLeft.Click += new System.EventHandler(this.btnFirstYLeft_Click);
             // 
             // btnFirstXDown
             // 
@@ -124,6 +131,7 @@ namespace myOpenGL
             this.btnFirstXDown.TabIndex = 22;
             this.btnFirstXDown.Text = "\\/";
             this.btnFirstXDown.UseVisualStyleBackColor = true;
+            this.btnFirstXDown.Click += new System.EventHandler(this.btnFirstXDown_Click);
             // 
             // btnSecondYLeft
             // 
@@ -133,6 +141,7 @@ namespace myOpenGL
             this.btnSecondYLeft.TabIndex = 21;
             this.btnSecondYLeft.Text = "<";
             this.btnSecondYLeft.UseVisualStyleBackColor = true;
+            this.btnSecondYLeft.Click += new System.EventHandler(this.btnSecondYLeft_Click);
             // 
             // btnThirdXUp
             // 
@@ -142,6 +151,7 @@ namespace myOpenGL
             this.btnThirdXUp.TabIndex = 20;
             this.btnThirdXUp.Text = "/\\";
             this.btnThirdXUp.UseVisualStyleBackColor = true;
+            this.btnThirdXUp.Click += new System.EventHandler(this.btnThirdXUp_Click);
             // 
             // btnSecondXUp
             // 
@@ -181,11 +191,11 @@ namespace myOpenGL
             this.Controls.Add(this.btnSecondXUp);
             this.Controls.Add(this.btnFirstXUp);
             this.Controls.Add(this.panel1);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.KeyPreview = true;
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
 
         }
