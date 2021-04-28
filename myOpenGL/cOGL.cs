@@ -7,14 +7,13 @@ using RubikCube.Draws;
 
 namespace OpenGL
 {
-
     class cOGL
     {
         Control p;
         int Width;
         int Height;
 
-        RubiksCube rubiksCube;
+        public RubiksCube rubiksCube;
 
         public cOGL(Control pb)
         {
@@ -69,12 +68,7 @@ namespace OpenGL
             GL.glEnd();
         }
 
-        public void Manipulate(RubikCubeMoviment moviment)
-        {
-            rubiksCube.Manipulate(moviment);
-        }
-
-        public void Draw()
+            public void Draw()
         {
             if (m_uint_DC == 0 || m_uint_RC == 0)
                 return;

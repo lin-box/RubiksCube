@@ -183,6 +183,8 @@ namespace myOpenGL
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.KeyPreview = true;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
