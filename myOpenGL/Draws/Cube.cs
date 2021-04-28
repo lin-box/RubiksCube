@@ -84,21 +84,21 @@ namespace RubikCube.Draws
             GL.glVertex3d(-this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
-
+            
             //Right
             GL.glColor3ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B);
             GL.glVertex3d(this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
-
+            
             //Top
             GL.glColor3ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B);
             GL.glVertex3d(-this.size + X, this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
-
+            
             //Front
             GL.glColor3ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);

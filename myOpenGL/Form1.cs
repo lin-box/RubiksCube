@@ -41,7 +41,6 @@ namespace myOpenGL
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            Console.WriteLine("kdddd");
             if (e.KeyCode == Keys.D)
             {
                 cGL.rubiksCube.Rotate(0, 5, 0);
@@ -58,12 +57,19 @@ namespace myOpenGL
             {
                 cGL.rubiksCube.Rotate(5, 0, 0);
             }
+            else if (e.KeyCode == Keys.I)
+            {
+                cGL.rubiksCube.Rotate(5, 0, 0);
+            }
+            else if (e.KeyCode == Keys.O)
+            {
+                cGL.rubiksCube.Rotate(5, 0, 0);
+            }
             cGL.Draw();
         }
 
         private void btnFirstXUp_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("hei");
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Clockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
         }

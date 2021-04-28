@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
-// using Tao.OpenGl;
 using Gl = OpenGL.GL;
 
 namespace RubikCube.Draws
@@ -15,6 +14,7 @@ namespace RubikCube.Draws
         List<Cube> composingCubes;
         Queue<Animation> pendingAnimation;
         Animation current;
+        Color insideColor;
 
         public int AngleX, AngleY, AngleZ;
 
@@ -22,28 +22,31 @@ namespace RubikCube.Draws
         {
             pendingAnimation = new Queue<Animation>();
             composingCubes = new List<Cube>();
+            insideColor = Color.Black;
 
-
+            /* Drow 3*3*3 black cubes so the user 
+             * wont see blank holes between the colored cubes */
             double blockSpace = .66;
-            for (double x = -blockSpace; x < 2 * blockSpace; x += blockSpace)
+            for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
-                for (double y = -blockSpace; y < 2 * blockSpace; y += blockSpace)
+                for (double y = -blockSpace; y <= blockSpace; y += blockSpace)
                 {
-                    for (double z = -blockSpace; z < 2 * blockSpace; z += blockSpace)
+                    for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
-                        var cubeColor = this.GenerateCubeColor(x, y, z);
                         composingCubes.Add(new Cube(.33, x, y, z));
                     }
                 }
             }
 
-
+            /* Drow 3*3*3 colored cubes
+             * with block that bigger than the black 
+             * and color area that is smaller then the black area */
             blockSpace = .73;
-            for (double x = -blockSpace; x < 2 * blockSpace; x += blockSpace)
+            for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
-                for (double y = -blockSpace; y < 2 * blockSpace; y += blockSpace)
+                for (double y = -blockSpace; y <= blockSpace; y += blockSpace)
                 {
-                    for (double z = -blockSpace; z < 2 * blockSpace; z += blockSpace)
+                    for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
                         var cubeColor = this.GenerateCubeColor(x, y, z);
                         composingCubes.Add(new Cube(.32, x, y, z, cubeColor));
@@ -58,42 +61,42 @@ namespace RubikCube.Draws
 
             if (x < 0)
             {
-                cubeColor.Right = Color.DarkGray;
+                cubeColor.Right = insideColor;
             }
             if (x == 0)
             {
-                cubeColor.Left = Color.DarkGray;
-                cubeColor.Right = Color.DarkGray;
+                cubeColor.Left = insideColor;
+                cubeColor.Right = insideColor;
             }
             if (x > 0)
             {
-                cubeColor.Left = Color.DarkGray;
+                cubeColor.Left = insideColor;
             }
             if (y < 0)
             {
-                cubeColor.Top = Color.DarkGray;
+                cubeColor.Top = insideColor;
             }
             if (y == 0)
             {
-                cubeColor.Top = Color.DarkGray;
-                cubeColor.Bottom = Color.DarkGray;
+                cubeColor.Top = insideColor;
+                cubeColor.Bottom = insideColor;
             }
             if (y > 0)
             {
-                cubeColor.Bottom = Color.DarkGray;
+                cubeColor.Bottom = insideColor;
             }
             if (z < 0)
             {
-                cubeColor.Front = Color.DarkGray;
+                cubeColor.Front = insideColor;
             }
             if (z == 0)
             {
-                cubeColor.Front = Color.DarkGray;
-                cubeColor.Back = Color.DarkGray;
+                cubeColor.Front = insideColor;
+                cubeColor.Back = insideColor;
             }
             if (z > 0)
             {
-                cubeColor.Back = Color.DarkGray;
+                cubeColor.Back = insideColor;
             }
 
             return cubeColor;
@@ -167,7 +170,6 @@ namespace RubikCube.Draws
             this.AngleX += AngleAxisX;
             this.AngleY += AngleAxisY;
             this.AngleZ += AngleAxisZ;
-
         }
 
         public void Draw()

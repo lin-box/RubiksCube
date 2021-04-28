@@ -50,25 +50,25 @@ namespace OpenGL
 			get{ return m_uint_RC; }
 		}
 
-        void DrawAxes()
+        void DrawAxes(Color xColor, Color yColor, Color zColor)
         {
             GL.glBegin( GL.GL_LINES);
-            //x  RED
-            GL.glColor3f(1.0f, 0.0f, 0.0f);
+            //x
+            GL.glColor3f(xColor.R, xColor.G, xColor.B);
             GL.glVertex3f(-3.0f, 0.0f, 0.0f);
             GL.glVertex3f(3.0f, 0.0f, 0.0f);
-            //y  GREEN 
-            GL.glColor3f(0.0f, 1.0f, 0.0f);
+            //y 
+            GL.glColor3f(yColor.R, yColor.G, yColor.B);
             GL.glVertex3f(0.0f, -3.0f, 0.0f);
             GL.glVertex3f(0.0f, 3.0f, 0.0f);
-            //z  BLUE
-            GL.glColor3f(0.0f, 0.0f, 1.0f);
+            //z
+            GL.glColor3f(zColor.R, zColor.G, zColor.B);
             GL.glVertex3f(0.0f, 0.0f, -3.0f);
             GL.glVertex3f(0.0f, 0.0f, 3.0f);
             GL.glEnd();
         }
 
-            public void Draw()
+        public void Draw()
         {
             if (m_uint_DC == 0 || m_uint_RC == 0)
                 return;
@@ -79,10 +79,10 @@ namespace OpenGL
 
             GL.glTranslated(0, 0, -7);
             
-            // DrawAxes();
-
-            Console.WriteLine("hello");
+            Console.WriteLine("cOGL.Draw!");
             rubiksCube.Draw();
+
+            DrawAxes(Color.Red, Color.Green, Color.Blue);
 
             GL.glFlush();
 
