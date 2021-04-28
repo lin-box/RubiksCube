@@ -28,9 +28,19 @@ namespace myOpenGL
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            
+            this.btnThirdXDown = new System.Windows.Forms.Button();
+            this.btnSecondXDown = new System.Windows.Forms.Button();
+            this.btnThirdYRight = new System.Windows.Forms.Button();
+            this.btnFirstYRight = new System.Windows.Forms.Button();
+            this.btnSecondYRight = new System.Windows.Forms.Button();
+            this.btnThirdYLeft = new System.Windows.Forms.Button();
+            this.btnFirstYLeft = new System.Windows.Forms.Button();
+            this.btnFirstXDown = new System.Windows.Forms.Button();
+            this.btnSecondYLeft = new System.Windows.Forms.Button();
+            this.btnThirdXUp = new System.Windows.Forms.Button();
+            this.btnSecondXUp = new System.Windows.Forms.Button();
+            this.btnFirstXUp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -43,21 +53,155 @@ namespace myOpenGL
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
             // 
+            // btnThirdXDown
+            // 
+            this.btnThirdXDown.Location = new System.Drawing.Point(658, 302);
+            this.btnThirdXDown.Name = "btnThirdXDown";
+            this.btnThirdXDown.Size = new System.Drawing.Size(30, 23);
+            this.btnThirdXDown.TabIndex = 29;
+            this.btnThirdXDown.Text = "\\/";
+            this.btnThirdXDown.UseVisualStyleBackColor = true;
+            // 
+            // btnSecondXDown
+            // 
+            this.btnSecondXDown.Location = new System.Drawing.Point(622, 302);
+            this.btnSecondXDown.Name = "btnSecondXDown";
+            this.btnSecondXDown.Size = new System.Drawing.Size(30, 23);
+            this.btnSecondXDown.TabIndex = 28;
+            this.btnSecondXDown.Text = "\\/";
+            this.btnSecondXDown.UseVisualStyleBackColor = true;
+            // 
+            // btnThirdYRight
+            // 
+            this.btnThirdYRight.Location = new System.Drawing.Point(690, 215);
+            this.btnThirdYRight.Name = "btnThirdYRight";
+            this.btnThirdYRight.Size = new System.Drawing.Size(28, 23);
+            this.btnThirdYRight.TabIndex = 27;
+            this.btnThirdYRight.Text = ">";
+            this.btnThirdYRight.UseVisualStyleBackColor = true;
+            // 
+            // btnFirstYRight
+            // 
+            this.btnFirstYRight.Location = new System.Drawing.Point(690, 273);
+            this.btnFirstYRight.Name = "btnFirstYRight";
+            this.btnFirstYRight.Size = new System.Drawing.Size(28, 23);
+            this.btnFirstYRight.TabIndex = 26;
+            this.btnFirstYRight.Text = ">";
+            this.btnFirstYRight.UseVisualStyleBackColor = true;
+            // 
+            // btnSecondYRight
+            // 
+            this.btnSecondYRight.Location = new System.Drawing.Point(690, 244);
+            this.btnSecondYRight.Name = "btnSecondYRight";
+            this.btnSecondYRight.Size = new System.Drawing.Size(28, 23);
+            this.btnSecondYRight.TabIndex = 25;
+            this.btnSecondYRight.Text = ">";
+            this.btnSecondYRight.UseVisualStyleBackColor = true;
+            // 
+            // btnThirdYLeft
+            // 
+            this.btnThirdYLeft.Location = new System.Drawing.Point(556, 215);
+            this.btnThirdYLeft.Name = "btnThirdYLeft";
+            this.btnThirdYLeft.Size = new System.Drawing.Size(28, 23);
+            this.btnThirdYLeft.TabIndex = 24;
+            this.btnThirdYLeft.Text = "<";
+            this.btnThirdYLeft.UseVisualStyleBackColor = true;
+            // 
+            // btnFirstYLeft
+            // 
+            this.btnFirstYLeft.Location = new System.Drawing.Point(556, 273);
+            this.btnFirstYLeft.Name = "btnFirstYLeft";
+            this.btnFirstYLeft.Size = new System.Drawing.Size(28, 23);
+            this.btnFirstYLeft.TabIndex = 23;
+            this.btnFirstYLeft.Text = "<";
+            this.btnFirstYLeft.UseVisualStyleBackColor = true;
+            // 
+            // btnFirstXDown
+            // 
+            this.btnFirstXDown.Location = new System.Drawing.Point(586, 302);
+            this.btnFirstXDown.Name = "btnFirstXDown";
+            this.btnFirstXDown.Size = new System.Drawing.Size(30, 23);
+            this.btnFirstXDown.TabIndex = 22;
+            this.btnFirstXDown.Text = "\\/";
+            this.btnFirstXDown.UseVisualStyleBackColor = true;
+            // 
+            // btnSecondYLeft
+            // 
+            this.btnSecondYLeft.Location = new System.Drawing.Point(556, 244);
+            this.btnSecondYLeft.Name = "btnSecondYLeft";
+            this.btnSecondYLeft.Size = new System.Drawing.Size(28, 23);
+            this.btnSecondYLeft.TabIndex = 21;
+            this.btnSecondYLeft.Text = "<";
+            this.btnSecondYLeft.UseVisualStyleBackColor = true;
+            // 
+            // btnThirdXUp
+            // 
+            this.btnThirdXUp.Location = new System.Drawing.Point(658, 186);
+            this.btnThirdXUp.Name = "btnThirdXUp";
+            this.btnThirdXUp.Size = new System.Drawing.Size(30, 23);
+            this.btnThirdXUp.TabIndex = 20;
+            this.btnThirdXUp.Text = "/\\";
+            this.btnThirdXUp.UseVisualStyleBackColor = true;
+            // 
+            // btnSecondXUp
+            // 
+            this.btnSecondXUp.Location = new System.Drawing.Point(622, 186);
+            this.btnSecondXUp.Name = "btnSecondXUp";
+            this.btnSecondXUp.Size = new System.Drawing.Size(30, 23);
+            this.btnSecondXUp.TabIndex = 19;
+            this.btnSecondXUp.Text = "/\\";
+            this.btnSecondXUp.UseVisualStyleBackColor = true;
+            this.btnSecondXUp.Click += new System.EventHandler(this.btnSecondXUp_Click);
+            // 
+            // btnFirstXUp
+            // 
+            this.btnFirstXUp.Location = new System.Drawing.Point(586, 186);
+            this.btnFirstXUp.Name = "btnFirstXUp";
+            this.btnFirstXUp.Size = new System.Drawing.Size(30, 23);
+            this.btnFirstXUp.TabIndex = 18;
+            this.btnFirstXUp.Text = "/\\";
+            this.btnFirstXUp.UseVisualStyleBackColor = true;
+            this.btnFirstXUp.Click += new System.EventHandler(this.btnFirstXUp_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(685, 528);
+            this.ClientSize = new System.Drawing.Size(750, 528);
+            this.Controls.Add(this.btnThirdXDown);
+            this.Controls.Add(this.btnSecondXDown);
+            this.Controls.Add(this.btnThirdYRight);
+            this.Controls.Add(this.btnFirstYRight);
+            this.Controls.Add(this.btnSecondYRight);
+            this.Controls.Add(this.btnThirdYLeft);
+            this.Controls.Add(this.btnFirstYLeft);
+            this.Controls.Add(this.btnFirstXDown);
+            this.Controls.Add(this.btnSecondYLeft);
+            this.Controls.Add(this.btnThirdXUp);
+            this.Controls.Add(this.btnSecondXUp);
+            this.Controls.Add(this.btnFirstXUp);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-            this.PerformLayout(); // TODO-2021: do we need this?
+
         }
 
         #endregion
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnThirdXDown;
+        private System.Windows.Forms.Button btnSecondXDown;
+        private System.Windows.Forms.Button btnThirdYRight;
+        private System.Windows.Forms.Button btnFirstYRight;
+        private System.Windows.Forms.Button btnSecondYRight;
+        private System.Windows.Forms.Button btnThirdYLeft;
+        private System.Windows.Forms.Button btnFirstYLeft;
+        private System.Windows.Forms.Button btnFirstXDown;
+        private System.Windows.Forms.Button btnSecondYLeft;
+        private System.Windows.Forms.Button btnThirdXUp;
+        private System.Windows.Forms.Button btnSecondXUp;
+        private System.Windows.Forms.Button btnFirstXUp;
     }
 }
 

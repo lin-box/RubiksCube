@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using RubikCube;
 using RubikCube.Draws;
 
 namespace OpenGL
@@ -12,8 +13,8 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
-        int i = 0;
-        private RubiksCube rubiksCube;
+
+        RubiksCube rubiksCube;
 
         public cOGL(Control pb)
         {
@@ -21,6 +22,7 @@ namespace OpenGL
             Width = p.Width;
             Height = p.Height; 
             InitializeGL();
+
             rubiksCube = new RubiksCube();
         }
 
@@ -66,7 +68,12 @@ namespace OpenGL
             GL.glVertex3f(0.0f, 0.0f, 3.0f);
             GL.glEnd();
         }
-        
+
+        public void Manipulate(RubikCubeMoviment moviment)
+        {
+            rubiksCube.Manipulate(moviment);
+        }
+
         public void Draw()
         {
             if (m_uint_DC == 0 || m_uint_RC == 0)
@@ -77,6 +84,8 @@ namespace OpenGL
             GL.glLoadIdentity();
 
             GL.glTranslated(0, 0, -7);
+            
+            // DrawAxes();
 
             Console.WriteLine("hello");
             rubiksCube.Draw();

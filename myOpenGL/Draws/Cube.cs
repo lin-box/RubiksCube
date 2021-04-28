@@ -1,11 +1,6 @@
-﻿//using System;
-//using System.Collections.Generic;
-using OpenGL;
+﻿using OpenGL;
 using System.Diagnostics;
 using System.Drawing;
-//using System.Linq;
-//using System.Text;
-//using Tao.OpenGl;
 
 namespace RubikCube.Draws
 {
@@ -69,48 +64,48 @@ namespace RubikCube.Draws
 
             GL.glBegin(GL.GL_QUADS);
 
-            //Traseira
+            //Back
             GL.glColor3ub(faceColors.Back.R, faceColors.Back.G, faceColors.Back.B);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, -this.size + Z);
-
-            //Inferior
+            
+            //Bottom
             GL.glColor3ub(faceColors.Bottom.R, faceColors.Bottom.G, faceColors.Bottom.B);
             GL.glVertex3d(-this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, this.size + Z);
 
-            //Esquerda
+            //Left
             GL.glColor3ub(faceColors.Left.R, faceColors.Left.G, faceColors.Left.B);
             GL.glVertex3d(-this.size + X, this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
 
-            //Direita
+            //Right
             GL.glColor3ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B);
             GL.glVertex3d(this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
 
-            ///Superior
+            //Top
             GL.glColor3ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B);
             GL.glVertex3d(-this.size + X, this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
 
-            //Frente
+            //Front
             GL.glColor3ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, this.size + Z);
-
+            
             GL.glEnd();
 
             GL.glPopMatrix();
