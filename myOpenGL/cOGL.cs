@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-
+using RubikCube.Draws;
 
 namespace OpenGL
 {
@@ -12,6 +12,8 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
+        int i = 0;
+        private RubiksCube rubiksCube;
 
         public cOGL(Control pb)
         {
@@ -19,6 +21,7 @@ namespace OpenGL
             Width = p.Width;
             Height = p.Height; 
             InitializeGL();
+            rubiksCube = new RubiksCube();
         }
 
         ~cOGL()
@@ -45,73 +48,6 @@ namespace OpenGL
 		{
 			get{ return m_uint_RC; }
 		}
-
-        void DrawCube()
-        {
-            GL.glPushMatrix();
-
-            GL.glTranslatef(-1, -1, -1);
-            // cube
-            GL.glBegin(GL.GL_QUADS);
-
-            //1
-            //TRANSPARENCY
-            GL.glColor4f(1, 0, 0, 0.3f);
-            //GL.glColor3f(0.0f,0.0f,0.0f);						
-            GL.glVertex3f(0.0f, 0.0f, 0.0f);
-            GL.glVertex3f(0.0f, 2.0f, 0.0f);
-            GL.glVertex3f(2.0f, 2.0f, 0.0f);
-            GL.glVertex3f(2.0f, 0.0f, 0.0f);
-
-            //2
-
-            GL.glColor4f(0, 1, 0, 0.3f);
-            GL.glVertex3f(0.0f, 0.0f, 0.0f);
-            GL.glVertex3f(0.0f, 0.0f, 2.0f);
-            GL.glVertex3f(0.0f, 2.0f, 2.0f);
-            GL.glVertex3f(0.0f, 2.0f, 0.0f);
-
-
-            //3
-
-            GL.glColor4f(0, 0, 1, 0.3f);
-            GL.glVertex3f(0.0f, 0.0f, 0.0f);
-            GL.glVertex3f(2.0f, 0.0f, 0.0f);
-            GL.glVertex3f(2.0f, 0.0f, 2.0f);
-            GL.glVertex3f(0.0f, 0.0f, 2.0f);
-
-
-            //4
-
-            GL.glColor4f(1, 0, 1, 0.3f);
-            GL.glVertex3f(2.0f, 0.0f, 0.0f);
-            GL.glVertex3f(2.0f, 0.0f, 2.0f);
-            GL.glVertex3f(2.0f, 2.0f, 2.0f);
-            GL.glVertex3f(2.0f, 2.0f, 0.0f);
-
-
-            //5
-
-            GL.glColor4f(0, 1, 1, 0.3f);
-            GL.glVertex3f(2.0f, 2.0f, 2.0f);
-            GL.glVertex3f(2.0f, 2.0f, 0.0f);
-            GL.glVertex3f(0.0f, 2.0f, 0.0f);
-            GL.glVertex3f(0.0f, 2.0f, 2.0f);
-
-
-            //6
-
-            GL.glColor4f(1, 1, 0, 0.3f);
-            GL.glVertex3f(2.0f, 2.0f, 2.0f);
-            GL.glVertex3f(0.0f, 2.0f, 2.0f);
-            GL.glVertex3f(0.0f, 0.0f, 2.0f);
-            GL.glVertex3f(2.0f, 0.0f, 2.0f);
-
-
-            GL.glEnd();
-
-            GL.glPopMatrix();
-        }
 
         void DrawAxes()
         {
@@ -140,8 +76,10 @@ namespace OpenGL
             
             GL.glLoadIdentity();
 
-            DrawAxes();
-            DrawCube();
+            GL.glTranslated(0, 0, -7);
+
+            Console.WriteLine("hello");
+            rubiksCube.Draw();
 
             GL.glFlush();
 
@@ -213,7 +151,7 @@ namespace OpenGL
             GL.glDepthFunc(GL.GL_LEQUAL);
 
             GL.glViewport(0, 0, this.Width, this.Height);
-            GL.glClearColor(0, 0, 0, 0);
+            GL.glClearColor(1, 1, 1, 0);
             GL.glMatrixMode(GL.GL_PROJECTION);
             GL.glLoadIdentity();
             GLU.gluPerspective(45.0, ((double)Width) / Height, 1.0, 1000.0);
