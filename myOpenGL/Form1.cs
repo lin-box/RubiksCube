@@ -81,7 +81,7 @@ namespace myOpenGL
 
         private void btnFirstYRight_Click(object sender, EventArgs e)
         {
-            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Anticlockwise, Axis.Y);
+            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
         }
 
@@ -93,7 +93,7 @@ namespace myOpenGL
 
         private void btnThirdYRight_Click(object sender, EventArgs e)
         {
-            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Anticlockwise, Axis.Y);
+            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
         }
 
@@ -117,7 +117,7 @@ namespace myOpenGL
 
         private void btnThirdYLeft_Click(object sender, EventArgs e)
         {
-            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Clockwise, Axis.Y);
+            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
         }
 
@@ -129,7 +129,7 @@ namespace myOpenGL
 
         private void btnFirstYLeft_Click(object sender, EventArgs e)
         {
-            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Clockwise, Axis.Y);
+            RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
         }
 
