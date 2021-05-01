@@ -143,5 +143,11 @@ namespace myOpenGL
             cGL.rubiksCube.Manipulate(moviment);
             cGL.Draw();
         }
+
+        private void timerRepaint_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("Timer Draw!");
+            cGL.Draw();
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace myOpenGL
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnThirdXDown = new System.Windows.Forms.Button();
             this.btnSecondXDown = new System.Windows.Forms.Button();
@@ -41,6 +42,7 @@ namespace myOpenGL
             this.btnThirdXUp = new System.Windows.Forms.Button();
             this.btnSecondXUp = new System.Windows.Forms.Button();
             this.btnFirstXUp = new System.Windows.Forms.Button();
+            this.timerRepaint = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // panel1
@@ -173,6 +175,12 @@ namespace myOpenGL
             this.btnFirstXUp.UseVisualStyleBackColor = true;
             this.btnFirstXUp.Click += new System.EventHandler(this.btnFirstXUp_Click);
             // 
+            // timerRepaint
+            // 
+            this.timerRepaint.Enabled = true;
+            this.timerRepaint.Interval = 10;
+            this.timerRepaint.Tick += new System.EventHandler(this.timerRepaint_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,6 +222,7 @@ namespace myOpenGL
         private System.Windows.Forms.Button btnThirdXUp;
         private System.Windows.Forms.Button btnSecondXUp;
         private System.Windows.Forms.Button btnFirstXUp;
+        private System.Windows.Forms.Timer timerRepaint;
     }
 }
 
