@@ -24,6 +24,8 @@ namespace myOpenGL
             cGL = new cOGL(panel1);
         }
 
+        // happens when the window is re-rendered.
+        // for example when another window is hiding it and it gets clear and then should be re-paint.
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             cGL.Draw();
@@ -57,91 +59,78 @@ namespace myOpenGL
             {
                 cGL.rubiksCube.Rotate(5, 0, 0);
             }
-            cGL.Draw();
         }
 
         private void btnFirstXUp_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Clockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnSecondXUp_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Clockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnThirdXUp_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Clockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnFirstYRight_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnSecondYRight_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnThirdYRight_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Anticlockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnThirdXDown_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Anticlockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnSecondXDown_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Anticlockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnFirstXDown_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Anticlockwise, Axis.X);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnThirdYLeft_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Third, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnSecondYLeft_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.Second, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void btnFirstYLeft_Click(object sender, EventArgs e)
         {
             RubikCubeMoviment moviment = new RubikCubeMoviment(Depth.First, Spin.Clockwise, Axis.Y);
             cGL.rubiksCube.Manipulate(moviment);
-            cGL.Draw();
         }
 
         private void timerRepaint_Tick(object sender, EventArgs e)
