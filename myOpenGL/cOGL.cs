@@ -78,7 +78,9 @@ namespace OpenGL
             GL.glLoadIdentity();
 
             GL.glTranslated(0, 0, -7);
-            
+            GL.glRotated(30, 1, 0, 0);
+            GL.glRotated(30, 0, 1, 0);
+
             Console.WriteLine("cOGL.Draw!");
             rubiksCube.Draw();
 
