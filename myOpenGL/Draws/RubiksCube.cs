@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+using System.Threading;
 using Gl = OpenGL.GL;
 
 namespace RubikCube.Draws
@@ -15,6 +11,8 @@ namespace RubikCube.Draws
         Queue<Animation> pendingAnimation;
         Animation current;
         Color insideColor;
+        private readonly object syncLock = new object();
+
 
         public int AngleX, AngleY, AngleZ;
 
@@ -104,65 +102,66 @@ namespace RubikCube.Draws
 
         public void Manipulate(RubikCubeMoviment moviment)
         {
-
-            List<Cube> movimentingPieces = new List<Cube>();
-
-            if (moviment.Axis == Axis.X)
+            lock (syncLock)
             {
-                if(moviment.Depth == Depth.First)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.X < 0);
-                }
-                else if(moviment.Depth == Depth.Second)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.X == 0);
-                }
-                else if (moviment.Depth == Depth.Third)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.X > 0);
-                }
+                List<Cube> movimentingPieces = new List<Cube>();
 
-                Animation animation = new Animation(movimentingPieces, 90, moviment);
-                this.pendingAnimation.Enqueue(animation);
+                if (moviment.Axis == Axis.X)
+                {
+                    if (moviment.Depth == Depth.First)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.X < 0);
+                    }
+                    else if (moviment.Depth == Depth.Second)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.X == 0);
+                    }
+                    else if (moviment.Depth == Depth.Third)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.X > 0);
+                    }
 
+                    Animation animation = new Animation(movimentingPieces, 90, moviment);
+                    this.pendingAnimation.Enqueue(animation);
+
+                }
+                else if (moviment.Axis == Axis.Y)
+                {
+                    if (moviment.Depth == Depth.First)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Y > 0);
+                    }
+                    else if (moviment.Depth == Depth.Second)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Y == 0);
+                    }
+                    else if (moviment.Depth == Depth.Third)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Y < 0);
+                    }
+
+
+                    Animation animation = new Animation(movimentingPieces, 90, moviment);
+                    this.pendingAnimation.Enqueue(animation);
+                }
+                else if (moviment.Axis == Axis.Z)
+                {
+                    if (moviment.Depth == Depth.First)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Z > 0);
+                    }
+                    else if (moviment.Depth == Depth.Second)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Z == 0);
+                    }
+                    else if (moviment.Depth == Depth.Third)
+                    {
+                        movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Z < 0);
+                    }
+                    Animation animation = new Animation(movimentingPieces, 90, moviment);
+                    this.pendingAnimation.Enqueue(animation);
+                }
             }
-            else if(moviment.Axis == Axis.Y)
-            {
-                if (moviment.Depth == Depth.First)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Y > 0);
-                }
-                else if (moviment.Depth == Depth.Second)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Y == 0);
-                }
-                else if (moviment.Depth == Depth.Third)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Y < 0);
-                }
-
-
-                Animation animation = new Animation(movimentingPieces, 90, moviment);
-                this.pendingAnimation.Enqueue(animation);
-            }
-            else if(moviment.Axis == Axis.Z)
-            {
-                if (moviment.Depth == Depth.First)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Z > 0);
-                }
-                else if (moviment.Depth == Depth.Second)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Z == 0);
-                }
-                else if (moviment.Depth == Depth.Third)
-                {
-                    movimentingPieces = this.composingCubes.FindAll(pieces => pieces.Z < 0);
-                }
-                Animation animation = new Animation(movimentingPieces, 90, moviment);
-                this.pendingAnimation.Enqueue(animation);
-            }
-
         }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
