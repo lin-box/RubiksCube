@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,9 +64,9 @@ namespace RubikCube.Draws
         {
 
             if (IsSpecularLightEnabled)
-                Gl.glLightfv(this.GlLight, Gl.GL_SPECULAR, SpecularLight);
+                Gl.glLightfv((uint)this.GlLight, Gl.GL_SPECULAR, SpecularLight);
             else
-                Gl.glLightfv(this.GlLight, Gl.GL_SPECULAR, Blackout);
+                Gl.glLightfv((uint)this.GlLight, Gl.GL_SPECULAR, Blackout);
             
         }
 
@@ -75,21 +75,21 @@ namespace RubikCube.Draws
             if (IsAmbientLightEnabled)
             {
                 Gl.glLightModelfv(Gl.GL_LIGHT_MODEL_AMBIENT, AmbientLight);
-                Gl.glLightfv(this.GlLight, Gl.GL_AMBIENT, AmbientLight);
+                Gl.glLightfv((uint)this.GlLight, Gl.GL_AMBIENT, AmbientLight);
             }
             else
             {
                 Gl.glLightModelfv(Gl.GL_LIGHT_MODEL_AMBIENT, Blackout);
-                Gl.glLightfv(this.GlLight, Gl.GL_AMBIENT, Blackout);
+                Gl.glLightfv((uint)this.GlLight, Gl.GL_AMBIENT, Blackout);
             }
         }
 
         private void SetDiffuseLight()
         {
             if(IsDiffuseLightEnabled)
-                Gl.glLightfv(this.GlLight, Gl.GL_DIFFUSE, DiffuseLight);
+                Gl.glLightfv((uint)this.GlLight, Gl.GL_DIFFUSE, DiffuseLight);
             else
-                Gl.glLightfv(this.GlLight, Gl.GL_DIFFUSE, Blackout);
+                Gl.glLightfv((uint)this.GlLight, Gl.GL_DIFFUSE, Blackout);
             
         }
 
@@ -100,17 +100,17 @@ namespace RubikCube.Draws
             this.SetDiffuseLight();
             this.SetSpecularLight();
 
-            //Gl.glPushMatrix();
+            Gl.glPushMatrix();
 
             Gl.glRotatef(this.AngleX, 1, 0, 0);
             Gl.glRotatef(this.AngleY, 0, 1, 0);
             Gl.glRotatef(this.AngleZ, 0, 0, 1);
 
-            Gl.glLightfv(this.GlLight, Gl.GL_POSITION, LightPosition);
+            Gl.glLightfv((uint)this.GlLight, Gl.GL_POSITION, LightPosition);
 
-            //Gl.glPopMatrix();
+            Gl.glPopMatrix();
 
-            Gl.glEnable(this.GlLight);
+            Gl.glEnable((uint)this.GlLight);
         }
 
 
@@ -123,4 +123,3 @@ namespace RubikCube.Draws
 
     }
 }
-*/

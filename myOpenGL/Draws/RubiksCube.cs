@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
-using Gl = OpenGL.GL;
+using OpenGL;
 
 namespace RubikCube.Draws
 {
@@ -206,9 +206,9 @@ namespace RubikCube.Draws
 
         private void AdjustRotation()
         {
-            Gl.glRotatef(AngleX, 1, 0, 0);
-            Gl.glRotatef(AngleY, 0, 1, 0);
-            Gl.glRotatef(AngleZ, 0, 0, 1);
+            GL.glRotatef(AngleX, 1, 0, 0);
+            GL.glRotatef(AngleY, 0, 1, 0);
+            GL.glRotatef(AngleZ, 0, 0, 1);
         }
     }
 }

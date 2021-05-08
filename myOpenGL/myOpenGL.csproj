@@ -65,6 +65,7 @@
     <Compile Include="Axis.cs" />
     <Compile Include="cOGL.cs" />
     <Compile Include="Depth.cs" />
+    <Compile Include="Draws\Mirror.cs" />
     <Compile Include="Draws\Cube.cs" />
     <Compile Include="Draws\IDraw.cs" />
     <Compile Include="Draws\Light.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RubikCubeMoviment.cs" />
     <Compile Include="Spin.cs" />
+    <Compile Include="Texture.cs" />
     <EmbeddedResource Include="Form1.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Form1.cs</DependentUpon>

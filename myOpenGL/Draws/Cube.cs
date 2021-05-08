@@ -7,7 +7,7 @@
 1.1. לתקן קצוות של צורה שיראה חלק
 2. שיהיה אפשר לעשות תזוזה עם העכבר/מקלדת לראות כמה פוינטס אוף וויו.
 3. לסובב שורות ועמודות.
-4. להוסיף מראות
+4. להוסיף מראות עם טקסטורה של מראה 
 5. להוסיף טקסטורות
 6. לעצב כפתורים
 7. סוגי אורות עם הצללה
@@ -30,7 +30,7 @@ using System.Drawing;
 
 namespace RubikCube.Draws
 {
-    class Cube  //: IDraw
+    class Cube  : IDraw
     {
         private double size;
         public double X { get; private set; }
@@ -61,7 +61,7 @@ namespace RubikCube.Draws
             this.Z = Z;
             this.faceColors = faceColors;
         }
-/*
+
         public Cube(double size, double X, double Y, double Z, FaceCube<Texture> faceColors)
         {
             this.size = size;
@@ -69,7 +69,7 @@ namespace RubikCube.Draws
             this.Y = Y;
             this.Z = Z;
             //this.faceColors = faceColors;
-        }*/
+        }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
         {
