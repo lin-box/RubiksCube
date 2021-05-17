@@ -28,8 +28,10 @@ namespace RubikCube.Draws
             this.AngleX = AngleX;
             this.AngleY = AngleY;
             this.AngleZ = AngleZ;
-
-
+           
+            //make the surface transparent  
+            GL.glEnable(GL.GL_BLEND); 
+            GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         }
 
         public void Draw()
@@ -52,6 +54,13 @@ namespace RubikCube.Draws
             GL.glEnd();
             GL.glPopMatrix();
         }
-  
+
+        public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
+        {
+            this.AngleX += AngleAxisX;
+            this.AngleY += AngleAxisY;
+            this.AngleZ += AngleAxisZ;
+        }
+
     }    
 }

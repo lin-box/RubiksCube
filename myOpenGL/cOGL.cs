@@ -52,11 +52,8 @@ namespace OpenGL
 		{
 			get{ return m_uint_RC; }
 		}
-        void DrawMirror()
+        void DrawMirrors()
         {
-            //-------------for reflection---------//
-            GL.glEnable(GL.GL_BLEND); //make the surface transparent  
-            GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 
             //only floor, draw only to STENCIL buffer
             GL.glEnable(GL.GL_STENCIL_TEST);
@@ -78,16 +75,16 @@ namespace OpenGL
 
             GL.glEnable(GL.GL_STENCIL_TEST);
 
-            // draw reflected scene
+            // draw reflected scene for back mirror
             GL.glPushMatrix();
             GL.glScalef(1, 1, -1); //swap on Z axis
-            GL.glTranslated(0, 0, 5);   
+            GL.glTranslated(0, 0, 7);   
             rubiksCube.Draw();
             GL.glPopMatrix();
-
+            // draw reflected scene for right mirror
             GL.glPushMatrix();
-            GL.glScalef(-1, 1, 1); //swap on Z axis
-            GL.glTranslated(-5, 0, 0);
+            GL.glScalef(-1, 1, 1); //swap on X axis
+            GL.glTranslated(-7, 0, 0);
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -100,8 +97,7 @@ namespace OpenGL
             GL.glDepthMask((byte)GL.GL_TRUE);
             // Disable GL.GL_STENCIL_TEST to show All, else it will be cut on GL.GL_STENCIL
             GL.glDisable(GL.GL_STENCIL_TEST);
-            rubiksCube.Draw();
-       
+
         }
         void DrawAxes(Color xColor, Color yColor, Color zColor)
         {
@@ -141,7 +137,11 @@ namespace OpenGL
 
             DrawAxes(Color.Red, Color.Green, Color.Blue);
 
-            DrawMirror();
+            DrawMirrors();
+
+            rubiksCube.Draw();
+
+            rightMirrorSurface.Rotate(0, 2, 0);
 
             GL.glFlush();
 
