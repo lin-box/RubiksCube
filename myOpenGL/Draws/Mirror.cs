@@ -14,10 +14,10 @@ namespace RubikCube.Draws
         public double x { get; private set; }
         public double y { get; private set; }
         public double z { get; private set; }
-        
-        private int AngleX = 0; 
-        private int AngleY = 0;
-        private int AngleZ = 0;
+
+        public int AngleX = 0;
+        public int AngleY = 0;
+        public int AngleZ = 0;
 
         public Mirror(double size, double x, double y, double z, int AngleX, int AngleY, int AngleZ)   
         {
@@ -36,7 +36,8 @@ namespace RubikCube.Draws
 
         public void Draw()
         {
-         //   GL.glEnable(GL.GL_LIGHTING);
+            //   GL.glEnable(GL.GL_LIGHTING);
+
             GL.glPushMatrix();
 
             GL.glTranslated(x, y, z);
@@ -47,12 +48,14 @@ namespace RubikCube.Draws
             GL.glBegin(GL.GL_QUADS);
             //!!! for blended REFLECTION 
             GL.glColor4d(0.9, 0.9, 0.9, 0.5);
-            GL.glVertex3d(size/2, size / 2, 0);
-            GL.glVertex3d(-size / 2, size / 2, 0);
-            GL.glVertex3d(-size / 2, -size / 2, 0);
-            GL.glVertex3d(size / 2, -size / 2, 0);
+            GL.glVertex3d(size, size/2, 0);
+            GL.glVertex3d(0, size/2, 0);
+            GL.glVertex3d(0, -size / 2, 0);
+            GL.glVertex3d(size, -size / 2, 0);
             GL.glEnd();
+
             GL.glPopMatrix();
+ 
         }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)

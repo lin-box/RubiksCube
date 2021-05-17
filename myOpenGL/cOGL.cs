@@ -12,7 +12,7 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
-
+        double mirrorSize =5;
         public Mirror backMirrorSurface;
         public Mirror rightMirrorSurface;
         public RubiksCube rubiksCube;
@@ -24,8 +24,8 @@ namespace OpenGL
             Height = p.Height; 
             InitializeGL();
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(5, 0, 0, -2.5, 0, 0, 0);
-            rightMirrorSurface = new Mirror(5, 2.5, 0, 0, 0, 90, 0);
+            backMirrorSurface = new Mirror(mirrorSize, -mirrorSize/2, 0, -mirrorSize/2, 0, 0, 0);
+            rightMirrorSurface = new Mirror(mirrorSize, mirrorSize/2, 0, -mirrorSize/2, 0, -90, 0);
         }
 
         ~cOGL()
@@ -61,7 +61,7 @@ namespace OpenGL
             GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw floor always
             GL.glColorMask((byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE);
             GL.glDisable(GL.GL_DEPTH_TEST);
-
+            // add mirrors for STENCIL buffer
             backMirrorSurface.Draw();
             rightMirrorSurface.Draw();
 
@@ -78,13 +78,14 @@ namespace OpenGL
             // draw reflected scene for back mirror
             GL.glPushMatrix();
             GL.glScalef(1, 1, -1); //swap on Z axis
-            GL.glTranslated(0, 0, 7);   
+            GL.glTranslated(0, 0, mirrorSize);   
             rubiksCube.Draw();
             GL.glPopMatrix();
+
             // draw reflected scene for right mirror
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
-            GL.glTranslated(-7, 0, 0);
+            GL.glTranslated(-mirrorSize, 0, 0);
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -126,11 +127,11 @@ namespace OpenGL
             
             GL.glLoadIdentity();
 
-            GL.glTranslated(0, 0, -10);
+            GL.glTranslated(0, 0, -12);
 
             
             GL.glRotated(30, 1, 0, 0);
-            GL.glRotated(30, 0, 1, 0);
+            //GL.glRotated(30, 0, 1, 0);
 
          //  Console.WriteLine("cOGL.Draw!");
          //   rubiksCube.Draw();
@@ -140,8 +141,6 @@ namespace OpenGL
             DrawMirrors();
 
             rubiksCube.Draw();
-
-            rightMirrorSurface.Rotate(0, 2, 0);
 
             GL.glFlush();
 
@@ -225,7 +224,7 @@ namespace OpenGL
             GL.glClearColor(1, 1, 1, 0);
             GL.glMatrixMode(GL.GL_PROJECTION);
             GL.glLoadIdentity();
-            GLU.gluPerspective(45.0, ((double)Width) / Height, 1.0, 1000.0);
+            GLU.gluPerspective(45, ((double)Width) / Height, 1.0, 1000.0);
             GL.glMatrixMode(GL.GL_MODELVIEW);
             GL.glLoadIdentity();
 
