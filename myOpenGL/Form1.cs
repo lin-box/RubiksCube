@@ -141,14 +141,22 @@ namespace myOpenGL
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (cGL.rightMirrorSurface.AngleY <= -75 )
+            if (cGL.rightMirrorSurface.AngleY <= -80 )
+            {
                 cGL.rightMirrorSurface.Rotate(0, 5, 0);
+                cGL.leftMirrorSurface.Rotate(0, -5, 0);
+            }
+                
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             if (cGL.rightMirrorSurface.AngleY >= -90)
+            {
                 cGL.rightMirrorSurface.Rotate(0, -5, 0);
+                cGL.leftMirrorSurface.Rotate(0, 5, 0);
+            }
+                
         }
     }
 }
