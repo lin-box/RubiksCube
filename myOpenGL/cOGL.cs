@@ -15,6 +15,7 @@ namespace OpenGL
         double mirrorSize =5;
         public Mirror backMirrorSurface;
         public Mirror rightMirrorSurface;
+        public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
         public cOGL(Control pb)
@@ -26,6 +27,7 @@ namespace OpenGL
             rubiksCube = new RubiksCube();
             backMirrorSurface = new Mirror(mirrorSize, -mirrorSize/2, 0, -mirrorSize/2, 0, 0, 0);
             rightMirrorSurface = new Mirror(mirrorSize, mirrorSize/2, 0, -mirrorSize/2, 0, -90, 0);
+            leftMirrorSurface = new Mirror(mirrorSize, -mirrorSize / 2, 0, -mirrorSize / 2, 0, -90, 0);
         }
 
         ~cOGL()
@@ -64,6 +66,7 @@ namespace OpenGL
             // add mirrors for STENCIL buffer
             backMirrorSurface.Draw();
             rightMirrorSurface.Draw();
+            leftMirrorSurface.Draw();
 
             // restore regular settings
             GL.glColorMask((byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE);
@@ -89,12 +92,20 @@ namespace OpenGL
             rubiksCube.Draw();
             GL.glPopMatrix();
 
+            // draw reflected scene for right mirror
+            GL.glPushMatrix();
+            GL.glScalef(-1, 1, 1); //swap on X axis
+            GL.glTranslated(mirrorSize, 0, 0);
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+
             // really draw floor 
             //( half-transparent ( see its color's alpha byte)))
             // in order to see reflected objects 
             GL.glDepthMask((byte)GL.GL_FALSE);
             backMirrorSurface.Draw();
             rightMirrorSurface.Draw();
+            leftMirrorSurface.Draw();
             GL.glDepthMask((byte)GL.GL_TRUE);
             // Disable GL.GL_STENCIL_TEST to show All, else it will be cut on GL.GL_STENCIL
             GL.glDisable(GL.GL_STENCIL_TEST);
