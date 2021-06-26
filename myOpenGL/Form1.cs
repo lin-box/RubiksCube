@@ -22,6 +22,12 @@ namespace myOpenGL
         {
             InitializeComponent();
             cGL = new cOGL(panel1);
+
+            // initialize ScrollValue array
+
+            cGL.ScrollValue[10] = (hScrollBar11.Value - 100) / 10.0f;
+            cGL.ScrollValue[11] = (hScrollBar12.Value - 100) / 10.0f;
+            cGL.ScrollValue[12] = (hScrollBar13.Value - 100) / 10.0f;
         }
 
         // happens when the window is re-rendered.
@@ -157,6 +163,16 @@ namespace myOpenGL
                 cGL.leftMirrorSurface.Rotate(0, 5, 0);
             }
                 
+        }
+
+        private void hScrollBarScroll(object sender, ScrollEventArgs e)
+        {
+            cGL.intOptionC = 0;
+            HScrollBar hb = (HScrollBar)sender;
+            int n = int.Parse(hb.Name.Substring(10));
+            cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
+            if (e != null)
+                cGL.Draw();
         }
     }
 }
