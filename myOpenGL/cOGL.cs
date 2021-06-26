@@ -230,17 +230,19 @@ namespace OpenGL
             GL.glRotated(30, 1, 0, 0);
             //GL.glRotated(30, 0, 1, 0);
 
-            //DrawAxes(Color.Red, Color.Green, Color.Blue);
+            DrawAxes(Color.Red, Color.Green, Color.Blue);
             
             UpdateScrollInput();
             //UpdateLightSettings();
             DrawLights();
 
-            //DrawMirrors();
+            DrawMirrors();
 
             rubiksCube.Draw();
-            /*GL.glColor3d(0.8, 0.8, 0.8);
-            GLUT.glutSolidCube(1);*/
+
+            // draw simple cube instead
+            //GL.glColor3d(0.8, 0.8, 0.8);
+            //GLUT.glutSolidCube(1);
 
             GL.glFlush();
 
