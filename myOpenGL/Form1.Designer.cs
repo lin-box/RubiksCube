@@ -45,6 +45,9 @@ namespace myOpenGL
             this.timerRepaint = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.hScrollBar12 = new System.Windows.Forms.HScrollBar();
+            this.hScrollBar11 = new System.Windows.Forms.HScrollBar();
+            this.hScrollBar13 = new System.Windows.Forms.HScrollBar();
             this.SuspendLayout();
             // 
             // panel1
@@ -203,11 +206,44 @@ namespace myOpenGL
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // hScrollBar12
+            // 
+            this.hScrollBar12.Location = new System.Drawing.Point(569, 441);
+            this.hScrollBar12.Maximum = 200;
+            this.hScrollBar12.Name = "hScrollBar12";
+            this.hScrollBar12.Size = new System.Drawing.Size(143, 17);
+            this.hScrollBar12.TabIndex = 34;
+            this.hScrollBar12.Value = 143;
+            this.hScrollBar12.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            // 
+            // hScrollBar11
+            // 
+            this.hScrollBar11.Location = new System.Drawing.Point(569, 415);
+            this.hScrollBar11.Maximum = 200;
+            this.hScrollBar11.Name = "hScrollBar11";
+            this.hScrollBar11.Size = new System.Drawing.Size(143, 17);
+            this.hScrollBar11.TabIndex = 33;
+            this.hScrollBar11.Value = 99;
+            this.hScrollBar11.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            // 
+            // hScrollBar13
+            // 
+            this.hScrollBar13.Location = new System.Drawing.Point(569, 465);
+            this.hScrollBar13.Maximum = 200;
+            this.hScrollBar13.Name = "hScrollBar13";
+            this.hScrollBar13.Size = new System.Drawing.Size(143, 17);
+            this.hScrollBar13.TabIndex = 32;
+            this.hScrollBar13.Value = 120;
+            this.hScrollBar13.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 528);
+            this.Controls.Add(this.hScrollBar12);
+            this.Controls.Add(this.hScrollBar11);
+            this.Controls.Add(this.hScrollBar13);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnThirdXDown);
@@ -249,6 +285,9 @@ namespace myOpenGL
         private System.Windows.Forms.Timer timerRepaint;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.HScrollBar hScrollBar12;
+        private System.Windows.Forms.HScrollBar hScrollBar11;
+        private System.Windows.Forms.HScrollBar hScrollBar13;
     }
 }
 
