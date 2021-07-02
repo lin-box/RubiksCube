@@ -12,7 +12,8 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
-        double mirrorSize =5;
+        double mirrorHeight = 8;
+        double mirrorWidth = 6;
         public Mirror backMirrorSurface;
         public Mirror rightMirrorSurface;
         public Mirror leftMirrorSurface;
@@ -25,9 +26,10 @@ namespace OpenGL
             Height = p.Height; 
             InitializeGL();
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(mirrorSize, -mirrorSize/2, 0, -mirrorSize/2, 0, 0, 0);
-            rightMirrorSurface = new Mirror(mirrorSize, mirrorSize/2, 0, -mirrorSize/2, 0, -90, 0);
-            leftMirrorSurface = new Mirror(mirrorSize, -mirrorSize / 2, 0, -mirrorSize / 2, 0, -90, 0);
+            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorHeight / 2, 0, 0, 0);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorHeight / 2, 0, -90, 0);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, -mirrorWidth / 2, 0, -mirrorHeight / 2, 0, -90, 0);
+            
         }
 
         ~cOGL()
@@ -57,10 +59,10 @@ namespace OpenGL
         void DrawMirrors()
         {
 
-            //only floor, draw only to STENCIL buffer
+            //only wall, draw only to STENCIL buffer
             GL.glEnable(GL.GL_STENCIL_TEST);
             GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
-            GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw floor always
+            GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw wall always
             GL.glColorMask((byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE);
             GL.glDisable(GL.GL_DEPTH_TEST);
             // add mirrors for STENCIL buffer
@@ -81,25 +83,43 @@ namespace OpenGL
             // draw reflected scene for back mirror
             GL.glPushMatrix();
             GL.glScalef(1, 1, -1); //swap on Z axis
-            GL.glTranslated(0, 0, mirrorSize);   
+            GL.glTranslated(0, 0, mirrorWidth);   
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+
+            // draw reflected left mirror scene for right mirror scene
+            GL.glPushMatrix();
+            //GL.glScalef(-1, 1, 1); //swap on Z axis
+            GL.glTranslated(mirrorWidth * 2, 0, 0);
             rubiksCube.Draw();
             GL.glPopMatrix();
 
             // draw reflected scene for right mirror
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
-            GL.glTranslated(-mirrorSize, 0, 0);
+            GL.glTranslated(-mirrorWidth, 0, 0);
+            leftMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
 
-            // draw reflected scene for right mirror
+
+            // draw reflected right mirror scene for left mirror scene
+            GL.glPushMatrix();
+            //GL.glScalef(-1, 1, 1); //swap on Z axis
+            GL.glTranslated(-mirrorWidth * 2, 0, 0);
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+
+
+            // draw reflected scene for left mirror
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
-            GL.glTranslated(mirrorSize, 0, 0);
+            GL.glTranslated(mirrorWidth, 0, 0);
+            rightMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
 
-            // really draw floor 
+            // really draw wall 
             //( half-transparent ( see its color's alpha byte)))
             // in order to see reflected objects 
             GL.glDepthMask((byte)GL.GL_FALSE);
@@ -128,7 +148,9 @@ namespace OpenGL
             GL.glVertex3f(0.0f, 0.0f, 3.0f);
             GL.glEnd();
         }
-        
+
+        //public int intOptionC = 1;
+        public float[] ScrollValue = new float[3]; 
         public void Draw()
         {
             if (m_uint_DC == 0 || m_uint_RC == 0)
@@ -138,14 +160,12 @@ namespace OpenGL
             
             GL.glLoadIdentity();
 
-            GL.glTranslated(0, 0, -12);
-
+            GLU.gluLookAt(ScrollValue[1], 1, 10, 0, 0, 0, 0, 1, 0);
             
-            GL.glRotated(30, 1, 0, 0);
-            //GL.glRotated(30, 0, 1, 0);
+           
+            GL.glTranslated(0, 0, -6);
 
-         //  Console.WriteLine("cOGL.Draw!");
-         //   rubiksCube.Draw();
+            GL.glRotated(20, 1, 0, 0);
 
             DrawAxes(Color.Red, Color.Green, Color.Blue);
 
@@ -223,63 +243,25 @@ namespace OpenGL
                 return;
             if (this.Width == 0 || this.Height == 0)
                 return;
-//*
+
             GL.glShadeModel(GL.GL_SMOOTH);
-            GL.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-            GL.glClearDepth(1.0f);//*/
+            GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+            GL.glClearDepth(1.0f);
 
             GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
 
             GL.glViewport(0, 0, this.Width, this.Height);
-            GL.glClearColor(1, 1, 1, 0);
             GL.glMatrixMode(GL.GL_PROJECTION);
             GL.glLoadIdentity();
+
             GLU.gluPerspective(45, ((double)Width) / Height, 1.0, 1000.0);
             GL.glMatrixMode(GL.GL_MODELVIEW);
             GL.glLoadIdentity();
 
-           
         }
     
     }
 
 }
-
-
-/*  protected virtual void initRenderingGL()
-        {
-            if (m_uint_DC == 0 || m_uint_RC == 0)
-                return;
-            if (this.Width == 0 || this.Height == 0)
-                return;
-
-            GL.glShadeModel(GL.GL_SMOOTH);
-            GL.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-            GL.glClearDepth(1.0f);
-          
-
-            GL.glEnable(GL.GL_LIGHT0);
-            GL.glEnable(GL.GL_COLOR_MATERIAL);
-            GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
-
-            GL.glEnable(GL.GL_DEPTH_TEST);
-            GL.glDepthFunc(GL.GL_LEQUAL);
-            GL.glHint(GL.GL_PERSPECTIVE_CORRECTION_Hint, GL.GL_NICEST);	
-
-
-            GL.glViewport(0, 0, this.Width, this.Height);
-            GL.glMatrixMode(GL.GL_PROJECTION);
-            GL.glLoadIdentity();
-
-            //nice 3D
-            GLU.gluPerspective(45.0, 1.0, 0.4, 100.0);
-
-
-            GL.glMatrixMode(GL.GL_MODELVIEW);
-            GL.glLoadIdentity();
-
-            //save the current MODELVIEW Matrix (now it is Identity)
-            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
-      */
 

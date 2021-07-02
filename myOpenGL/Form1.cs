@@ -22,6 +22,12 @@ namespace myOpenGL
         {
             InitializeComponent();
             cGL = new cOGL(panel1);
+
+            //apply the bars values as cGL.ScrollValue[..] properties 
+            //!!!
+
+            hScrollBarScroll(hScrollBar2, null);
+
         }
 
         // happens when the window is re-rendered.
@@ -36,13 +42,10 @@ namespace myOpenGL
             cGL.OnResize();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            
+
             if (e.KeyCode == Keys.D)
             {
                 cGL.rubiksCube.Rotate(0, 5, 0);
@@ -139,7 +142,7 @@ namespace myOpenGL
             cGL.Draw();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //open
         {
             if (cGL.rightMirrorSurface.AngleY <= -80 )
             {
@@ -149,7 +152,7 @@ namespace myOpenGL
                 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) //close
         {
             if (cGL.rightMirrorSurface.AngleY >= -90)
             {
@@ -158,5 +161,16 @@ namespace myOpenGL
             }
                 
         }
+
+        private void hScrollBarScroll(object sender, ScrollEventArgs e)
+        {
+            //cGL.intOptionC = 0;
+            HScrollBar hb = (HScrollBar)sender;
+            int n = int.Parse(hb.Name.Substring(10));
+            cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
+            if (e != null)
+                cGL.Draw();
+        }
+   
     }
 }
