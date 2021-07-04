@@ -19,12 +19,19 @@ namespace OpenGL
         public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
+        public int intOptionC = 0;
+
+        public float[] ScrollValue = new float[14] { 1, -10, 10, 0, 0, 0, 0, 1, 0, -0.6f, -3, -2, 3, 4.1f };
+        public float[] pos = new float[4] { -0.1f, 4.3f, 2f, -1f };
+        double[] AccumulatedRotationsTraslations = new double[16];
+
         public cOGL(Control pb)
         {
             p=pb;
             Width = p.Width;
             Height = p.Height; 
             InitializeGL();
+
             rubiksCube = new RubiksCube();
             backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorHeight / 2, 0, 0, 0);
             rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorHeight / 2, 0, -90, 0);
@@ -56,6 +63,7 @@ namespace OpenGL
 		{
 			get{ return m_uint_RC; }
 		}
+
         void DrawMirrors()
         {
 
@@ -131,6 +139,7 @@ namespace OpenGL
             GL.glDisable(GL.GL_STENCIL_TEST);
 
         }
+
         void DrawAxes(Color xColor, Color yColor, Color zColor)
         {
             GL.glBegin( GL.GL_LINES);
@@ -149,8 +158,84 @@ namespace OpenGL
             GL.glEnd();
         }
 
-        //public int intOptionC = 1;
-        public float[] ScrollValue = new float[3]; 
+        void UpdateScrollInput()
+        {
+            pos[0] = ScrollValue[10];
+            pos[1] = ScrollValue[11];
+            pos[2] = ScrollValue[12];
+            pos[3] = 1.0f;
+        }
+
+        void UpdateLightSettings()
+        {
+            GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+
+            GL.glLoadIdentity();
+
+            // not trivial
+            double[] ModelVievMatrixBeforeSpecificTransforms = new double[16];
+            double[] CurrentRotationTraslation = new double[16];
+
+            GLU.gluLookAt(ScrollValue[0], ScrollValue[1], ScrollValue[2],
+                       ScrollValue[3], ScrollValue[4], ScrollValue[5],
+                       ScrollValue[6], ScrollValue[7], ScrollValue[8]);
+            GL.glTranslatef(0.0f, 0.0f, -1.0f);
+
+            //save current ModelView Matrix values
+            //in ModelVievMatrixBeforeSpecificTransforms array
+            //ModelView Matrix ========>>>>>> ModelVievMatrixBeforeSpecificTransforms
+            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, ModelVievMatrixBeforeSpecificTransforms);
+            //ModelView Matrix was saved, so
+            GL.glLoadIdentity(); // make it identity matrix
+
+            //as result - the ModelView Matrix now is pure representation
+            //of KeyCode transform and only it !!!
+
+            //save current ModelView Matrix values
+            //in CurrentRotationTraslation array
+            //ModelView Matrix =======>>>>>>> CurrentRotationTraslation
+            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, CurrentRotationTraslation);
+
+            //The GL.glLoadMatrix function replaces the current matrix with
+            //the one specified in its argument.
+            //The current matrix is the
+            //projection matrix, modelview matrix, or texture matrix,
+            //determined by the current matrix mode (now is ModelView mode)
+            GL.glLoadMatrixd(AccumulatedRotationsTraslations); //Global Matrix
+
+            //The GL.glMultMatrix function multiplies the current matrix by
+            //the one specified in its argument.
+            //That is, if M is the current matrix and T is the matrix passed to
+            //GL.glMultMatrix, then M is replaced with M • T
+            GL.glMultMatrixd(CurrentRotationTraslation);
+
+            //save the matrix product in AccumulatedRotationsTraslations1
+            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
+
+            //replace ModelViev Matrix with stored ModelVievMatrixBeforeSpecificTransforms
+            GL.glLoadMatrixd(ModelVievMatrixBeforeSpecificTransforms);
+            //multiply it by KeyCode defined AccumulatedRotationsTraslations1 matrix
+            GL.glMultMatrixd(AccumulatedRotationsTraslations);
+        }
+
+        void DrawLights()
+        {
+            GL.glPushMatrix();
+            GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
+
+            //Draw Light Source
+            GL.glDisable(GL.GL_LIGHTING);
+            GL.glTranslatef(pos[0], pos[1], pos[2]);
+            //Yellow Light source
+            GL.glColor3f(1, 1, 0);
+            GLUT.glutSolidSphere(0.05, 8, 8);
+            GL.glTranslatef(-pos[0], -pos[1], -pos[2]);
+
+            //main System draw
+            GL.glEnable(GL.GL_LIGHTING);
+            GL.glPopMatrix();
+        }
+
         public void Draw()
         {
             if (m_uint_DC == 0 || m_uint_RC == 0)
@@ -164,14 +249,24 @@ namespace OpenGL
             
            
             GL.glTranslated(0, 0, -6);
-
+            //GL.glRotated(30, 0, 1, 0);
             GL.glRotated(20, 1, 0, 0);
 
+         //   rubiksCube.Draw();
+
             DrawAxes(Color.Red, Color.Green, Color.Blue);
+            
+            UpdateScrollInput();
+            //UpdateLightSettings();
+            DrawLights();
 
             DrawMirrors();
 
             rubiksCube.Draw();
+
+            // draw simple cube instead
+            //GL.glColor3d(0.8, 0.8, 0.8);
+            //GLUT.glutSolidCube(1);
 
             GL.glFlush();
 
@@ -248,6 +343,10 @@ namespace OpenGL
             GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             GL.glClearDepth(1.0f);
 
+            GL.glEnable(GL.GL_LIGHT0);
+            GL.glEnable(GL.GL_COLOR_MATERIAL);
+            GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
+
             GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
 
@@ -257,8 +356,11 @@ namespace OpenGL
 
             GLU.gluPerspective(45, ((double)Width) / Height, 1.0, 1000.0);
             GL.glMatrixMode(GL.GL_MODELVIEW);
-            GL.glLoadIdentity();
+            //save the current MODELVIEW Matrix (now it is Identity)
+            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
 
+
+           
         }
     
     }

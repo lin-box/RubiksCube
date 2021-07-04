@@ -28,6 +28,12 @@ namespace myOpenGL
 
             hScrollBarScroll(hScrollBar2, null);
 
+
+            // initialize ScrollValue array
+
+            cGL.ScrollValue[10] = (hScrollBar11.Value - 100) / 10.0f;
+            cGL.ScrollValue[11] = (hScrollBar12.Value - 100) / 10.0f;
+            cGL.ScrollValue[12] = (hScrollBar13.Value - 100) / 10.0f;
         }
 
         // happens when the window is re-rendered.
@@ -42,10 +48,13 @@ namespace myOpenGL
             cGL.OnResize();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            
-
             if (e.KeyCode == Keys.D)
             {
                 cGL.rubiksCube.Rotate(0, 5, 0);
@@ -164,7 +173,7 @@ namespace myOpenGL
 
         private void hScrollBarScroll(object sender, ScrollEventArgs e)
         {
-            //cGL.intOptionC = 0;
+            cGL.intOptionC = 0;
             HScrollBar hb = (HScrollBar)sender;
             int n = int.Parse(hb.Name.Substring(10));
             cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
