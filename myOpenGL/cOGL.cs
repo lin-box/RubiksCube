@@ -254,13 +254,107 @@ namespace OpenGL
 
          //   rubiksCube.Draw();
 
-            DrawAxes(Color.Red, Color.Green, Color.Blue);
-            
-            UpdateScrollInput();
-            //UpdateLightSettings();
-            DrawLights();
+                //DrawAxes(Color.Red, Color.Green, Color.Blue);
 
-            DrawMirrors();
+                UpdateScrollInput();
+                //UpdateLightSettings();
+                DrawLights();
+                DrawMirrors();
+                
+                /*
+                float x = (float)(-mirrorSize / 2);
+                float y = 0;
+                float z = (float)-mirrorSize / 2;
+                float AngleX = 0;
+                float AngleY = 0;
+                float AngleZ = 0;
+
+                GL.glPushMatrix();
+
+                GL.glTranslated(x, y, z);
+                GL.glRotatef(AngleX, 1, 0, 0);
+                GL.glRotatef(AngleY, 0, 1, 0);
+                GL.glRotatef(AngleZ, 0, 0, 1);
+
+                GL.glBegin(GL.GL_QUADS);
+                //!!! for blended REFLECTION 
+                GL.glColor4d(0, 0, 1, 1);
+                GL.glVertex3d(mirrorSize, mirrorSize / 2, 0 - 0.05);
+                GL.glVertex3d(0, mirrorSize / 2, 0 - 0.05);
+                GL.glVertex3d(0, -mirrorSize / 2, 0 - 0.05);
+                GL.glVertex3d(mirrorSize, -mirrorSize / 2, 0 - 0.05);
+                GL.glEnd();
+
+                bool isForShades = true;
+                if (!isForShades)
+                    GL.glColor3d(0, 1, 1);
+                else
+                    if (1 == 1)
+                        GL.glColor3d(0.5, 0.5, 0.5);
+                    else
+                        GL.glColor3d(0.8, 0.8, 0.8);
+                GLUT.glutSolidTeapot(1);
+
+                GL.glPopMatrix();
+
+
+                // (mirrorSize, mirrorSize/2, 0, -mirrorSize/2, 0, -90, 0);
+
+                x = (float)(mirrorSize/2);
+                y = 0;
+                z = (float)-mirrorSize/2;
+                AngleX = 0;
+                AngleY = -90;
+                AngleZ = 0;
+
+                GL.glPushMatrix();
+
+                GL.glTranslated(x, y, z);
+                GL.glRotatef(AngleX, 1, 0, 0);
+                GL.glRotatef(AngleY, 0, 1, 0);
+                GL.glRotatef(AngleZ, 0, 0, 1);
+
+                GL.glBegin(GL.GL_QUADS);
+                //!!! for blended REFLECTION 
+                GL.glColor4d(0, 1, 0, 1);
+                GL.glVertex3d(mirrorSize, mirrorSize / 2, 0);
+                GL.glVertex3d(0, mirrorSize / 2, 0);
+                GL.glVertex3d(0, -mirrorSize / 2, 0);
+                GL.glVertex3d(mirrorSize, -mirrorSize / 2, 0);
+                GL.glEnd();
+
+                GL.glPopMatrix();
+
+
+                // (mirrorSize, -mirrorSize / 2, 0, -mirrorSize / 2, 0, -90, 0);
+
+                x = (float)(-mirrorSize / 2);
+                y = 0;
+                z = (float)-mirrorSize / 2;
+                AngleX = 0;
+                AngleY = -90;
+                AngleZ = 0;
+
+                GL.glPushMatrix();
+
+                GL.glTranslated(x, y, z);
+                GL.glRotatef(AngleX, 1, 0, 0);
+                GL.glRotatef(AngleY, 0, 1, 0);
+                GL.glRotatef(AngleZ, 0, 0, 1);
+
+                GL.glBegin(GL.GL_QUADS);
+                //!!! for blended REFLECTION 
+                GL.glColor4d(1, 0, 0, 1);
+                GL.glVertex3d(mirrorSize, mirrorSize / 2, 0);
+                GL.glVertex3d(0, mirrorSize / 2, 0);
+                GL.glVertex3d(0, -mirrorSize / 2, 0);
+                GL.glVertex3d(mirrorSize, -mirrorSize / 2, 0);
+                GL.glEnd();
+
+                GL.glPopMatrix();
+                */
+                
+                //DrawFigures();
 
             rubiksCube.Draw();
 
