@@ -171,13 +171,13 @@ namespace RubikCube.Draws
             this.AngleZ += AngleAxisZ;
         }
 
-        public void Draw()
+        public void Draw(bool isShadow = false)
         {
             DoAnimation();
             AdjustRotation();
             foreach (var item in composingCubes)
             {
-                item.Draw();
+                item.Draw(isShadow);
             }
         }
 

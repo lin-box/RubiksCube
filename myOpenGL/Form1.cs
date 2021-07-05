@@ -180,6 +180,10 @@ namespace myOpenGL
             if (e != null)
                 cGL.Draw();
         }
-   
+
+        private void buttonMirror_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -8,7 +8,7 @@ using Gl = OpenGL.GL;
 
 namespace RubikCube.Draws
 {
-    class Light : IDraw
+    class Light
     {
         private int AngleX = 0;
         private int AngleY = 0;

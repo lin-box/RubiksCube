@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RubikCube.Draws
 {
-    class Mirror : IDraw
+    class Mirror
     {
         private double mirrorHeight;
 
@@ -36,16 +36,39 @@ namespace RubikCube.Draws
             GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         }
 
-        public void Draw()
+        public float[,] getSurf()
+        {
+            float[,] surf = new float[3, 3];
+            surf[0, 0] = (float)mirrorWidth;
+            surf[0, 1] = (float)mirrorHeight / 2;
+            surf[0, 2] = (float)0;
+
+            surf[1, 0] = (float)0;
+            surf[1, 1] = (float)mirrorWidth / 2;
+            surf[1, 2] = (float)0;
+
+            surf[2, 0] = (float)0;
+            surf[2, 1] = (float)-mirrorWidth / 2;
+            surf[2, 2] = (float)0;
+
+            return surf;
+        }
+
+        public void doRotations()
+        {
+            GL.glTranslated(x, y, z);
+            GL.glRotatef(AngleX, 1, 0, 0);
+            GL.glRotatef(AngleY, 0, 1, 0);
+            GL.glRotatef(AngleZ, 0, 0, 1);
+        }
+
+        public void Draw(float[] colorArray)
         {
             //   GL.glEnable(GL.GL_LIGHTING);
 
             GL.glPushMatrix();
 
-            GL.glTranslated(x, y, z);
-            GL.glRotatef(AngleX, 1, 0, 0);
-            GL.glRotatef(AngleY, 0, 1, 0);
-            GL.glRotatef(AngleZ, 0, 0, 1);
+            doRotations();
 
             GL.glBegin(GL.GL_QUADS);
             //!!! for blended REFLECTION 
@@ -57,7 +80,6 @@ namespace RubikCube.Draws
             GL.glEnd();
 
             GL.glPopMatrix();
- 
         }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
