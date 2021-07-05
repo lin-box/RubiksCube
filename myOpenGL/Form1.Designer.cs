@@ -240,10 +240,10 @@ namespace myOpenGL
             // hScrollBar2
             // 
             this.hScrollBar2.LargeChange = 2;
-            this.hScrollBar2.Location = new System.Drawing.Point(604, 136);
+            this.hScrollBar2.Location = new System.Drawing.Point(569, 118);
             this.hScrollBar2.Maximum = 200;
             this.hScrollBar2.Name = "hScrollBar2";
-            this.hScrollBar2.Size = new System.Drawing.Size(80, 17);
+            this.hScrollBar2.Size = new System.Drawing.Size(143, 17);
             this.hScrollBar2.SmallChange = 2;
             this.hScrollBar2.TabIndex = 32;
             this.hScrollBar2.Value = 100;
