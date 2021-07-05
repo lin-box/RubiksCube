@@ -85,7 +85,7 @@ namespace RubikCube.Draws
         public void Draw()
         {
 
-            GL.glEnable(GL.GL_TEXTURE);
+           // GL.glEnable(GL.GL_TEXTURE);
 
             GL.glPushMatrix();
             GL.glRotatef(AngleX, 1, 0, 0);

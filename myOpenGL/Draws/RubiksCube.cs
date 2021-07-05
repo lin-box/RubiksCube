@@ -13,7 +13,6 @@ namespace RubikCube.Draws
         Color insideColor;
         private readonly object syncLock = new object();
 
-
         public int AngleX, AngleY, AngleZ;
 
         public RubiksCube()
@@ -166,9 +165,11 @@ namespace RubikCube.Draws
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
         {
+           
             this.AngleX += AngleAxisX;
             this.AngleY += AngleAxisY;
             this.AngleZ += AngleAxisZ;
+          
         }
 
         public void Draw()

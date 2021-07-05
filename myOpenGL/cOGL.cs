@@ -14,16 +14,27 @@ namespace OpenGL
         int Height;
         double mirrorHeight = 8;
         double mirrorWidth = 6;
+
+        const int x = 0;
+        const int y = 1;
+        const int z = 2;
+
         public Mirror backMirrorSurface;
         public Mirror rightMirrorSurface;
         public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
-        public int intOptionC = 0;
-
-        public float[] ScrollValue = new float[14] { 1, -10, 10, 0, 0, 0, 0, 1, 0, -0.6f, -3, -2, 3, 4.1f };
-        public float[] pos = new float[4] { -0.1f, 4.3f, 2f, -1f };
-        double[] AccumulatedRotationsTraslations = new double[16];
+        public float[] ScrollValue = new float[14];
+        float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
+        float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
+        float[] rightWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
+        float[] backMinusArray = new float[3] { 0f, +0.0f, -0.5f };
+        float[] leftMinusArray = new float[3] { 0f, 0f, 0f };
+        float[] rightMinusArray = new float[3] { 0f, 0f, 0f };
+        float[] zeroArray = new float[3] { 0f, 0f, 0f };
+        float[] planeCoeff = { 1, 1, 1, 1 };
+        public float[] pos = new float[4];
+        float[] cubeXform = new float[16];
 
         public cOGL(Control pb)
         {
@@ -33,9 +44,9 @@ namespace OpenGL
             InitializeGL();
 
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorHeight / 2, 0, 0, 0);
-            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorHeight / 2, 0, -90, 0);
-            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, -mirrorWidth / 2, 0, -mirrorHeight / 2, 0, -90, 0);
+            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, texture[0]);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, texture[0]);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, texture[0]);
             
         }
 
@@ -82,6 +93,11 @@ namespace OpenGL
             GL.glColorMask((byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE);
             GL.glEnable(GL.GL_DEPTH_TEST);
 
+            // first draw the real cube in DEPTH_TEST
+            GL.glPushMatrix();
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+
             // reflection is drawn only where STENCIL buffer value equal to 1
             GL.glStencilFunc(GL.GL_EQUAL, 1, 0xFFFFFFFF);
             GL.glStencilOp(GL.GL_KEEP, GL.GL_KEEP, GL.GL_KEEP); // keep object origenal color
@@ -107,9 +123,10 @@ namespace OpenGL
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(-mirrorWidth, 0, 0);
             leftMirrorSurface.Draw();
+            backMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
-
+         
 
             // draw reflected right mirror scene for left mirror scene
             GL.glPushMatrix();
@@ -124,6 +141,7 @@ namespace OpenGL
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(mirrorWidth, 0, 0);
             rightMirrorSurface.Draw();
+            backMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -132,13 +150,35 @@ namespace OpenGL
             // in order to see reflected objects 
             GL.glDepthMask((byte)GL.GL_FALSE);
             backMirrorSurface.Draw();
-            rightMirrorSurface.Draw();
-            leftMirrorSurface.Draw();
+
+            if (ScrollValue[1] < (3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[1] > -(3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            {
+                rightMirrorSurface.Draw(); //rightMinusArray
+                leftMirrorSurface.Draw(); //leftMinusArray
+            }
+            else if (ScrollValue[1] < (3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            {
+                leftMirrorSurface.DrawAsWall(leftWallColorArray, zeroArray); //, leftMinusArray
+                rightMirrorSurface.Draw(); //rightMinusArray
+            }
+            else
+            {
+                rightMirrorSurface.DrawAsWall(rightWallColorArray, zeroArray); //, rightMinusArray
+                leftMirrorSurface.Draw(); //leftMinusArray
+            }
+
             GL.glDepthMask((byte)GL.GL_TRUE);
             // Disable GL.GL_STENCIL_TEST to show All, else it will be cut on GL.GL_STENCIL
             GL.glDisable(GL.GL_STENCIL_TEST);
 
         }
+  //
+//        void DrawWalls()
+//        {
+//            backMirrorSurface.DrawAsWall(backWallColorArray); //, backMinusArray
+//            leftMirrorSurface.DrawAsWall(leftWallColorArray); //, leftMinusArray
+//            rightMirrorSurface.DrawAsWall(rightWallColorArray); //, rightMinusArray
+//        }
 
         void DrawAxes(Color xColor, Color yColor, Color zColor)
         {
@@ -158,71 +198,125 @@ namespace OpenGL
             GL.glEnd();
         }
 
-        void UpdateScrollInput()
+        // Reduces a normal vector specified as a set of three coordinates,
+        // to a unit normal vector of length one.
+        void ReduceToUnit(float[] vector)
         {
-            pos[0] = ScrollValue[10];
-            pos[1] = ScrollValue[11];
-            pos[2] = ScrollValue[12];
-            pos[3] = 1.0f;
+            float length;
+
+            // Calculate the length of the vector		
+            length = (float)Math.Sqrt((vector[0] * vector[0]) +
+                                (vector[1] * vector[1]) +
+                                (vector[2] * vector[2]));
+
+            // Keep the program from blowing up by providing an exceptable
+            // value for vectors that may calculated too close to zero.
+            if (length == 0.0f)
+                length = 1.0f;
+
+            // Dividing each element by the length will result in a
+            // unit normal vector.
+            vector[0] /= length;
+            vector[1] /= length;
+            vector[2] /= length;
         }
 
-        void UpdateLightSettings()
+
+        // Points p1, p2, & p3 specified in counter clock-wise order
+        void calcNormal(float[,] v, float[] outp)
         {
-            GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+            float[] v1 = new float[3];
+            float[] v2 = new float[3];
 
-            GL.glLoadIdentity();
+            // Calculate two vectors from the three points
+            v1[x] = v[0, x] - v[1, x];
+            v1[y] = v[0, y] - v[1, y];
+            v1[z] = v[0, z] - v[1, z];
 
-            // not trivial
-            double[] ModelVievMatrixBeforeSpecificTransforms = new double[16];
-            double[] CurrentRotationTraslation = new double[16];
+            v2[x] = v[1, x] - v[2, x];
+            v2[y] = v[1, y] - v[2, y];
+            v2[z] = v[1, z] - v[2, z];
 
-            GLU.gluLookAt(ScrollValue[0], ScrollValue[1], ScrollValue[2],
-                       ScrollValue[3], ScrollValue[4], ScrollValue[5],
-                       ScrollValue[6], ScrollValue[7], ScrollValue[8]);
-            GL.glTranslatef(0.0f, 0.0f, -1.0f);
+            // Take the cross product of the two vectors to get
+            // the normal vector which will be stored in out
+            outp[x] = v1[y] * v2[z] - v1[z] * v2[y];
+            outp[y] = v1[z] * v2[x] - v1[x] * v2[z];
+            outp[z] = v1[x] * v2[y] - v1[y] * v2[x];
 
-            //save current ModelView Matrix values
-            //in ModelVievMatrixBeforeSpecificTransforms array
-            //ModelView Matrix ========>>>>>> ModelVievMatrixBeforeSpecificTransforms
-            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, ModelVievMatrixBeforeSpecificTransforms);
-            //ModelView Matrix was saved, so
-            GL.glLoadIdentity(); // make it identity matrix
-
-            //as result - the ModelView Matrix now is pure representation
-            //of KeyCode transform and only it !!!
-
-            //save current ModelView Matrix values
-            //in CurrentRotationTraslation array
-            //ModelView Matrix =======>>>>>>> CurrentRotationTraslation
-            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, CurrentRotationTraslation);
-
-            //The GL.glLoadMatrix function replaces the current matrix with
-            //the one specified in its argument.
-            //The current matrix is the
-            //projection matrix, modelview matrix, or texture matrix,
-            //determined by the current matrix mode (now is ModelView mode)
-            GL.glLoadMatrixd(AccumulatedRotationsTraslations); //Global Matrix
-
-            //The GL.glMultMatrix function multiplies the current matrix by
-            //the one specified in its argument.
-            //That is, if M is the current matrix and T is the matrix passed to
-            //GL.glMultMatrix, then M is replaced with M • T
-            GL.glMultMatrixd(CurrentRotationTraslation);
-
-            //save the matrix product in AccumulatedRotationsTraslations1
-            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
-
-            //replace ModelViev Matrix with stored ModelVievMatrixBeforeSpecificTransforms
-            GL.glLoadMatrixd(ModelVievMatrixBeforeSpecificTransforms);
-            //multiply it by KeyCode defined AccumulatedRotationsTraslations1 matrix
-            GL.glMultMatrixd(AccumulatedRotationsTraslations);
+            // Normalize the vector (shorten length to one)
+            ReduceToUnit(outp);
         }
 
-        void DrawLights()
+
+        void MakeShadowMatrix(float[,] points)
         {
+            float[] planeCoeff = new float[4];
+            float dot;
+
+            // Find the plane equation coefficients
+            // Find the first three coefficients the same way we
+            // find a normal.
+            calcNormal(points, planeCoeff);
+
+            // Find the last coefficient by back substitutions
+            planeCoeff[3] = -(
+                (planeCoeff[0] * points[2, 0]) + (planeCoeff[1] * points[2, 1]) +
+                (planeCoeff[2] * points[2, 2]));
+
+
+            // Dot product of plane and light position
+            dot = planeCoeff[0] * pos[0] +
+                    planeCoeff[1] * pos[1] +
+                    planeCoeff[2] * pos[2] +
+                    planeCoeff[3];
+
+            // Now do the projection
+            // First column
+            cubeXform[0] = dot - pos[0] * planeCoeff[0];
+            cubeXform[4] = 0.0f - pos[0] * planeCoeff[1];
+            cubeXform[8] = 0.0f - pos[0] * planeCoeff[2];
+            cubeXform[12] = 0.0f - pos[0] * planeCoeff[3];
+
+            // Second column
+            cubeXform[1] = 0.0f - pos[1] * planeCoeff[0];
+            cubeXform[5] = dot - pos[1] * planeCoeff[1];
+            cubeXform[9] = 0.0f - pos[1] * planeCoeff[2];
+            cubeXform[13] = 0.0f - pos[1] * planeCoeff[3];
+
+            // Third Column
+            cubeXform[2] = 0.0f - pos[2] * planeCoeff[0];
+            cubeXform[6] = 0.0f - pos[2] * planeCoeff[1];
+            cubeXform[10] = dot - pos[2] * planeCoeff[2];
+            cubeXform[14] = 0.0f - pos[2] * planeCoeff[3];
+
+            // Fourth Column
+            cubeXform[3] = 0.0f - pos[3] * planeCoeff[0];
+            cubeXform[7] = 0.0f - pos[3] * planeCoeff[1];
+            cubeXform[11] = 0.0f - pos[3] * planeCoeff[2];
+            cubeXform[15] = dot - pos[3] * planeCoeff[3];
+        }
+        //Shadows
+
+        void DrawFigures()
+        {
+            //!!!!!!!!!!!!!
             GL.glPushMatrix();
-            GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
+            //!!!!!!!!!!!!!
+         
+            GL.glDisable(GL.GL_LIGHTING);
+            
+            GL.glEnable(GL.GL_STENCIL_TEST);
+            GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
+            GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw wall always
+            
+            // add surface for STENCIL buffer
+            backMirrorSurface.DrawAsWall(backWallColorArray, backMinusArray); //, backMinusArray
 
+            // shadow is drawn only where STENCIL buffer value equal to 1          
+            GL.glStencilFunc(GL.GL_EQUAL, 1, 0xFFFFFFFF);
+            GL.glStencilOp(GL.GL_KEEP, GL.GL_KEEP, GL.GL_KEEP); // keep object origenal color
+
+            GL.glDisable(GL.GL_STENCIL_TEST);
             //Draw Light Source
             GL.glDisable(GL.GL_LIGHTING);
             GL.glTranslatef(pos[0], pos[1], pos[2]);
@@ -230,14 +324,75 @@ namespace OpenGL
             GL.glColor3f(1, 1, 0);
             GLUT.glutSolidSphere(0.05, 8, 8);
             GL.glTranslatef(-pos[0], -pos[1], -pos[2]);
+            GL.glEnd();
 
             //main System draw
             GL.glEnable(GL.GL_LIGHTING);
+           
+            DrawObjects(false, 1);
+
+
+            //end of regular show
+            //!!!!!!!!!!!!!
             GL.glPopMatrix();
+            //!!!!!!!!!!!!!
+
+            //SHADING begin
+            //we'll define cubeXform matrix in MakeShadowMatrix Sub
+            // Disable lighting, we'll just draw the shadow
+            //else instead of shadow we'll see stange projection of the same objects
+            GL.glDisable(GL.GL_LIGHTING);
+
+            // wall shadow
+            //!!!!!!!!!!!!!
+            GL.glPushMatrix();
+            //!!!!!!!!!!!!       
+            MakeShadowMatrix(backMirrorSurface.getSurf());
+            GL.glMultMatrixf(cubeXform);
+
+            GL.glEnable(GL.GL_STENCIL_TEST);
+
+            DrawObjects(true, 1);
+            //!!!!!!!!!!!!!
+            GL.glPopMatrix();
+            //!!!!!!!!!!!!!
+            GL.glDisable(GL.GL_STENCIL_TEST);
         }
+
+        void DrawObjects(bool isForShades, int c)
+        {
+            
+            //if(!isForShades)
+            //    rubiksCube.Draw(false);
+            //else
+            //    rubiksCube.Draw(true);
+            
+
+            if (!isForShades)
+                GL.glColor3d(1, 0, 0);
+            else
+                if (c == 1)
+                GL.glColor3d(0.5, 0.5, 0.5);
+            else
+                GL.glColor3d(0.8, 0.8, 0.8);
+            GLUT.glutSolidCube(1);  
+            //GLUT.glutSolidTeapot(1);
+            
+            GL.glTranslated(1, 2, 0.3);
+            GL.glRotated(90, 1, 0, 0);
+
+        }
+
 
         public void Draw()
         {
+            //Shadows
+            pos[0] = ScrollValue[10];
+            pos[1] = ScrollValue[11];
+            pos[2] = ScrollValue[12];
+            pos[3] = 1.0f;
+            //Shadows
+
             if (m_uint_DC == 0 || m_uint_RC == 0)
                 return;
 
@@ -249,20 +404,18 @@ namespace OpenGL
             
            
             GL.glTranslated(0, 0, -6);
-            //GL.glRotated(30, 0, 1, 0);
-            GL.glRotated(20, 1, 0, 0);
+          //  GL.glRotated(30, 0, 1, 0);
+           GL.glRotated(20, 1, 0, 0);
 
+            //DrawAxes(Color.Red, Color.Green, Color.Blue);
+
+            DrawFigures();
+
+         //   DrawWalls();
          //   rubiksCube.Draw();
 
-            DrawAxes(Color.Red, Color.Green, Color.Blue);
+          //  DrawMirrors();
             
-            UpdateScrollInput();
-            //UpdateLightSettings();
-            DrawLights();
-
-            DrawMirrors();
-
-            rubiksCube.Draw();
 
             // draw simple cube instead
             //GL.glColor3d(0.8, 0.8, 0.8);
@@ -345,7 +498,8 @@ namespace OpenGL
 
             GL.glEnable(GL.GL_LIGHT0);
             GL.glEnable(GL.GL_COLOR_MATERIAL);
-            GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
+            GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE); // GL.GL_AMBIENT_AND_DIFFUSE / GL.GL_SHININESS
+
 
             GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
@@ -357,12 +511,42 @@ namespace OpenGL
             GLU.gluPerspective(45, ((double)Width) / Height, 1.0, 1000.0);
             GL.glMatrixMode(GL.GL_MODELVIEW);
             //save the current MODELVIEW Matrix (now it is Identity)
-            GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
+            //GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
 
-
-           
+            InitTexture("IMG\\1.bmp");
         }
-    
+
+        public uint[] texture;      // texture
+
+        void InitTexture(string imageBMPfile) // Update from P2
+        {
+            GL.glEnable(GL.GL_TEXTURE_2D);
+
+            texture = new uint[1];		// storage for texture
+
+            Bitmap image = new Bitmap(imageBMPfile);
+            image.RotateFlip(RotateFlipType.RotateNoneFlipY); //Y axis in Windows is directed downwards, while in OpenGL-upwards
+            System.Drawing.Imaging.BitmapData bitmapdata;
+            Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
+
+            bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+            GL.glGenTextures(1, texture);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[0]);
+            //  VN-in order to use System.Drawing.Imaging.BitmapData Scan0 I've added overloaded version to
+            //  OpenGL.cs
+            //  [DllImport(GL_DLL, EntryPoint = "glTexImage2D")]
+            //  public static extern void glTexImage2D(uint target, int level, int internalformat, int width, int height, int border, uint format, uint type, IntPtr pixels);
+            GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,
+                0, GL.GL_BGR_EXT, GL.GL_UNSIGNED_byte, bitmapdata.Scan0);
+
+            GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, (int)GL.GL_LINEAR);		// Linear Filtering
+            GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, (int)GL.GL_LINEAR);		// Linear Filtering
+
+            image.UnlockBits(bitmapdata);
+            image.Dispose();
+        }
     }
 
 }

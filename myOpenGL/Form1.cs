@@ -153,33 +153,30 @@ namespace myOpenGL
 
         private void button1_Click(object sender, EventArgs e) //open
         {
-            if (cGL.rightMirrorSurface.AngleY <= -80 )
+            if (cGL.rightMirrorSurface.AngleY < -75 )
             {
                 cGL.rightMirrorSurface.Rotate(0, 5, 0);
                 cGL.leftMirrorSurface.Rotate(0, -5, 0);
             }
-                
         }
 
         private void button2_Click(object sender, EventArgs e) //close
         {
-            if (cGL.rightMirrorSurface.AngleY >= -90)
+            if (cGL.rightMirrorSurface.AngleY > -90)
             {
                 cGL.rightMirrorSurface.Rotate(0, -5, 0);
                 cGL.leftMirrorSurface.Rotate(0, 5, 0);
-            }
-                
+            }     
         }
 
         private void hScrollBarScroll(object sender, ScrollEventArgs e)
         {
-            cGL.intOptionC = 0;
+            //cGL.intOptionC = 0;
             HScrollBar hb = (HScrollBar)sender;
             int n = int.Parse(hb.Name.Substring(10));
             cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
             if (e != null)
                 cGL.Draw();
         }
-   
     }
 }
