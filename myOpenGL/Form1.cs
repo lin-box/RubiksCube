@@ -183,7 +183,16 @@ namespace myOpenGL
 
         private void buttonMirror_Click(object sender, EventArgs e)
         {
-
+            if (buttonMirror.Text == "mirrors")
+            {
+                cGL.display_mirrors = true;
+                buttonMirror.Text = "walls";
+            }
+            else
+            {
+                cGL.display_mirrors = false;
+                buttonMirror.Text = "mirrors";
+            }
         }
     }
 }

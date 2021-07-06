@@ -242,7 +242,8 @@ namespace myOpenGL
             // 
             this.hScrollBar2.LargeChange = 2;
             this.hScrollBar2.Location = new System.Drawing.Point(569, 83);
-            this.hScrollBar2.Maximum = 200;
+            this.hScrollBar2.Maximum = 500;
+            this.hScrollBar2.Minimum = -500;
             this.hScrollBar2.Name = "hScrollBar2";
             this.hScrollBar2.Size = new System.Drawing.Size(143, 17);
             this.hScrollBar2.SmallChange = 2;
@@ -256,7 +257,7 @@ namespace myOpenGL
             this.buttonMirror.Name = "buttonMirror";
             this.buttonMirror.Size = new System.Drawing.Size(75, 23);
             this.buttonMirror.TabIndex = 35;
-            this.buttonMirror.Text = "mirror";
+            this.buttonMirror.Text = "mirrors";
             this.buttonMirror.UseVisualStyleBackColor = true;
             this.buttonMirror.Click += new System.EventHandler(this.buttonMirror_Click);
             // 

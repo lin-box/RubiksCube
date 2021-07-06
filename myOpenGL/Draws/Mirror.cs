@@ -44,11 +44,11 @@ namespace RubikCube.Draws
             surf[0, 2] = (float)0;
 
             surf[1, 0] = (float)0;
-            surf[1, 1] = (float)mirrorWidth / 2;
+            surf[1, 1] = (float)mirrorHeight / 2;
             surf[1, 2] = (float)0;
 
             surf[2, 0] = (float)0;
-            surf[2, 1] = (float)-mirrorWidth / 2;
+            surf[2, 1] = (float)-mirrorHeight / 2;
             surf[2, 2] = (float)0;
 
             return surf;
@@ -62,7 +62,7 @@ namespace RubikCube.Draws
             GL.glRotatef(AngleZ, 0, 0, 1);
         }
 
-        public void Draw(float[] colorArray)
+        public void Draw(float[] colorArray, float[] minumArray)
         {
             //   GL.glEnable(GL.GL_LIGHTING);
 
@@ -72,11 +72,14 @@ namespace RubikCube.Draws
 
             GL.glBegin(GL.GL_QUADS);
             //!!! for blended REFLECTION 
-            GL.glColor4d(0.9, 0.9, 0.9, 0.5);
-            GL.glVertex3d(mirrorWidth, mirrorHeight / 2, 0);
-            GL.glVertex3d(0, mirrorHeight / 2, 0);
-            GL.glVertex3d(0, -mirrorHeight / 2, 0);
-            GL.glVertex3d(mirrorWidth, -mirrorHeight / 2, 0);
+            if(minumArray[2]==0)
+                GL.glColor4d(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+            else
+                GL.glColor4d(1-colorArray[0], 1-colorArray[1], 1-colorArray[2], colorArray[3]);
+            GL.glVertex3d(mirrorWidth - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glVertex3d(0 - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glVertex3d(0 - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glVertex3d(mirrorWidth - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
             GL.glEnd();
 
             GL.glPopMatrix();

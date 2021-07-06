@@ -173,12 +173,14 @@ namespace RubikCube.Draws
 
         public void Draw(bool isShadow = false)
         {
+            GL.glEnable(GL.GL_DEPTH_TEST);
             DoAnimation();
             AdjustRotation();
             foreach (var item in composingCubes)
             {
                 item.Draw(isShadow);
             }
+            GL.glDisable(GL.GL_DEPTH_TEST);
         }
 
         private void DoAnimation()

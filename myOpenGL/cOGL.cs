@@ -27,7 +27,11 @@ namespace OpenGL
         float[] cubeXform = new float[16];
         public float[] pos = new float[4];
         float[] mirrorColorArray = new float[4] { 0.9f, 0.9f, 0.9f, 0.5f };
-        float[] wallColorArray = new float[4] { 0, 0, 1, 1 };
+        float[] wallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
+        float[] backMinusArray = new float[3] { 0, 0, 1f };
+        float[] leftMinusArray = new float[3] { 1f, 0, 0};
+        float[] rightMinusArray = new float[3] { 1f, 0, 0 };
+
 
         public bool display_mirrors;
 
@@ -74,9 +78,9 @@ namespace OpenGL
 
         void DrawWalls()
         {
-            backMirrorSurface.Draw(wallColorArray);
-            leftMirrorSurface.Draw(wallColorArray);
-            rightMirrorSurface.Draw(wallColorArray);
+            backMirrorSurface.Draw(wallColorArray, backMinusArray);
+            leftMirrorSurface.Draw(wallColorArray, leftMinusArray);
+            rightMirrorSurface.Draw(wallColorArray, rightMinusArray);
         }
 
         void DrawMirrors()
@@ -86,11 +90,11 @@ namespace OpenGL
             GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
             GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw wall always
             GL.glColorMask((byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE);
-            GL.glDisable(GL.GL_DEPTH_TEST);
+            //GL.glDisable(GL.GL_DEPTH_TEST);
             // add mirrors for STENCIL buffer
-            backMirrorSurface.Draw(mirrorColorArray);
-            rightMirrorSurface.Draw(mirrorColorArray);
-            leftMirrorSurface.Draw(mirrorColorArray);
+            backMirrorSurface.Draw(mirrorColorArray, backMinusArray);
+            rightMirrorSurface.Draw(mirrorColorArray, rightMinusArray);
+            leftMirrorSurface.Draw(mirrorColorArray, leftMinusArray);
 
             // restore regular settings
             GL.glColorMask((byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE);
@@ -120,7 +124,7 @@ namespace OpenGL
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(-mirrorWidth, 0, 0);
-            leftMirrorSurface.Draw(mirrorColorArray);
+            leftMirrorSurface.Draw(mirrorColorArray, leftMinusArray);
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -137,7 +141,7 @@ namespace OpenGL
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(mirrorWidth, 0, 0);
-            rightMirrorSurface.Draw(mirrorColorArray);
+            rightMirrorSurface.Draw(mirrorColorArray, rightMinusArray);
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -145,13 +149,13 @@ namespace OpenGL
             //( half-transparent ( see its color's alpha byte)))
             // in order to see reflected objects 
             GL.glDepthMask((byte)GL.GL_FALSE);
-            backMirrorSurface.Draw(mirrorColorArray);
-            rightMirrorSurface.Draw(mirrorColorArray);
-            leftMirrorSurface.Draw(mirrorColorArray);
+            backMirrorSurface.Draw(mirrorColorArray, backMinusArray);
+            rightMirrorSurface.Draw(mirrorColorArray, rightMinusArray);
+            leftMirrorSurface.Draw(mirrorColorArray, leftMinusArray);
             GL.glDepthMask((byte)GL.GL_TRUE);
             // Disable GL.GL_STENCIL_TEST to show All, else it will be cut on GL.GL_STENCIL
             GL.glDisable(GL.GL_STENCIL_TEST);
-
+            GL.glDisable(GL.GL_DEPTH_TEST);
         }
 
         void DrawAxes(Color xColor, Color yColor, Color zColor)
@@ -393,6 +397,7 @@ namespace OpenGL
             //else instead of shadow we'll see stange projection of the same objects
             GL.glDisable(GL.GL_LIGHTING);
             
+            /*
             // back shadow
             //!!!!!!!!!!!!!
             GL.glPushMatrix();
@@ -404,7 +409,7 @@ namespace OpenGL
             //!!!!!!!!!!!!!
             GL.glPopMatrix();
             //!!!!!!!!!!!!!
-            /*
+            */
             // left shadow
             //!!!!!!!!!!!!!
             GL.glPushMatrix();
@@ -427,7 +432,7 @@ namespace OpenGL
             DrawObjects(true);
             //!!!!!!!!!!!!!
             GL.glPopMatrix();
-            //!!!!!!!!!!!!!*/
+            //!!!!!!!!!!!!!
         }
 
         public void Draw()
@@ -530,7 +535,7 @@ namespace OpenGL
             GL.glEnable(GL.GL_COLOR_MATERIAL);
             GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
 
-            GL.glEnable(GL.GL_DEPTH_TEST);
+            //GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
 
             GL.glViewport(0, 0, this.Width, this.Height);
