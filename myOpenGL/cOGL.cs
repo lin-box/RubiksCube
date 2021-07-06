@@ -19,12 +19,10 @@ namespace OpenGL
         public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
-        public int intOptionC = 0;
-
         public float[] ScrollValue = new float[14] { 1, -10, 10, 0, 0, 0, 0, 1, 0, -0.6f, -3, -2, 3, 4.1f };
         public float[] lightPos = new float[4] { -0.1f, 4.3f, 2f, -1f };
         double[] AccumulatedRotationsTraslations = new double[16];
-        float[] cubeXform = new float[16];
+        float[] shadowCubeXform = new float[16];
         public float[] pos = new float[4];
         float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
@@ -34,8 +32,7 @@ namespace OpenGL
         float[] rightMinusArray = new float[3] { 1f, 0, 0 };
         public float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
         public int display_mod;
-        public uint[] Textures = new uint[6];
-
+        public uint[] cubeMapTextures = new uint[6];
         public int viewAngle = 70;
 
         public cOGL(Control pb)
@@ -81,7 +78,7 @@ namespace OpenGL
         void GenerateTextures()
         {
             GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-            GL.glGenTextures(6, Textures);
+            GL.glGenTextures(6, cubeMapTextures);
             string[] imagesName ={"IMG\\green.bmp","IMG\\blue.bmp",
                                     "IMG\\orange.bmp","IMG\\red.bmp","IMG\\white.bmp","IMG\\yellow.bmp"};
             for (int i = 0; i < 6; i++)
@@ -93,7 +90,7 @@ namespace OpenGL
 
                 bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
-                GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[i]);
+                GL.glBindTexture(GL.GL_TEXTURE_2D, cubeMapTextures[i]);
                 //2D for XYZ
                 GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,
                                                               0, GL.GL_BGR_EXT, GL.GL_UNSIGNED_byte, bitmapdata.Scan0);
@@ -111,7 +108,7 @@ namespace OpenGL
             float small = big;
 
             // front
-            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[0]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, cubeMapTextures[0]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, -big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, -big, big);
@@ -119,7 +116,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-big, big, big);
             GL.glEnd();
             // back
-            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[1]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, cubeMapTextures[1]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
@@ -127,7 +124,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(small, small, -small);
             GL.glEnd();
             // left
-            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[2]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, cubeMapTextures[2]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-big, -big, big);
@@ -135,7 +132,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
             GL.glEnd();
             // right
-            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[3]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, cubeMapTextures[3]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(big, -big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
@@ -143,7 +140,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(big, big, big);
             GL.glEnd();
             // top
-            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[4]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, cubeMapTextures[4]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, big, big);
@@ -151,7 +148,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
             GL.glEnd();
             // bottom
-            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[5]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, cubeMapTextures[5]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
@@ -511,28 +508,28 @@ namespace OpenGL
 
             // Now do the projection
             // First column
-            cubeXform[0] = dot - pos[0] * planeCoeff[0];
-            cubeXform[4] = 0.0f - pos[0] * planeCoeff[1];
-            cubeXform[8] = 0.0f - pos[0] * planeCoeff[2];
-            cubeXform[12] = 0.0f - pos[0] * planeCoeff[3];
+            shadowCubeXform[0] = dot - pos[0] * planeCoeff[0];
+            shadowCubeXform[4] = 0.0f - pos[0] * planeCoeff[1];
+            shadowCubeXform[8] = 0.0f - pos[0] * planeCoeff[2];
+            shadowCubeXform[12] = 0.0f - pos[0] * planeCoeff[3];
 
             // Second column
-            cubeXform[1] = 0.0f - pos[1] * planeCoeff[0];
-            cubeXform[5] = dot - pos[1] * planeCoeff[1];
-            cubeXform[9] = 0.0f - pos[1] * planeCoeff[2];
-            cubeXform[13] = 0.0f - pos[1] * planeCoeff[3];
+            shadowCubeXform[1] = 0.0f - pos[1] * planeCoeff[0];
+            shadowCubeXform[5] = dot - pos[1] * planeCoeff[1];
+            shadowCubeXform[9] = 0.0f - pos[1] * planeCoeff[2];
+            shadowCubeXform[13] = 0.0f - pos[1] * planeCoeff[3];
 
             // Third Column
-            cubeXform[2] = 0.0f - pos[2] * planeCoeff[0];
-            cubeXform[6] = 0.0f - pos[2] * planeCoeff[1];
-            cubeXform[10] = dot - pos[2] * planeCoeff[2];
-            cubeXform[14] = 0.0f - pos[2] * planeCoeff[3];
+            shadowCubeXform[2] = 0.0f - pos[2] * planeCoeff[0];
+            shadowCubeXform[6] = 0.0f - pos[2] * planeCoeff[1];
+            shadowCubeXform[10] = dot - pos[2] * planeCoeff[2];
+            shadowCubeXform[14] = 0.0f - pos[2] * planeCoeff[3];
 
             // Fourth Column
-            cubeXform[3] = 0.0f - pos[3] * planeCoeff[0];
-            cubeXform[7] = 0.0f - pos[3] * planeCoeff[1];
-            cubeXform[11] = 0.0f - pos[3] * planeCoeff[2];
-            cubeXform[15] = dot - pos[3] * planeCoeff[3];
+            shadowCubeXform[3] = 0.0f - pos[3] * planeCoeff[0];
+            shadowCubeXform[7] = 0.0f - pos[3] * planeCoeff[1];
+            shadowCubeXform[11] = 0.0f - pos[3] * planeCoeff[2];
+            shadowCubeXform[15] = dot - pos[3] * planeCoeff[3];
         }
 
         void DrawRoom()
@@ -591,7 +588,7 @@ namespace OpenGL
                     leftMirrorSurface.doRotations();
                     //!!!!!!!!!!!!    		
                     MakeShadowMatrix(leftMirrorSurface.getSurf());
-                    GL.glMultMatrixf(cubeXform);
+                    GL.glMultMatrixf(shadowCubeXform);
                     DrawObjects(true);
                     //!!!!!!!!!!!!!
                     GL.glPopMatrix();
@@ -603,7 +600,7 @@ namespace OpenGL
                     //!!!!!!!!!!!!    
                     rightMirrorSurface.doRotations();
                     MakeShadowMatrix(rightMirrorSurface.getSurf());
-                    GL.glMultMatrixf(cubeXform);
+                    GL.glMultMatrixf(shadowCubeXform);
                     DrawObjects(true);
                     //!!!!!!!!!!!!!
                     GL.glPopMatrix();
@@ -740,4 +737,3 @@ namespace OpenGL
     }
 
 }
-

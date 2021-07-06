@@ -28,7 +28,6 @@ namespace myOpenGL
 
             hScrollBarScroll(hScrollBar2, null);
 
-
             // initialize ScrollValue array
 
             cGL.ScrollValue[10] = (hScrollBar11.Value - 100) / 10.0f;
@@ -173,7 +172,6 @@ namespace myOpenGL
 
         private void hScrollBarScroll(object sender, ScrollEventArgs e)
         {
-            cGL.intOptionC = 0;
             HScrollBar hb = (HScrollBar)sender;
             int n = int.Parse(hb.Name.Substring(10));
             cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
