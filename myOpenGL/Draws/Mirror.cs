@@ -72,7 +72,7 @@ namespace RubikCube.Draws
 
             GL.glBegin(GL.GL_QUADS);
             //!!! for blended REFLECTION 
-            if(minumArray[2]==0)
+            if(minumArray[2]==0 || colorArray[3] < 1) // if its not the back wall or if its mirror
                 GL.glColor4d(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
             else
                 GL.glColor4d(1-colorArray[0], 1-colorArray[1], 1-colorArray[2], colorArray[3]);

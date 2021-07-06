@@ -185,12 +185,17 @@ namespace myOpenGL
         {
             if (buttonMirror.Text == "mirrors")
             {
-                cGL.display_mirrors = true;
+                cGL.display_mod = 1;
                 buttonMirror.Text = "walls";
+            }
+            else if (buttonMirror.Text == "walls")
+            {
+                cGL.display_mod = 2;
+                buttonMirror.Text = "room";
             }
             else
             {
-                cGL.display_mirrors = false;
+                cGL.display_mod = 3;
                 buttonMirror.Text = "mirrors";
             }
         }

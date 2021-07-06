@@ -31,10 +31,9 @@ namespace OpenGL
         float[] backMinusArray = new float[3] { 0, 0, 1f };
         float[] leftMinusArray = new float[3] { 1f, 0, 0};
         float[] rightMinusArray = new float[3] { 1f, 0, 0 };
+        float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
 
-
-        public bool display_mirrors;
-
+        public int display_mod;
 
         public cOGL(Control pb)
         {
@@ -43,7 +42,7 @@ namespace OpenGL
             Height = p.Height; 
             InitializeGL();
 
-            display_mirrors = false;
+            display_mod = 1;
 
             rubiksCube = new RubiksCube();
             backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorHeight / 2, 0, 0, 0);
@@ -374,17 +373,26 @@ namespace OpenGL
             cubeXform[15] = dot - pos[3] * planeCoeff[3];
         }
 
+        void DrawRoom()
+        {
+
+        }
+
         void DrawFigures()
         {
             GL.glPushMatrix();
 
-            if (display_mirrors)
+            switch (display_mod)
             {
-                DrawMirrors();
-            }
-            else
-            {
-                DrawWalls();
+                case 1:
+                    DrawMirrors();
+                    break;
+                case 2:
+                    DrawWalls();
+                    break;
+                case 3:
+                    DrawRoom();
+                    break;
             }
 
             DrawLights();

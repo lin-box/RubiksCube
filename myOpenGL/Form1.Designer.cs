@@ -257,7 +257,7 @@ namespace myOpenGL
             this.buttonMirror.Name = "buttonMirror";
             this.buttonMirror.Size = new System.Drawing.Size(75, 23);
             this.buttonMirror.TabIndex = 35;
-            this.buttonMirror.Text = "mirrors";
+            this.buttonMirror.Text = "rooms";
             this.buttonMirror.UseVisualStyleBackColor = true;
             this.buttonMirror.Click += new System.EventHandler(this.buttonMirror_Click);
             // 
