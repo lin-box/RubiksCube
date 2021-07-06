@@ -38,6 +38,9 @@ namespace RubikCube.Draws
             
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture);
+
+            //make the surface transparent  
+            GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         }
 
         public float[,] getSurf()
@@ -68,8 +71,9 @@ namespace RubikCube.Draws
 
         public void DrawAsWall(float[] colorArray, float[] minusArray)
         {
+            
             GL.glPushMatrix();
-
+        
             doRotations();
             GL.glBegin(GL.GL_QUADS);
             //!!! for blended REFLECTION
@@ -81,47 +85,16 @@ namespace RubikCube.Draws
            
             GL.glEnd();
             //GL.glEnable(GL.GL_LIGHTING);
-
+            
             GL.glPopMatrix();
+
         }
 
         public void Draw(float[] minumArray)
         {
- //           GL.glPushMatrix();
- //
- //           GL.glDisable(GL.GL_LIGHTING);
- //
- //           GL.glTranslated(x, y, z);
- //           GL.glRotatef(AngleX, 1, 0, 0);
- //           GL.glRotatef(AngleY, 0, 1, 0);
- //           GL.glRotatef(AngleZ, 0, 0, 1);
- //
- //           GL.glBegin(GL.GL_QUADS);
- //           //!!! for blended REFLECTION 
- //           GL.glColor4d(1, 1, 1, 0.3);
- //           GL.glTexCoord2d(0, 0);
- //           GL.glVertex3d(mirrorWidth, mirrorHeight / 2, 0);
- //           GL.glTexCoord2d(1, 0);
- //           GL.glVertex3d(0, mirrorHeight / 2, 0);
- //           GL.glTexCoord2d(1, 1);
- //           GL.glVertex3d(0, -mirrorHeight / 2, 0);
- //           GL.glTexCoord2d(0, 1);
- //           GL.glVertex3d(mirrorWidth, -mirrorHeight / 2, 0);
- //
- //           GL.glDisable(GL.GL_TEXTURE_2D);
- //           GL.glEnd();
- //
- //           GL.glEnable(GL.GL_LIGHTING);
- //
- //           GL.glPopMatrix();
-
-
-
-
             GL.glDisable(GL.GL_LIGHTING);
 
             //make the surface transparent  
-            GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
             GL.glEnable(GL.GL_BLEND);
 
             GL.glPushMatrix();

@@ -239,7 +239,7 @@ namespace OpenGL
             leftMirrorSurface.DrawAsWall(leftWallColorArray, leftMinusArray);
             rightMirrorSurface.DrawAsWall(rightWallColorArray, rightMinusArray);
         }
-
+  
         void DrawMirrors()
         {
             //only wall, draw only to STENCIL buffer
@@ -257,6 +257,7 @@ namespace OpenGL
             // restore regular settings
             GL.glColorMask((byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE);
             GL.glEnable(GL.GL_DEPTH_TEST);
+            
 
             // reflection is drawn only where STENCIL buffer value equal to 1
             GL.glStencilFunc(GL.GL_EQUAL, 1, 0xFFFFFFFF);
@@ -305,15 +306,18 @@ namespace OpenGL
             //( half-transparent ( see its color's alpha byte)))
             // in order to see reflected objects 
             GL.glDepthMask((byte)GL.GL_FALSE);
-
+            
             backMirrorSurface.Draw(backMinusArray);
 
-            if (ScrollValue[1] < 2 && ScrollValue[1] > -2)
+            Console.WriteLine(( ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))));
+            Console.WriteLine(rightMirrorSurface.AngleY);
+
+            if (ScrollValue[1] < (3 + 5 * ((-1.0/15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[1] > -(3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))  // TODO: need to consider with --> cGL.rightMirrorSurface.AngleY >= -90
             {
                 rightMirrorSurface.Draw(rightMinusArray);
                 leftMirrorSurface.Draw(leftMinusArray);
             }
-            else if (ScrollValue[1] < 2 )
+            else if (ScrollValue[1] < (3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
             {
                 leftMirrorSurface.DrawAsWall(leftWallColorArray, leftMinusArray);
                 rightMirrorSurface.Draw(rightMinusArray);
@@ -323,12 +327,18 @@ namespace OpenGL
                 rightMirrorSurface.DrawAsWall(rightWallColorArray, rightMinusArray);
                 leftMirrorSurface.Draw(leftMinusArray);
             }
-            
+
             GL.glDepthMask((byte)GL.GL_TRUE);
             // Disable GL.GL_STENCIL_TEST to show All, else it will be cut on GL.GL_STENCIL
             GL.glDisable(GL.GL_STENCIL_TEST);
-         //   GL.glDisable(GL.GL_DEPTH_TEST);
-         //   GL.glDisable(GL.GL_BLEND);
+
+          // GL.glEnable(GL.GL_DEPTH_TEST);
+          //GL.glDisable(GL.GL_DEPTH_TEST);
+          //GL.glClear(GL.GL_DEPTH_BUFFER_BIT);
+          //GL.glDepthFunc(GL.GL_LESS);
+          //GL.glDepthFunc(GL.GL_GREATER);
+
+            //   GL.glDisable(GL.GL_BLEND);
         }
 
         void DrawAxes(Color xColor, Color yColor, Color zColor)

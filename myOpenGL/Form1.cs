@@ -23,6 +23,8 @@ namespace myOpenGL
             InitializeComponent();
             cGL = new cOGL(panel1);
 
+            
+
             //apply the bars values as cGL.ScrollValue[..] properties 
             //!!!
 
@@ -152,7 +154,7 @@ namespace myOpenGL
 
         private void button1_Click(object sender, EventArgs e) //open
         {
-            if (cGL.rightMirrorSurface.AngleY <= -80 )
+            if (cGL.rightMirrorSurface.AngleY < -75 )
             {
                 cGL.rightMirrorSurface.Rotate(0, 5, 0);
                 cGL.leftMirrorSurface.Rotate(0, -5, 0);
@@ -162,7 +164,7 @@ namespace myOpenGL
 
         private void button2_Click(object sender, EventArgs e) //close
         {
-            if (cGL.rightMirrorSurface.AngleY >= -90)
+            if (cGL.rightMirrorSurface.AngleY > -90)
             {
                 cGL.rightMirrorSurface.Rotate(0, -5, 0);
                 cGL.leftMirrorSurface.Rotate(0, 5, 0);
