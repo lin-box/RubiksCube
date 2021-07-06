@@ -63,20 +63,18 @@ namespace RubikCube.Draws
             GL.glRotatef(AngleZ, 0, 0, 1);
         }
 
-        public void DrawAsWall(float[] colorArray, float[] minumArray)
+        public void DrawAsWall(float[] colorArray, float[] minusArray)
         {
-            GL.glDisable(GL.GL_BLEND);
-
             GL.glPushMatrix();
 
             doRotations();
             GL.glBegin(GL.GL_QUADS);
             //!!! for blended REFLECTION
             GL.glColor4d(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-            GL.glVertex3d(mirrorWidth - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
-            GL.glVertex3d(0 - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
-            GL.glVertex3d(0 - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
-            GL.glVertex3d(mirrorWidth - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glVertex3d(mirrorWidth - minusArray[0], mirrorHeight / 2 - minusArray[1], 0 - minusArray[2]);
+            GL.glVertex3d(0 - minusArray[0], mirrorHeight / 2 - minusArray[1], 0 - minusArray[2]);
+            GL.glVertex3d(0 - minusArray[0], -mirrorHeight / 2 - minusArray[1], 0 - minusArray[2]);
+            GL.glVertex3d(mirrorWidth - minusArray[0], -mirrorHeight / 2 - minusArray[1], 0 - minusArray[2]);
             GL.glEnd();
 
             GL.glPopMatrix();
