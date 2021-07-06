@@ -26,20 +26,23 @@ namespace OpenGL
         double[] AccumulatedRotationsTraslations = new double[16];
         float[] cubeXform = new float[16];
         public float[] pos = new float[4];
-        float[] mirrorColorArray = new float[4] { 0.9f, 0.9f, 0.9f, 0.5f };
-        float[] wallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
+        float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
+        float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
+        float[] rightWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
         float[] backMinusArray = new float[3] { 0, 0, 1f };
         float[] leftMinusArray = new float[3] { 1f, 0, 0};
         float[] rightMinusArray = new float[3] { 1f, 0, 0 };
-        float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
-
+        public float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
         public int display_mod;
+        public uint[] Textures = new uint[6];
+
+        public int viewAngle = 70;
 
         public cOGL(Control pb)
         {
             p=pb;
             Width = p.Width;
-            Height = p.Height; 
+            Height = p.Height;
             InitializeGL();
 
             display_mod = 1;
@@ -75,25 +78,183 @@ namespace OpenGL
 			get{ return m_uint_RC; }
 		}
 
+        void GenerateTextures()
+        {
+            GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+            GL.glGenTextures(6, Textures);
+            string[] imagesName ={"IMG\\green.bmp","IMG\\blue.bmp",
+                                    "IMG\\orange.bmp","IMG\\red.bmp","IMG\\white.bmp","IMG\\yellow.bmp"};
+            for (int i = 0; i < 6; i++)
+            {
+                Bitmap image = new Bitmap(imagesName[i]);
+                image.RotateFlip(RotateFlipType.RotateNoneFlipY); //Y axis in Windows is directed downwards, while in OpenGL-upwards
+                System.Drawing.Imaging.BitmapData bitmapdata;
+                Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
+
+                bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+                GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[i]);
+                //2D for XYZ
+                GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,
+                                                              0, GL.GL_BGR_EXT, GL.GL_UNSIGNED_byte, bitmapdata.Scan0);
+                GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, (int)GL.GL_LINEAR);
+                GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, (int)GL.GL_LINEAR);
+
+                image.UnlockBits(bitmapdata);
+                image.Dispose();
+            }
+        }
+
+        void DrawTexturedCube()
+        {
+            float big = 1.0f;
+            float small = big;
+
+            // front
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[0]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, -big, big);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, -big, big);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(big, big, big);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-big, big, big);
+            GL.glEnd();
+            // back
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[1]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(small, -small, -small);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(-small, small, -small);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(small, small, -small);
+            GL.glEnd();
+            // left
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[2]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-big, -big, big);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(-big, big, big);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
+            GL.glEnd();
+            // right
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[3]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(big, -big, big);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(small, small, -small);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(big, big, big);
+            GL.glEnd();
+            // top
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[4]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, big, big);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, big, big);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(small, small, -small);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
+            GL.glEnd();
+            // bottom
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures[5]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(big, -big, big);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-big, -big, big);
+            GL.glEnd();
+        }
+
+        void DrawBounds()
+        {
+            GL.glScalef(0.99f, 0.99f, 0.99f);
+            GL.glLineWidth(2);
+            GL.glColor3f(0.0f, 0.0f, 0.0f);
+            //GL.glDisable(GL.GL_LIGHTING);
+            GL.glBegin(GL.GL_LINE_LOOP);
+            GL.glVertex3f(-1, -1, -1);
+            GL.glVertex3f(1, -1, -1);
+            GL.glVertex3f(1, -1, 1);
+            GL.glVertex3f(-1, -1, 1);
+            GL.glEnd();
+            GL.glBegin(GL.GL_LINE_LOOP);
+            GL.glVertex3f(-1, 1, -1);
+            GL.glVertex3f(1, 1, -1);
+            GL.glVertex3f(1, 1, 1);
+            GL.glVertex3f(-1, 1, 1);
+            GL.glEnd();
+            GL.glBegin(GL.GL_LINES);
+            GL.glVertex3f(-1, -1, -1);
+            GL.glVertex3f(-1, 1, -1);
+
+            GL.glVertex3f(1, -1, -1);
+            GL.glVertex3f(1, 1, -1);
+
+            GL.glVertex3f(1, -1, 1);
+            GL.glVertex3f(1, 1, 1);
+
+            GL.glVertex3f(-1, -1, 1);
+            GL.glVertex3f(-1, 1, 1);
+            GL.glEnd();
+            GL.glScalef(1.0f / 0.99f, 1.0f / 0.99f, 1.0f / 0.99f);
+
+            //GL.glEnable(GL.GL_COLOR_MATERIAL);
+            //GL.glEnable(GL.GL_LIGHT0);
+            //GL.glEnable(GL.GL_LIGHTING);
+            GL.glTranslatef(0.1f, 0.2f, -0.7f);
+            GL.glColor3f(0, 1, 0);
+            //GLU.gluSphere(obj, 0.05, 16, 16);
+            //rubiksCube.Draw();
+            GL.glTranslatef(-0.1f, -0.2f, 0.7f);
+            //GL.glDisable(GL.GL_LIGHTING);
+        }
+
+        public void update_cube_map_prespective()
+        {
+            GL.glMatrixMode(GL.GL_PROJECTION);
+            GL.glLoadIdentity();
+
+            GLU.gluPerspective(viewAngle, (float)Width / (float)Height, 0.45f, 30.0f);
+
+            GL.glMatrixMode(GL.GL_MODELVIEW);
+            GL.glLoadIdentity();
+        }
+
+        public void update_cube_map_rotations()
+        {
+            GL.glTranslatef(0.0f, 0.0f, -1.4f);
+
+            GL.glRotatef(cubemapXYZAngles[0], 1.0f, 0.0f, 0.0f);
+            GL.glRotatef(cubemapXYZAngles[1], 0.0f, 1.0f, 0.0f);
+            GL.glRotatef(cubemapXYZAngles[2], 0.0f, 0.0f, 1.0f);
+
+            GL.glDisable(GL.GL_LIGHTING);
+            GL.glDisable(GL.GL_TEXTURE_2D);
+
+            DrawBounds();
+
+            GL.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+            GL.glEnable(GL.GL_TEXTURE_2D);
+            DrawTexturedCube();
+            GL.glColor4f(1.0f, 1.0f, 1.0f, 1);
+            GL.glDisable(GL.GL_TEXTURE_2D);
+        }
+
         void DrawWalls()
         {
-            backMirrorSurface.Draw(wallColorArray, backMinusArray);
-            leftMirrorSurface.Draw(wallColorArray, leftMinusArray);
-            rightMirrorSurface.Draw(wallColorArray, rightMinusArray);
+            backMirrorSurface.DrawAsWall(backWallColorArray, backMinusArray);
+            leftMirrorSurface.DrawAsWall(leftWallColorArray, leftMinusArray);
+            rightMirrorSurface.DrawAsWall(rightWallColorArray, rightMinusArray);
         }
 
         void DrawMirrors()
         {
             //only wall, draw only to STENCIL buffer
+            GL.glEnable(GL.GL_BLEND);
             GL.glEnable(GL.GL_STENCIL_TEST);
             GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
             GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw wall always
             GL.glColorMask((byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE, (byte)GL.GL_FALSE);
             //GL.glDisable(GL.GL_DEPTH_TEST);
             // add mirrors for STENCIL buffer
-            backMirrorSurface.Draw(mirrorColorArray, backMinusArray);
-            rightMirrorSurface.Draw(mirrorColorArray, rightMinusArray);
-            leftMirrorSurface.Draw(mirrorColorArray, leftMinusArray);
+            backMirrorSurface.Draw(backMinusArray);
+            rightMirrorSurface.Draw(rightMinusArray);
+            leftMirrorSurface.Draw(leftMinusArray);
 
             // restore regular settings
             GL.glColorMask((byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE, (byte)GL.GL_TRUE);
@@ -123,7 +284,7 @@ namespace OpenGL
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(-mirrorWidth, 0, 0);
-            leftMirrorSurface.Draw(mirrorColorArray, leftMinusArray);
+            leftMirrorSurface.Draw(leftMinusArray);
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -140,7 +301,7 @@ namespace OpenGL
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(mirrorWidth, 0, 0);
-            rightMirrorSurface.Draw(mirrorColorArray, rightMinusArray);
+            rightMirrorSurface.Draw(rightMinusArray);
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -148,13 +309,14 @@ namespace OpenGL
             //( half-transparent ( see its color's alpha byte)))
             // in order to see reflected objects 
             GL.glDepthMask((byte)GL.GL_FALSE);
-            backMirrorSurface.Draw(mirrorColorArray, backMinusArray);
-            rightMirrorSurface.Draw(mirrorColorArray, rightMinusArray);
-            leftMirrorSurface.Draw(mirrorColorArray, leftMinusArray);
+            backMirrorSurface.Draw(backMinusArray);
+            rightMirrorSurface.Draw(rightMinusArray);
+            leftMirrorSurface.Draw(leftMinusArray);
             GL.glDepthMask((byte)GL.GL_TRUE);
             // Disable GL.GL_STENCIL_TEST to show All, else it will be cut on GL.GL_STENCIL
             GL.glDisable(GL.GL_STENCIL_TEST);
             GL.glDisable(GL.GL_DEPTH_TEST);
+            GL.glDisable(GL.GL_BLEND);
         }
 
         void DrawAxes(Color xColor, Color yColor, Color zColor)
@@ -375,72 +537,89 @@ namespace OpenGL
 
         void DrawRoom()
         {
+            GL.glPushMatrix();
+            update_cube_map_prespective();
 
+            GL.glLoadIdentity();
+
+            update_cube_map_rotations();
+            GL.glPopMatrix();
+            GL.glLoadIdentity();
         }
 
         void DrawFigures()
         {
             GL.glPushMatrix();
 
+            DrawLights();
+
             switch (display_mod)
             {
                 case 1:
                     DrawMirrors();
+                    DrawObjects(false);
+                    GL.glPopMatrix();
                     break;
                 case 2:
                     DrawWalls();
+
+                    DrawObjects(false);
+                    GL.glPopMatrix();
+
+                    //SHADING begin
+                    //we'll define cubeXform matrix in MakeShadowMatrix Sub
+                    // Disable lighting, we'll just draw the shadow
+                    //else instead of shadow we'll see stange projection of the same objects
+                    GL.glDisable(GL.GL_LIGHTING);
+
+                    /*
+                    // back shadow
+                    //!!!!!!!!!!!!!
+                    GL.glPushMatrix();
+                    backMirrorSurface.doRotations();
+                    //!!!!!!!!!!!!    		
+                    MakeShadowMatrix(backMirrorSurface.getSurf());
+                    GL.glMultMatrixf(cubeXform);
+                    DrawObjects(true);
+                    //!!!!!!!!!!!!!
+                    GL.glPopMatrix();
+                    //!!!!!!!!!!!!!
+                    */
+                    // left shadow
+                    //!!!!!!!!!!!!!
+                    GL.glPushMatrix();
+                    leftMirrorSurface.doRotations();
+                    //!!!!!!!!!!!!    		
+                    MakeShadowMatrix(leftMirrorSurface.getSurf());
+                    GL.glMultMatrixf(cubeXform);
+                    DrawObjects(true);
+                    //!!!!!!!!!!!!!
+                    GL.glPopMatrix();
+                    //!!!!!!!!!!!!!
+
+                    // right shadow
+                    //!!!!!!!!!!!!!
+                    GL.glPushMatrix();
+                    //!!!!!!!!!!!!    
+                    rightMirrorSurface.doRotations();
+                    MakeShadowMatrix(rightMirrorSurface.getSurf());
+                    GL.glMultMatrixf(cubeXform);
+                    DrawObjects(true);
+                    //!!!!!!!!!!!!!
+                    GL.glPopMatrix();
+                    //!!!!!!!!!!!!!
                     break;
                 case 3:
                     DrawRoom();
+                    GL.glEnable(GL.GL_LIGHTING);
+                    GL.glTranslatef(0.0f, 0.0f, -7.4f);
+                    DrawObjects(false);
+                    GL.glTranslatef(0.0f, 0.0f, +7.4f);
+                    GL.glPopMatrix();
+                    GL.glDisable(GL.GL_LIGHTING);
                     break;
             }
 
-            DrawLights();
-            DrawObjects(false);
-            GL.glPopMatrix();
-
-            //SHADING begin
-            //we'll define cubeXform matrix in MakeShadowMatrix Sub
-            // Disable lighting, we'll just draw the shadow
-            //else instead of shadow we'll see stange projection of the same objects
-            GL.glDisable(GL.GL_LIGHTING);
-            
-            /*
-            // back shadow
-            //!!!!!!!!!!!!!
-            GL.glPushMatrix();
-            backMirrorSurface.doRotations();
-            //!!!!!!!!!!!!    		
-            MakeShadowMatrix(backMirrorSurface.getSurf());
-            GL.glMultMatrixf(cubeXform);
-            DrawObjects(true);
-            //!!!!!!!!!!!!!
-            GL.glPopMatrix();
-            //!!!!!!!!!!!!!
-            */
-            // left shadow
-            //!!!!!!!!!!!!!
-            GL.glPushMatrix();
-            leftMirrorSurface.doRotations();
-            //!!!!!!!!!!!!    		
-            MakeShadowMatrix(leftMirrorSurface.getSurf());
-            GL.glMultMatrixf(cubeXform);
-            DrawObjects(true);
-            //!!!!!!!!!!!!!
-            GL.glPopMatrix();
-            //!!!!!!!!!!!!!
-
-            // right shadow
-            //!!!!!!!!!!!!!
-            GL.glPushMatrix();
-            //!!!!!!!!!!!!    
-            rightMirrorSurface.doRotations();
-            MakeShadowMatrix(rightMirrorSurface.getSurf());
-            GL.glMultMatrixf(cubeXform);
-            DrawObjects(true);
-            //!!!!!!!!!!!!!
-            GL.glPopMatrix();
-            //!!!!!!!!!!!!!
         }
 
         public void Draw()
@@ -555,8 +734,7 @@ namespace OpenGL
             //save the current MODELVIEW Matrix (now it is Identity)
             GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
 
-
-           
+            GenerateTextures();
         }
     
     }

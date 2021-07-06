@@ -19,6 +19,8 @@ namespace RubikCube.Draws
         public int AngleX = 0;
         public int AngleY = 0;
         public int AngleZ = 0;
+        float[] mirrorColorArray = new float[4] { 0.9f, 0.9f, 0.9f, 0.5f };
+
 
         public Mirror(double mirrorHeight, double mirrorWidth, double x, double y, double z, int AngleX, int AngleY, int AngleZ)   
         {
@@ -32,7 +34,6 @@ namespace RubikCube.Draws
             this.AngleZ = AngleZ;
            
             //make the surface transparent  
-            GL.glEnable(GL.GL_BLEND); 
             GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         }
 
@@ -62,20 +63,16 @@ namespace RubikCube.Draws
             GL.glRotatef(AngleZ, 0, 0, 1);
         }
 
-        public void Draw(float[] colorArray, float[] minumArray)
+        public void DrawAsWall(float[] colorArray, float[] minumArray)
         {
-            //   GL.glEnable(GL.GL_LIGHTING);
+            GL.glDisable(GL.GL_BLEND);
 
             GL.glPushMatrix();
 
             doRotations();
-
             GL.glBegin(GL.GL_QUADS);
-            //!!! for blended REFLECTION 
-            if(minumArray[2]==0 || colorArray[3] < 1) // if its not the back wall or if its mirror
-                GL.glColor4d(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-            else
-                GL.glColor4d(1-colorArray[0], 1-colorArray[1], 1-colorArray[2], colorArray[3]);
+            //!!! for blended REFLECTION
+            GL.glColor4d(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
             GL.glVertex3d(mirrorWidth - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
             GL.glVertex3d(0 - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
             GL.glVertex3d(0 - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
@@ -83,6 +80,28 @@ namespace RubikCube.Draws
             GL.glEnd();
 
             GL.glPopMatrix();
+        }
+
+        public void Draw(float[] minumArray)
+        {
+            // GL.glEnable(GL.GL_LIGHTING);
+            
+            //make the surface transparent
+            GL.glEnable(GL.GL_BLEND);
+            GL.glPushMatrix();
+            
+            doRotations();
+            GL.glBegin(GL.GL_QUADS);
+            //!!! for blended REFLECTION
+            GL.glColor4d(mirrorColorArray[0], mirrorColorArray[1], mirrorColorArray[2], mirrorColorArray[3]);
+            GL.glVertex3d(mirrorWidth - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glVertex3d(0 - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glVertex3d(0 - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glVertex3d(mirrorWidth - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glEnd();
+
+            GL.glPopMatrix();
+            GL.glDisable(GL.GL_BLEND);
         }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
