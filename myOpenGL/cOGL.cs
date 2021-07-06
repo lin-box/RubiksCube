@@ -27,9 +27,9 @@ namespace OpenGL
         float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
         float[] rightWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
-        float[] backMinusArray = new float[3] { 0, 0, 1f };
-        float[] leftMinusArray = new float[3] { 1f, 0, 0};
-        float[] rightMinusArray = new float[3] { 1f, 0, 0 };
+        float[] backMinusArray = new float[3] { 0, 0, 0f };
+        float[] leftMinusArray = new float[3] { 0f, 0, 0};
+        float[] rightMinusArray = new float[3] { 0f, 0, 0 };
         public float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
         public int display_mod;
         public uint[] cubeMapTextures = new uint[6];
@@ -286,14 +286,12 @@ namespace OpenGL
             rubiksCube.Draw();
             GL.glPopMatrix();
 
-
             // draw reflected right mirror scene for left mirror scene
             GL.glPushMatrix();
             //GL.glScalef(-1, 1, 1); //swap on Z axis
             GL.glTranslated(-mirrorWidth * 2, 0, 0);
             rubiksCube.Draw();
             GL.glPopMatrix();
-
 
             // draw reflected scene for left mirror
             GL.glPushMatrix();
@@ -348,58 +346,6 @@ namespace OpenGL
             pos[3] = 1.0f;
         }
 
- //       void UpdateLightSettings()
- //       {
- //           GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
- //
- //           GL.glLoadIdentity();
- //
- //           // not trivial
- //           double[] ModelVievMatrixBeforeSpecificTransforms = new double[16];
- //           double[] CurrentRotationTraslation = new double[16];
- //
- //           GLU.gluLookAt(ScrollValue[0], ScrollValue[1], ScrollValue[2],
- //                      ScrollValue[3], ScrollValue[4], ScrollValue[5],
- //                      ScrollValue[6], ScrollValue[7], ScrollValue[8]);
- //           GL.glTranslatef(0.0f, 0.0f, -1.0f);
- //
- //           //save current ModelView Matrix values
- //           //in ModelVievMatrixBeforeSpecificTransforms array
- //           //ModelView Matrix ========>>>>>> ModelVievMatrixBeforeSpecificTransforms
- //           GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, ModelVievMatrixBeforeSpecificTransforms);
- //           //ModelView Matrix was saved, so
- //           GL.glLoadIdentity(); // make it identity matrix
- //
- //           //as result - the ModelView Matrix now is pure representation
- //           //of KeyCode transform and only it !!!
- //
- //           //save current ModelView Matrix values
- //           //in CurrentRotationTraslation array
- //           //ModelView Matrix =======>>>>>>> CurrentRotationTraslation
- //           GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, CurrentRotationTraslation);
- //
- //           //The GL.glLoadMatrix function replaces the current matrix with
- //           //the one specified in its argument.
- //           //The current matrix is the
- //           //projection matrix, modelview matrix, or texture matrix,
- //           //determined by the current matrix mode (now is ModelView mode)
- //           GL.glLoadMatrixd(AccumulatedRotationsTraslations); //Global Matrix
- //
- //           //The GL.glMultMatrix function multiplies the current matrix by
- //           //the one specified in its argument.
- //           //That is, if M is the current matrix and T is the matrix passed to
- //           //GL.glMultMatrix, then M is replaced with M � T
- //           GL.glMultMatrixd(CurrentRotationTraslation);
- //
- //           //save the matrix product in AccumulatedRotationsTraslations1
- //           GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
- //
- //           //replace ModelViev Matrix with stored ModelVievMatrixBeforeSpecificTransforms
- //           GL.glLoadMatrixd(ModelVievMatrixBeforeSpecificTransforms);
- //           //multiply it by KeyCode defined AccumulatedRotationsTraslations1 matrix
- //           GL.glMultMatrixd(AccumulatedRotationsTraslations);
- //       }
- //
         void DrawLights()
         {
             //GL.glPushMatrix();
@@ -560,7 +506,6 @@ namespace OpenGL
                     break;
                 case 2:
                     DrawWalls();
-
                     DrawObjects(false);
                     GL.glPopMatrix();
 
@@ -626,33 +571,20 @@ namespace OpenGL
                 return;
 
             GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT | GL.GL_STENCIL_BUFFER_BIT);
-            
-            GL.glLoadIdentity();
 
+            GL.glLoadIdentity();
             GLU.gluLookAt(ScrollValue[1], 1, 10, 0, 0, 0, 0, 1, 0);
-           
             GL.glTranslated(0, 0, -6);
-            //GL.glRotated(30, 0, 1, 0);
             GL.glRotated(20, 1, 0, 0);
 
-         //   rubiksCube.Draw();
-
-            DrawAxes(Color.Red, Color.Green, Color.Blue);
-            
-            DrawAxes(Color.Red, Color.Green, Color.Blue);
-            
+            //DrawAxes(Color.Red, Color.Green, Color.Blue);
+                        
             UpdateScrollInput();
-            //UpdateLightSettings();
             DrawLights();
-
             DrawMirrors();
-
             DrawFigures();
 
-            //rubiksCube.Draw();
-
             GL.glFlush();
-
             WGL.wglSwapBuffers(m_uint_DC);
         }
 
@@ -743,7 +675,7 @@ namespace OpenGL
             //save the current MODELVIEW Matrix (now it is Identity)
             //GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
 
-            InitTexture("1.bmp");
+            InitTexture("IMG\\1.bmp");
         }
 
         public uint[] texture;      // texture

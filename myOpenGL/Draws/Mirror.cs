@@ -22,8 +22,6 @@ namespace RubikCube.Draws
         public int AngleZ = 0;
         float[] mirrorColorArray = new float[4] { 0.9f, 0.9f, 0.9f, 0.5f };
 
-
-        public Mirror(double mirrorHeight, double mirrorWidth, double x, double y, double z, int AngleX, int AngleY, int AngleZ)   
         public uint texture;
         public Mirror(double mirrorHeight, double mirrorWidth, double x, double y, double z, int AngleX, int AngleY, int AngleZ, uint texture)   
         {
@@ -41,7 +39,6 @@ namespace RubikCube.Draws
             GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture);
-           
         }
 
         public float[,] getSurf()
@@ -82,29 +79,17 @@ namespace RubikCube.Draws
             GL.glVertex3d(0 - minusArray[0], mirrorHeight / 2 - minusArray[1], 0 - minusArray[2]);
             GL.glVertex3d(0 - minusArray[0], -mirrorHeight / 2 - minusArray[1], 0 - minusArray[2]);
             GL.glVertex3d(mirrorWidth - minusArray[0], -mirrorHeight / 2 - minusArray[1], 0 - minusArray[2]);
-            //!!! for blended REFLECTION 
-            GL.glColor4d(1, 1, 1, 0.3);
-            GL.glTexCoord2d(0, 0);
-            GL.glVertex3d(mirrorWidth, mirrorHeight / 2, 0);
-            GL.glTexCoord2d(1, 0);
-            GL.glVertex3d(0, mirrorHeight / 2, 0);
-            GL.glTexCoord2d(1, 1);
-            GL.glVertex3d(0, -mirrorHeight / 2, 0);
-            GL.glTexCoord2d(0, 1);
-            GL.glVertex3d(mirrorWidth, -mirrorHeight / 2, 0);
-
-            GL.glDisable(GL.GL_TEXTURE_2D);
+           
             GL.glEnd();
-
-            GL.glEnable(GL.GL_LIGHTING);
+            //GL.glEnable(GL.GL_LIGHTING);
 
             GL.glPopMatrix();
         }
 
         public void Draw(float[] minumArray)
         {
-            // GL.glEnable(GL.GL_LIGHTING);
-            
+            GL.glDisable(GL.GL_LIGHTING);
+
             //make the surface transparent
             GL.glEnable(GL.GL_BLEND);
             GL.glPushMatrix();
@@ -112,15 +97,25 @@ namespace RubikCube.Draws
             doRotations();
             GL.glBegin(GL.GL_QUADS);
             //!!! for blended REFLECTION
-            GL.glColor4d(mirrorColorArray[0], mirrorColorArray[1], mirrorColorArray[2], mirrorColorArray[3]);
+            //GL.glColor4d(mirrorColorArray[0], mirrorColorArray[1], mirrorColorArray[2], mirrorColorArray[3]);
+            //!!! for blended REFLECTION 
+            GL.glColor4d(1, 1, 1, 0.3);
+            GL.glTexCoord2d(0, 0);
             GL.glVertex3d(mirrorWidth - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glTexCoord2d(1, 0);
             GL.glVertex3d(0 - minumArray[0], mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glTexCoord2d(1, 1);
             GL.glVertex3d(0 - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+            GL.glTexCoord2d(0, 1);
             GL.glVertex3d(mirrorWidth - minumArray[0], -mirrorHeight / 2 - minumArray[1], 0 - minumArray[2]);
+
+            GL.glDisable(GL.GL_TEXTURE_2D);
+
             GL.glEnd();
 
             GL.glPopMatrix();
             GL.glDisable(GL.GL_BLEND);
+            GL.glEnable(GL.GL_LIGHTING);
         }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
