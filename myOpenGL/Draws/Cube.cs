@@ -82,7 +82,7 @@ namespace RubikCube.Draws
             this.AngleZ += AngleAxisZ;
         }
 
-        public void Draw()
+        public void Draw(bool isShadow = false)
         {
 
             GL.glEnable(GL.GL_TEXTURE);
@@ -95,42 +95,60 @@ namespace RubikCube.Draws
             GL.glBegin(GL.GL_QUADS);
 
             //Back
-            GL.glColor3ub(faceColors.Back.R, faceColors.Back.G, faceColors.Back.B);
+            if(!isShadow)
+                GL.glColor3ub(faceColors.Back.R, faceColors.Back.G, faceColors.Back.B);
+            else
+                GL.glColor3d(0.5, 0.5,0.5);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, -this.size + Z);
-            
+
             //Bottom
-            GL.glColor3ub(faceColors.Bottom.R, faceColors.Bottom.G, faceColors.Bottom.B);
+            if (!isShadow)
+                GL.glColor3ub(faceColors.Bottom.R, faceColors.Bottom.G, faceColors.Bottom.B);
+            else
+                GL.glColor3d(0.5, 0.5, 0.5);
             GL.glVertex3d(-this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, this.size + Z);
 
             //Left
-            GL.glColor3ub(faceColors.Left.R, faceColors.Left.G, faceColors.Left.B);
+            if (!isShadow)
+                GL.glColor3ub(faceColors.Left.R, faceColors.Left.G, faceColors.Left.B);
+            else
+                GL.glColor3d(0.5, 0.5, 0.5);
             GL.glVertex3d(-this.size + X, this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
-            
+
             //Right
-            GL.glColor3ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B);
+            if (!isShadow)
+                GL.glColor3ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B);
+            else
+                GL.glColor3d(0.5, 0.5, 0.5);
             GL.glVertex3d(this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, -this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
-            
+
             //Top
-            GL.glColor3ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B);
+            if (!isShadow)
+                GL.glColor3ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B);
+            else
+                GL.glColor3d(0.5, 0.5, 0.5);
             GL.glVertex3d(-this.size + X, this.size + Y, -this.size + Z);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, this.size + Y, -this.size + Z);
-            
+
             //Front
-            GL.glColor3ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B);
+            if (!isShadow)
+                GL.glColor3ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B);
+            else
+                GL.glColor3d(0.5, 0.5, 0.5);
             GL.glVertex3d(-this.size + X, this.size + Y, this.size + Z);
             GL.glVertex3d(-this.size + X, -this.size + Y, this.size + Z);
             GL.glVertex3d(this.size + X, -this.size + Y, this.size + Z);

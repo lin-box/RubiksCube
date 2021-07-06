@@ -7,6 +7,6 @@ namespace RubikCube.Draws
 {
     interface IDraw
     {
-        void Draw();
+        void Draw(bool isShadow = false);
     }
 }

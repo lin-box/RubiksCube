@@ -49,6 +49,7 @@ namespace myOpenGL
             this.hScrollBar11 = new System.Windows.Forms.HScrollBar();
             this.hScrollBar13 = new System.Windows.Forms.HScrollBar();
             this.hScrollBar2 = new System.Windows.Forms.HScrollBar();
+            this.buttonMirror = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -63,7 +64,7 @@ namespace myOpenGL
             // 
             // btnThirdXDown
             // 
-            this.btnThirdXDown.Location = new System.Drawing.Point(658, 302);
+            this.btnThirdXDown.Location = new System.Drawing.Point(659, 265);
             this.btnThirdXDown.Name = "btnThirdXDown";
             this.btnThirdXDown.Size = new System.Drawing.Size(30, 23);
             this.btnThirdXDown.TabIndex = 29;
@@ -73,7 +74,7 @@ namespace myOpenGL
             // 
             // btnSecondXDown
             // 
-            this.btnSecondXDown.Location = new System.Drawing.Point(622, 302);
+            this.btnSecondXDown.Location = new System.Drawing.Point(623, 265);
             this.btnSecondXDown.Name = "btnSecondXDown";
             this.btnSecondXDown.Size = new System.Drawing.Size(30, 23);
             this.btnSecondXDown.TabIndex = 28;
@@ -83,7 +84,7 @@ namespace myOpenGL
             // 
             // btnThirdYRight
             // 
-            this.btnThirdYRight.Location = new System.Drawing.Point(690, 215);
+            this.btnThirdYRight.Location = new System.Drawing.Point(691, 178);
             this.btnThirdYRight.Name = "btnThirdYRight";
             this.btnThirdYRight.Size = new System.Drawing.Size(28, 23);
             this.btnThirdYRight.TabIndex = 27;
@@ -93,7 +94,7 @@ namespace myOpenGL
             // 
             // btnFirstYRight
             // 
-            this.btnFirstYRight.Location = new System.Drawing.Point(690, 273);
+            this.btnFirstYRight.Location = new System.Drawing.Point(691, 236);
             this.btnFirstYRight.Name = "btnFirstYRight";
             this.btnFirstYRight.Size = new System.Drawing.Size(28, 23);
             this.btnFirstYRight.TabIndex = 26;
@@ -103,7 +104,7 @@ namespace myOpenGL
             // 
             // btnSecondYRight
             // 
-            this.btnSecondYRight.Location = new System.Drawing.Point(690, 244);
+            this.btnSecondYRight.Location = new System.Drawing.Point(691, 207);
             this.btnSecondYRight.Name = "btnSecondYRight";
             this.btnSecondYRight.Size = new System.Drawing.Size(28, 23);
             this.btnSecondYRight.TabIndex = 25;
@@ -113,7 +114,7 @@ namespace myOpenGL
             // 
             // btnThirdYLeft
             // 
-            this.btnThirdYLeft.Location = new System.Drawing.Point(556, 215);
+            this.btnThirdYLeft.Location = new System.Drawing.Point(557, 178);
             this.btnThirdYLeft.Name = "btnThirdYLeft";
             this.btnThirdYLeft.Size = new System.Drawing.Size(28, 23);
             this.btnThirdYLeft.TabIndex = 24;
@@ -123,7 +124,7 @@ namespace myOpenGL
             // 
             // btnFirstYLeft
             // 
-            this.btnFirstYLeft.Location = new System.Drawing.Point(556, 273);
+            this.btnFirstYLeft.Location = new System.Drawing.Point(557, 236);
             this.btnFirstYLeft.Name = "btnFirstYLeft";
             this.btnFirstYLeft.Size = new System.Drawing.Size(28, 23);
             this.btnFirstYLeft.TabIndex = 23;
@@ -133,7 +134,7 @@ namespace myOpenGL
             // 
             // btnFirstXDown
             // 
-            this.btnFirstXDown.Location = new System.Drawing.Point(586, 302);
+            this.btnFirstXDown.Location = new System.Drawing.Point(587, 265);
             this.btnFirstXDown.Name = "btnFirstXDown";
             this.btnFirstXDown.Size = new System.Drawing.Size(30, 23);
             this.btnFirstXDown.TabIndex = 22;
@@ -143,7 +144,7 @@ namespace myOpenGL
             // 
             // btnSecondYLeft
             // 
-            this.btnSecondYLeft.Location = new System.Drawing.Point(556, 244);
+            this.btnSecondYLeft.Location = new System.Drawing.Point(557, 207);
             this.btnSecondYLeft.Name = "btnSecondYLeft";
             this.btnSecondYLeft.Size = new System.Drawing.Size(28, 23);
             this.btnSecondYLeft.TabIndex = 21;
@@ -153,7 +154,7 @@ namespace myOpenGL
             // 
             // btnThirdXUp
             // 
-            this.btnThirdXUp.Location = new System.Drawing.Point(658, 186);
+            this.btnThirdXUp.Location = new System.Drawing.Point(659, 149);
             this.btnThirdXUp.Name = "btnThirdXUp";
             this.btnThirdXUp.Size = new System.Drawing.Size(30, 23);
             this.btnThirdXUp.TabIndex = 20;
@@ -163,7 +164,7 @@ namespace myOpenGL
             // 
             // btnSecondXUp
             // 
-            this.btnSecondXUp.Location = new System.Drawing.Point(622, 186);
+            this.btnSecondXUp.Location = new System.Drawing.Point(623, 149);
             this.btnSecondXUp.Name = "btnSecondXUp";
             this.btnSecondXUp.Size = new System.Drawing.Size(30, 23);
             this.btnSecondXUp.TabIndex = 19;
@@ -173,7 +174,7 @@ namespace myOpenGL
             // 
             // btnFirstXUp
             // 
-            this.btnFirstXUp.Location = new System.Drawing.Point(586, 186);
+            this.btnFirstXUp.Location = new System.Drawing.Point(587, 149);
             this.btnFirstXUp.Name = "btnFirstXUp";
             this.btnFirstXUp.Size = new System.Drawing.Size(30, 23);
             this.btnFirstXUp.TabIndex = 18;
@@ -189,7 +190,7 @@ namespace myOpenGL
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(660, 365);
+            this.button1.Location = new System.Drawing.Point(650, 312);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(28, 23);
             this.button1.TabIndex = 30;
@@ -199,7 +200,7 @@ namespace myOpenGL
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(604, 365);
+            this.button2.Location = new System.Drawing.Point(594, 312);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(28, 23);
             this.button2.TabIndex = 31;
@@ -209,7 +210,7 @@ namespace myOpenGL
             // 
             // hScrollBar12
             // 
-            this.hScrollBar12.Location = new System.Drawing.Point(569, 441);
+            this.hScrollBar12.Location = new System.Drawing.Point(569, 386);
             this.hScrollBar12.Maximum = 200;
             this.hScrollBar12.Name = "hScrollBar12";
             this.hScrollBar12.Size = new System.Drawing.Size(143, 17);
@@ -219,7 +220,7 @@ namespace myOpenGL
             // 
             // hScrollBar11
             // 
-            this.hScrollBar11.Location = new System.Drawing.Point(569, 415);
+            this.hScrollBar11.Location = new System.Drawing.Point(569, 360);
             this.hScrollBar11.Maximum = 200;
             this.hScrollBar11.Name = "hScrollBar11";
             this.hScrollBar11.Size = new System.Drawing.Size(143, 17);
@@ -229,7 +230,7 @@ namespace myOpenGL
             // 
             // hScrollBar13
             // 
-            this.hScrollBar13.Location = new System.Drawing.Point(569, 465);
+            this.hScrollBar13.Location = new System.Drawing.Point(569, 410);
             this.hScrollBar13.Maximum = 200;
             this.hScrollBar13.Name = "hScrollBar13";
             this.hScrollBar13.Size = new System.Drawing.Size(143, 17);
@@ -243,17 +244,28 @@ namespace myOpenGL
             this.hScrollBar2.Location = new System.Drawing.Point(569, 118);
             this.hScrollBar2.Maximum = 200;
             this.hScrollBar2.Name = "hScrollBar2";
-            this.hScrollBar2.Size = new System.Drawing.Size(143, 17);
+            this.hScrollBar2.Size = new System.Drawing.Size(80, 17);
             this.hScrollBar2.SmallChange = 2;
             this.hScrollBar2.TabIndex = 32;
             this.hScrollBar2.Value = 100;
             this.hScrollBar2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            // 
+            // buttonMirror
+            // 
+            this.buttonMirror.Location = new System.Drawing.Point(601, 66);
+            this.buttonMirror.Name = "buttonMirror";
+            this.buttonMirror.Size = new System.Drawing.Size(75, 23);
+            this.buttonMirror.TabIndex = 35;
+            this.buttonMirror.Text = "background";
+            this.buttonMirror.UseVisualStyleBackColor = true;
+            this.buttonMirror.Click += new System.EventHandler(this.buttonMirror_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 528);
+            this.Controls.Add(this.buttonMirror);
             this.Controls.Add(this.hScrollBar2);
             this.Controls.Add(this.hScrollBar12);
             this.Controls.Add(this.hScrollBar11);
@@ -278,6 +290,7 @@ namespace myOpenGL
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
 
         }
@@ -303,6 +316,7 @@ namespace myOpenGL
         private System.Windows.Forms.HScrollBar hScrollBar11;
         private System.Windows.Forms.HScrollBar hScrollBar13;
         private System.Windows.Forms.HScrollBar hScrollBar2;
+        private System.Windows.Forms.Button buttonMirror;
     }
 }
 

@@ -28,7 +28,6 @@ namespace myOpenGL
 
             hScrollBarScroll(hScrollBar2, null);
 
-
             // initialize ScrollValue array
 
             cGL.ScrollValue[10] = (hScrollBar11.Value - 100) / 10.0f;
@@ -173,13 +172,84 @@ namespace myOpenGL
 
         private void hScrollBarScroll(object sender, ScrollEventArgs e)
         {
-            //cGL.intOptionC = 0;
+            cGL.intOptionC = 0;
             HScrollBar hb = (HScrollBar)sender;
             int n = int.Parse(hb.Name.Substring(10));
             cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
             if (e != null)
                 cGL.Draw();
         }
-   
+
+        private void buttonMirror_Click(object sender, EventArgs e)
+        {
+            if (cGL.display_mod == 3)
+            {
+                cGL.display_mod = 1;
+            }
+            else if (cGL.display_mod == 1)
+            {
+                cGL.display_mod = 2;
+            }
+            else // cGL.display_mod == 2
+            {
+                cGL.display_mod = 3;
+            }
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (cGL.display_mod)
+            {
+                case 1:
+                    
+                    break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    switch (e.KeyChar)
+                    {
+                        case 'x':
+                            cGL.cubemapXYZAngles[0] -= 5;
+                            cGL.rubiksCube.Rotate(-5, 0, 0);
+                            cGL.Draw();
+                            break;
+                        case 'X':
+                            cGL.cubemapXYZAngles[0] += 5;
+                            cGL.rubiksCube.Rotate(5, 0, 0);
+                            cGL.Draw();
+                            break;
+                        case 'y':
+                            cGL.cubemapXYZAngles[1] -= 5;
+                            cGL.rubiksCube.Rotate(0, -5, 0);
+                            cGL.Draw();
+                            break;
+                        case 'Y':
+                            cGL.cubemapXYZAngles[1] += 5;
+                            cGL.rubiksCube.Rotate(0, 5, 0);
+                            cGL.Draw();
+                            break;
+                        case 'z':
+                            cGL.cubemapXYZAngles[2] -= 5;
+                            cGL.rubiksCube.Rotate(0, 0, -5);
+                            cGL.Draw();
+                            break;
+                        case 'Z':
+                            cGL.cubemapXYZAngles[2] += 5;
+                            cGL.rubiksCube.Rotate(0, 0, 5);
+                            cGL.Draw();
+                            break;
+                    }
+                    break;
+            }
+
+        }
+
+        /*
+        private void hScrollBar3_Scroll(object sender, ScrollEventArgs e)
+        {
+            cGL.viewAngle = hScrollBar3.Value;
+        }
+        */
     }
 }
