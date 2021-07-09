@@ -362,24 +362,25 @@ namespace OpenGL
         void DrawObjects(bool isForShades, int c)
         {
             
-            //if(!isForShades)
-            //    rubiksCube.Draw(false);
-            //else
-            //    rubiksCube.Draw(true);
+            if(!isForShades)
+                //rubiksCube.DrawForShadow();
+                rubiksCube.Draw();
+            else
+                rubiksCube.DrawForShadow();
             
 
-            if (!isForShades)
-                GL.glColor3d(1, 0, 0);
-            else
-                if (c == 1)
-                GL.glColor3d(0.5, 0.5, 0.5);
-            else
-                GL.glColor3d(0.8, 0.8, 0.8);
-            GLUT.glutSolidCube(1);  
-            //GLUT.glutSolidTeapot(1);
-            
-            GL.glTranslated(1, 2, 0.3);
-            GL.glRotated(90, 1, 0, 0);
+            //if (!isForShades)
+            //    GL.glColor3d(1, 0, 0);
+            //else
+            //    if (c == 1)
+            //    GL.glColor3d(0.5, 0.5, 0.5);
+            //else
+            //    GL.glColor3d(0.8, 0.8, 0.8);
+            //rubiksCube.Draw();
+            ////GLUT.glutSolidCube(1);
+            ////GLUT.glutSolidTeapot(1);
+            //GL.glTranslated(1, 2, 0.3);
+            //GL.glRotated(90, 1, 0, 0);
 
         }
 
@@ -400,26 +401,18 @@ namespace OpenGL
             
             GL.glLoadIdentity();
 
-            GLU.gluLookAt(ScrollValue[1], 1, 10, 0, 0, 0, 0, 1, 0);
+            GLU.gluLookAt(ScrollValue[1], 2, 10, 0, 0, 0, 0, 1, 0);
             
            
-            GL.glTranslated(0, 0, -6);
-          //  GL.glRotated(30, 0, 1, 0);
-           GL.glRotated(20, 1, 0, 0);
+            GL.glTranslated(0, 0, -8);
+         
+            GL.glRotated(20, 1, 0, 0);
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);
 
-            DrawFigures();
+            //DrawFigures();
 
-         //   DrawWalls();
-         //   rubiksCube.Draw();
-
-          //  DrawMirrors();
-            
-
-            // draw simple cube instead
-            //GL.glColor3d(0.8, 0.8, 0.8);
-            //GLUT.glutSolidCube(1);
+            DrawMirrors();
 
             GL.glFlush();
 

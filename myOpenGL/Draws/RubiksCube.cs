@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using OpenGL;
@@ -14,12 +15,14 @@ namespace RubikCube.Draws
         private readonly object syncLock = new object();
 
         public int AngleX, AngleY, AngleZ;
+        bool withColor;
 
         public RubiksCube()
         {
             pendingAnimation = new Queue<Animation>();
             composingCubes = new List<Cube>();
             insideColor = Color.Black;
+            withColor = true;
 
             /* Drow 3*3*3 black cubes so the user 
              * wont see blank holes between the colored cubes */
@@ -39,6 +42,7 @@ namespace RubikCube.Draws
              * with block that bigger than the black 
              * and color area that is smaller then the black area */
             blockSpace = .73;
+
             for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
                 for (double y = -blockSpace; y <= blockSpace; y += blockSpace)
@@ -51,6 +55,9 @@ namespace RubikCube.Draws
                 }
             }
         }
+        
+    
+
 
         private FaceCube<Color> GenerateCubeColor(double x, double y, double z)
         {
@@ -174,6 +181,19 @@ namespace RubikCube.Draws
 
         public void Draw()
         {
+            this.withColor = true;
+            DoAnimation();
+            AdjustRotation();
+            foreach (var item in composingCubes)
+            {
+                item.Draw();
+            }
+        }
+
+        public void DrawForShadow()
+        {
+            this.withColor = false;
+            this.insideColor = Color.Gray;
             DoAnimation();
             AdjustRotation();
             foreach (var item in composingCubes)
@@ -211,5 +231,6 @@ namespace RubikCube.Draws
             GL.glRotatef(AngleY, 0, 1, 0);
             GL.glRotatef(AngleZ, 0, 0, 1);
         }
+
     }
 }

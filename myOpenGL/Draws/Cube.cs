@@ -42,11 +42,10 @@ namespace RubikCube.Draws
         public double Z { get; private set; }
 
         private FaceCube<Color> faceColors;
-
+ //       private FaceCube<Color> faceShadowColor;
         private int AngleX = 0;
         private int AngleY = 0;
         private int AngleZ = 0;
-
 
         public Cube(double size, double X, double Y, double Z)
         {
@@ -54,7 +53,8 @@ namespace RubikCube.Draws
             this.X = X;
             this.Y = Y;
             this.Z = Z;
-            this.faceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
+            //this.faceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
+            this.faceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
         }
 
         public Cube(double size, double X, double Y, double Z, FaceCube<Color> faceColors)
@@ -66,14 +66,14 @@ namespace RubikCube.Draws
             this.faceColors = faceColors;
         }
 
-        public Cube(double size, double X, double Y, double Z, FaceCube<Texture> faceColors)
-        {
-            this.size = size;
-            this.X = X;
-            this.Y = Y;
-            this.Z = Z;
-            //this.faceColors = faceColors;
-        }
+        //public Cube(double size, double X, double Y, double Z, FaceCube<Texture> faceColors)
+        //{
+        //    this.size = size;
+        //    this.X = X;
+        //    this.Y = Y;
+        //    this.Z = Z;
+        //    //this.faceColors = faceColors;
+        //}
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
         {

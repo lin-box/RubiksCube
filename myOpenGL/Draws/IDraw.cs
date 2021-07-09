@@ -8,5 +8,6 @@ namespace RubikCube.Draws
     interface IDraw
     {
         void Draw();
+
     }
 }
