@@ -23,8 +23,7 @@ namespace RubikCube.Draws
             this.X = X;
             this.Y = Y;
             this.Z = Z;
-            //this.faceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
-            this.faceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
+            this.faceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
         }
 
         public Cube(double size, double X, double Y, double Z, FaceCube<Color> faceColors)
