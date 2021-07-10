@@ -28,9 +28,9 @@ namespace OpenGL
         float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
         float[] rightWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
-        float[] backMinusArray = new float[3] { 0f, +0.0f, -0.5f };
-        float[] leftMinusArray = new float[3] {-0f, 0f, 0 };
-        float[] rightMinusArray = new float[3] { +0f, 0f, 0 };
+        float[] backMinusArray = new float[3] { 0f, +0.0f, -0.02f };
+        float[] leftMinusArray = new float[3] {-0.03f, 0.03f, 0.0f};
+        float[] rightMinusArray = new float[3] { -0.02f, 0.02f, 0.0f };
         float[] zeroArray = new float[3] { 0f, 0f, 0f };
         float[] planeCoeff = { 1, 1, 1, 1 };
         public float[] pos = new float[4];
@@ -408,7 +408,7 @@ namespace OpenGL
             DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
             DrawShadowsOnSurface(rightMirrorSurface);
 
-            DrawMirrors();
+            //DrawMirrors();
 
             GL.glFlush();
 
