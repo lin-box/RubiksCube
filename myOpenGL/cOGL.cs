@@ -402,13 +402,13 @@ namespace OpenGL
             DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
             DrawShadowsOnSurface(backMirrorSurface);
 
-            //DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
-            //DrawShadowsOnSurface(leftMirrorSurface);
+            DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
+            DrawShadowsOnSurface(leftMirrorSurface);
 
-            //DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
-            //DrawShadowsOnSurface(rightMirrorSurface);
+            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
+            DrawShadowsOnSurface(rightMirrorSurface);
 
-            //DrawMirrors();
+            DrawMirrors();
 
             GL.glFlush();
 

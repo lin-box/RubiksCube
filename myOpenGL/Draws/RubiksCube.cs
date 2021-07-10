@@ -14,6 +14,7 @@ namespace RubikCube.Draws
         Color insideColor;
         public FaceCube<Color> shadowsFaceColors;
         public List<FaceCube<Color>> prevFaceColors;
+        bool isPrevColorShade;
         private readonly object syncLock = new object();
 
         public int AngleX, AngleY, AngleZ;
@@ -25,6 +26,7 @@ namespace RubikCube.Draws
             insideColor = Color.Black;
             shadowsFaceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
             prevFaceColors = new List<FaceCube<Color>>();
+            isPrevColorShade = false;
 
             /* Drow 3*3*3 black cubes so the user 
              * wont see blank holes between the colored cubes */
@@ -197,11 +199,15 @@ namespace RubikCube.Draws
         {
             if (isShadows)
             {
-                for(int i = 0; i< composingCubes.Count; i++)
+                if (!isPrevColorShade)
                 {
-                    FaceCube<Color> tempFaceColors = composingCubes[i].faceColors;
-                    composingCubes[i].faceColors = shadowsFaceColors;
-                    prevFaceColors[i] = tempFaceColors;
+                    for (int i = 0; i < composingCubes.Count; i++)
+                    {
+                        FaceCube<Color> tempFaceColors = composingCubes[i].faceColors;
+                        composingCubes[i].faceColors = shadowsFaceColors;
+                        prevFaceColors[i] = tempFaceColors;
+                    }
+                    isPrevColorShade = true;
                 }
             }
             else
@@ -210,6 +216,7 @@ namespace RubikCube.Draws
                 {
                     composingCubes[i].faceColors = prevFaceColors[i];
                 }
+                isPrevColorShade = false;
             }
         }
 
