@@ -29,8 +29,8 @@ namespace OpenGL
         float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
         float[] rightWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
         float[] backMinusArray = new float[3] { 0f, +0.0f, -0.5f };
-        float[] leftMinusArray = new float[3] { 0f, 0f, 0f };
-        float[] rightMinusArray = new float[3] { 0f, 0f, 0f };
+        float[] leftMinusArray = new float[3] { 0f, 0f, 0 };
+        float[] rightMinusArray = new float[3] { 0f, 0f, 0 };
         float[] zeroArray = new float[3] { 0f, 0f, 0f };
         float[] planeCoeff = { 1, 1, 1, 1 };
         public float[] pos = new float[4];
@@ -172,13 +172,6 @@ namespace OpenGL
             GL.glDisable(GL.GL_STENCIL_TEST);
 
         }
-  //
-//        void DrawWalls()
-//        {
-//            backMirrorSurface.DrawAsWall(backWallColorArray); //, backMinusArray
-//            leftMirrorSurface.DrawAsWall(leftWallColorArray); //, leftMinusArray
-//            rightMirrorSurface.DrawAsWall(rightWallColorArray); //, rightMinusArray
-//        }
 
         void DrawAxes(Color xColor, Color yColor, Color zColor)
         {
@@ -297,24 +290,11 @@ namespace OpenGL
         }
         //Shadows
 
-        void DrawFigures()
+        void DrawLight()
         {
             //!!!!!!!!!!!!!
             GL.glPushMatrix();
             //!!!!!!!!!!!!!
-         
-            GL.glDisable(GL.GL_LIGHTING);
-            
-            GL.glEnable(GL.GL_STENCIL_TEST);
-            GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
-            GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw wall always
-            
-            // add surface for STENCIL buffer
-            backMirrorSurface.DrawAsWall(backWallColorArray, backMinusArray); //, backMinusArray
-
-            // shadow is drawn only where STENCIL buffer value equal to 1          
-            GL.glStencilFunc(GL.GL_EQUAL, 1, 0xFFFFFFFF);
-            GL.glStencilOp(GL.GL_KEEP, GL.GL_KEEP, GL.GL_KEEP); // keep object origenal color
 
             GL.glDisable(GL.GL_STENCIL_TEST);
             //Draw Light Source
@@ -328,15 +308,38 @@ namespace OpenGL
 
             //main System draw
             GL.glEnable(GL.GL_LIGHTING);
-           
-            DrawObjects(false, 1);
 
+            GL.glPopMatrix();
+        }
+       
+        void DrawShadableWall(Mirror surface, float [] colorArray, float [] minusArray)
+        {
+            //!!!!!!!!!!!!!
+            GL.glPushMatrix();
+            //!!!!!!!!!!!!!
+
+            GL.glDisable(GL.GL_LIGHTING);
+
+            // we want to cut the shadow that is not on this surface
+            GL.glEnable(GL.GL_STENCIL_TEST);
+            GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
+            GL.glStencilFunc(GL.GL_ALWAYS, 1, 0xFFFFFFFF); // draw wall always
+
+            // add surface for STENCIL buffer
+            surface.DrawAsWall(colorArray, minusArray); //, backMinusArray
+
+            // shadow is drawn only where STENCIL buffer value equal to 1          
+            GL.glStencilFunc(GL.GL_EQUAL, 1, 0xFFFFFFFF);
+            GL.glStencilOp(GL.GL_KEEP, GL.GL_KEEP, GL.GL_KEEP); // keep object origenal color
 
             //end of regular show
             //!!!!!!!!!!!!!
             GL.glPopMatrix();
             //!!!!!!!!!!!!!
+        }
 
+        void DrawShadowsOnSurface(Mirror surface)
+        {
             //SHADING begin
             //we'll define cubeXform matrix in MakeShadowMatrix Sub
             // Disable lighting, we'll just draw the shadow
@@ -347,7 +350,7 @@ namespace OpenGL
             //!!!!!!!!!!!!!
             GL.glPushMatrix();
             //!!!!!!!!!!!!       
-            MakeShadowMatrix(backMirrorSurface.getSurf());
+            MakeShadowMatrix(surface.getSurf());
             GL.glMultMatrixf(cubeXform);
 
             GL.glEnable(GL.GL_STENCIL_TEST);
@@ -363,23 +366,7 @@ namespace OpenGL
         {
             rubiksCube.SetShadows(isForShades);
             rubiksCube.Draw();
-
-
-            //if (!isForShades)
-            //    GL.glColor3d(1, 0, 0);
-            //else
-            //    if (c == 1)
-            //    GL.glColor3d(0.5, 0.5, 0.5);
-            //else
-            //    GL.glColor3d(0.8, 0.8, 0.8);
-            //rubiksCube.Draw();
-            ////GLUT.glutSolidCube(1);
-            ////GLUT.glutSolidTeapot(1);
-            //GL.glTranslated(1, 2, 0.3);
-            //GL.glRotated(90, 1, 0, 0);
-
         }
-
 
         public void Draw()
         {
@@ -406,7 +393,18 @@ namespace OpenGL
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);
 
-            DrawFigures();
+            DrawLight();
+
+            DrawObjects(false, 1);
+
+            //DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
+            //DrawShadowsOnSurface(backMirrorSurface);
+
+            //DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
+            //DrawShadowsOnSurface(leftMirrorSurface);
+
+            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
+            DrawShadowsOnSurface(rightMirrorSurface);
 
             //DrawMirrors();
 
