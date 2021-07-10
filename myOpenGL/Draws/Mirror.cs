@@ -44,17 +44,18 @@ namespace RubikCube.Draws
         public float[,] getSurf()
         {
             float[,] surf = new float[3, 3];
-            surf[1, 0] = (float)-mirrorWidth/2;
-            surf[1, 1] = (float)0;
-            surf[1, 2] = (float)-mirrorWidth / 2;
 
-            surf[0, 0] = (float)mirrorWidth / 2;
-            surf[0, 1] = (float)mirrorHeight/2;
-            surf[0, 2] = (float)-mirrorWidth / 2;
+            surf[0, 0] = (float)mirrorWidth;
+            surf[0, 1] = (float)mirrorHeight / 2;
+            surf[0, 2] = (float)0;
 
-            surf[2, 0] = (float)mirrorWidth / 2;
+            surf[1, 0] = (float)0;
+            surf[1, 1] = (float)mirrorHeight / 2;
+            surf[1, 2] = (float)0;
+
+            surf[2, 0] = (float)0;
             surf[2, 1] = (float)-mirrorHeight / 2;
-            surf[2, 2] = (float)-mirrorWidth / 2;
+            surf[2, 2] = (float)0;
 
             return surf;
         }
@@ -76,10 +77,6 @@ namespace RubikCube.Draws
             GL.glBegin(GL.GL_QUADS);
 
             GL.glColor4d(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-            //GL.glVertex3d(mirrorWidth, mirrorHeight / 2, 0);
-            //GL.glVertex3d(0 , mirrorHeight / 2, 0);
-            //GL.glVertex3d(0, -mirrorHeight / 2, 0);
-            //GL.glVertex3d(mirrorWidth, -mirrorHeight / 2, 0);
 
             GL.glVertex3d(mirrorWidth + minusArray[0], mirrorHeight / 2 + minusArray[1], 0 + minusArray[2]);
             GL.glVertex3d(0 + minusArray[0], mirrorHeight / 2 + minusArray[1], 0 + minusArray[2]);

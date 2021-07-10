@@ -29,8 +29,8 @@ namespace OpenGL
         float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
         float[] rightWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
         float[] backMinusArray = new float[3] { 0f, +0.0f, -0.5f };
-        float[] leftMinusArray = new float[3] { 0f, 0f, 0 };
-        float[] rightMinusArray = new float[3] { 0f, 0f, 0 };
+        float[] leftMinusArray = new float[3] {-0f, 0f, 0 };
+        float[] rightMinusArray = new float[3] { +0f, 0f, 0 };
         float[] zeroArray = new float[3] { 0f, 0f, 0f };
         float[] planeCoeff = { 1, 1, 1, 1 };
         public float[] pos = new float[4];
@@ -47,7 +47,6 @@ namespace OpenGL
             backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, texture[0]);
             rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, texture[0]);
             leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, texture[0]);
-            
         }
 
         ~cOGL()
@@ -349,7 +348,8 @@ namespace OpenGL
             // wall shadow
             //!!!!!!!!!!!!!
             GL.glPushMatrix();
-            //!!!!!!!!!!!!       
+            //!!!!!!!!!!!!   
+            surface.doRotations();
             MakeShadowMatrix(surface.getSurf());
             GL.glMultMatrixf(cubeXform);
 
@@ -395,16 +395,18 @@ namespace OpenGL
 
             DrawLight();
 
+            //GL.glEnable(GL.GL_LIGHTING);
             DrawObjects(false, 1);
+            //GL.glDisable(GL.GL_LIGHTING);
 
-            //DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
-            //DrawShadowsOnSurface(backMirrorSurface);
+            DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
+            DrawShadowsOnSurface(backMirrorSurface);
 
             //DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
             //DrawShadowsOnSurface(leftMirrorSurface);
 
-            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
-            DrawShadowsOnSurface(rightMirrorSurface);
+            //DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
+            //DrawShadowsOnSurface(rightMirrorSurface);
 
             //DrawMirrors();
 
