@@ -1,34 +1,4 @@
-﻿
-/*
- * 
- * משימות ג.ממוחשבת:
-
-1. לבנות צורה
-1.1. לתקן קצוות של צורה שיראה חלק
-2. שיהיה אפשר לעשות תזוזה עם העכבר/מקלדת לראות כמה פוינטס אוף וויו.
-3. לסובב שורות ועמודות.
-4. להוסיף מראות עם טקסטורה של מראה 
-5. להוסיף טקסטורות
-6. לעצב כפתורים
-7. סוגי אורות עם הצללה
-8. להוסיף פקדים מיוחדים לתאורה, וסקרולדאון לזום
-*** האם צריך לשנות טקסטורות?
-בונוס:
-1. *לייבא נתונים מקובץ
-2. לכתוב אלגוריתם שפותר.
-3. LABEL שאומר עוד כמה צעדים מינימום צריך לעשות כדי לנצח.
-4. להפעיל מצב מנחה:
-כותב מה צריך לעשות למשל:
-RU,...
-
-משה
-1. להפוך את הלחצנים ל SCROLLBAR
-2. להכניס טקסטורה של מראה למראות
-https://www.geogebra.org/3d/xkpa4d88
- * 
- */
-
-using OpenGL;
+﻿using OpenGL;
 using System.Diagnostics;
 using System.Drawing;
 
@@ -41,8 +11,8 @@ namespace RubikCube.Draws
         public double Y { get; private set; }
         public double Z { get; private set; }
 
-        private FaceCube<Color> faceColors;
- //       private FaceCube<Color> faceShadowColor;
+        public FaceCube<Color> faceColors;
+
         private int AngleX = 0;
         private int AngleY = 0;
         private int AngleZ = 0;
@@ -53,8 +23,7 @@ namespace RubikCube.Draws
             this.X = X;
             this.Y = Y;
             this.Z = Z;
-            //this.faceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
-            this.faceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
+            this.faceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
         }
 
         public Cube(double size, double X, double Y, double Z, FaceCube<Color> faceColors)
