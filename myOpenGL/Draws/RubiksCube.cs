@@ -12,17 +12,19 @@ namespace RubikCube.Draws
         Queue<Animation> pendingAnimation;
         Animation current;
         Color insideColor;
+        public FaceCube<Color> shadowsFaceColors;
+        public List<FaceCube<Color>> prevFaceColors;
         private readonly object syncLock = new object();
 
         public int AngleX, AngleY, AngleZ;
-        bool withColor;
 
         public RubiksCube()
         {
             pendingAnimation = new Queue<Animation>();
             composingCubes = new List<Cube>();
             insideColor = Color.Black;
-            withColor = true;
+            shadowsFaceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
+            prevFaceColors = new List<FaceCube<Color>>();
 
             /* Drow 3*3*3 black cubes so the user 
              * wont see blank holes between the colored cubes */
@@ -54,10 +56,12 @@ namespace RubikCube.Draws
                     }
                 }
             }
-        }
-        
-    
 
+            for (int i = 0; i < composingCubes.Count; i++)
+            {
+                prevFaceColors.Add(composingCubes[i].faceColors);
+            }
+        }
 
         private FaceCube<Color> GenerateCubeColor(double x, double y, double z)
         {
@@ -181,7 +185,6 @@ namespace RubikCube.Draws
 
         public void Draw()
         {
-            this.withColor = true;
             DoAnimation();
             AdjustRotation();
             foreach (var item in composingCubes)
@@ -190,15 +193,23 @@ namespace RubikCube.Draws
             }
         }
 
-        public void DrawForShadow()
+        public void SetShadows(bool isShadows)
         {
-            this.withColor = false;
-            this.insideColor = Color.Gray;
-            DoAnimation();
-            AdjustRotation();
-            foreach (var item in composingCubes)
+            if (isShadows)
             {
-                item.Draw();
+                for(int i = 0; i< composingCubes.Count; i++)
+                {
+                    FaceCube<Color> tempFaceColors = composingCubes[i].faceColors;
+                    composingCubes[i].faceColors = shadowsFaceColors;
+                    prevFaceColors[i] = tempFaceColors;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < composingCubes.Count; i++)
+                {
+                    composingCubes[i].faceColors = prevFaceColors[i];
+                }
             }
         }
 

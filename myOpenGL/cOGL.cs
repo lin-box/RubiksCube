@@ -361,13 +361,9 @@ namespace OpenGL
 
         void DrawObjects(bool isForShades, int c)
         {
-            
-            if(!isForShades)
-                //rubiksCube.DrawForShadow();
-                rubiksCube.Draw();
-            else
-                rubiksCube.DrawForShadow();
-            
+            rubiksCube.SetShadows(isForShades);
+            rubiksCube.Draw();
+
 
             //if (!isForShades)
             //    GL.glColor3d(1, 0, 0);
@@ -410,9 +406,9 @@ namespace OpenGL
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);
 
-            //DrawFigures();
+            DrawFigures();
 
-            DrawMirrors();
+            //DrawMirrors();
 
             GL.glFlush();
 
