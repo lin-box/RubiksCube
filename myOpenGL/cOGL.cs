@@ -499,7 +499,6 @@ namespace OpenGL
             GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             GL.glClearDepth(1.0f);
 
-            
             GL.glEnable(GL.GL_LIGHT0);
             GL.glEnable(GL.GL_COLOR_MATERIAL);
             GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE); // GL.GL_AMBIENT_AND_DIFFUSE / GL.GL_SHININESS
