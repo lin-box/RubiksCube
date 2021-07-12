@@ -44,9 +44,9 @@ namespace OpenGL
             InitializeGL();
 
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, texture[0]);
-            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, texture[0]);
-            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, texture[0]);
+            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0,false, texture[0]);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0,false, texture[0]);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0,true, texture[0]);
             
         }
 
@@ -378,10 +378,10 @@ namespace OpenGL
             DrawObjects(false);
             DrawShadowsOnSurface(rightMirrorSurface);
 
-            //DrawLight();
-            //GL.glEnable(GL.GL_LIGHTING);
-            //DrawObjects(false);
-            //DrawShadowsOnSurface(leftMirrorSurface);
+            DrawLight();
+            GL.glEnable(GL.GL_LIGHTING);
+            DrawObjects(false);
+            DrawShadowsOnSurface(leftMirrorSurface);
 
         }
 
@@ -499,7 +499,6 @@ namespace OpenGL
             GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             GL.glClearDepth(1.0f);
 
-            
             GL.glEnable(GL.GL_LIGHT0);
             GL.glEnable(GL.GL_COLOR_MATERIAL);
             GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE); // GL.GL_AMBIENT_AND_DIFFUSE / GL.GL_SHININESS

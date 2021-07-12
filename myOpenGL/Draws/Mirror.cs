@@ -22,7 +22,8 @@ namespace RubikCube.Draws
         public int AngleY = 0;
         public int AngleZ = 0;
         public uint texture;
-        public Mirror(double mirrorHeight, double mirrorWidth, double x, double y, double z, int AngleX, int AngleY, int AngleZ, uint texture)   
+        public bool leftMirror;
+        public Mirror(double mirrorHeight, double mirrorWidth, double x, double y, double z, int AngleX, int AngleY, int AngleZ, bool leftMirror, uint texture)   
         {
             this.mirrorHeight = mirrorHeight;
             this.mirrorWidth = mirrorWidth;
@@ -33,6 +34,7 @@ namespace RubikCube.Draws
             this.AngleY = AngleY;
             this.AngleZ = AngleZ;
             this.texture = texture;
+            this.leftMirror = leftMirror;
 
             //make the surface transparent  
             GL.glEnable(GL.GL_BLEND); 
@@ -45,21 +47,30 @@ namespace RubikCube.Draws
         public float[,] getSurf()
         {
             float[,] surf = new float[3, 3];
+            if (leftMirror)
+            {
+                float cosAngle = (float)(Math.Cos(Math.PI * (this.AngleY) / 180.0));
+                float sinAngle = (float)(Math.Sin(Math.PI * (this.AngleY) / 180.0));
+                surf[0, 0] = (float)this.x + (float)((-cosAngle * this.mirrorWidth) + 0 + (sinAngle * 0));    // Rotation matrix to Y axis
+                surf[0, 1] = (float)this.y + (float)(0 + -mirrorHeight / 2 + 0);                              // Rotation matrix to Y axis
+                surf[0, 2] = (float)this.z + (float)((-sinAngle * this.mirrorWidth) + 0 + (-cosAngle * 0));   // Rotation matrix to Y axis
+            }                                                                                                 
+            else                                                                                              
+            {                                                                                                 
+                float cosAngle = (float)(Math.Cos(Math.PI * (-this.AngleY) / 180.0));                         
+                float sinAngle = (float)(Math.Sin(Math.PI * (-this.AngleY) / 180.0));                         
+                surf[0, 0] = (float)this.x + (float)((cosAngle * this.mirrorWidth) + 0 + (-sinAngle * 0));     // Rotation matrix to Y axis
+                surf[0, 1] = (float)this.y + (float)(0 + mirrorHeight / 2 + 0);                               // Rotation matrix to Y axis
+                surf[0, 2] = (float)this.z + (float)((sinAngle * this.mirrorWidth) + 0 + (cosAngle * 0));     // Rotation matrix to Y axis
+            }
+            
+            surf[1, 0] = (float)this.x;                            
+            surf[1, 1] = (float)this.y;                            
+            surf[1, 2] = (float)this.z;                             
 
-            float cosAngle = (float)(Math.Cos(Math.PI * (-this.AngleY) / 180.0));
-            float sinAngle = (float)(Math.Sin(Math.PI * (-this.AngleY) / 180.0));
-
-            surf[0, 0] = (float)this.x + (float)((cosAngle * this.mirrorWidth) + 0 + (-sinAngle * 0));
-            surf[0, 1] = (float)this.y + (float)(0 + mirrorHeight / 2 + 0);
-            surf[0, 2] = (float)this.z + (float)((sinAngle * this.mirrorWidth) + 0 + (cosAngle * 0));                     
-
-            surf[1, 0] = (float)this.x;                             //-mirrorWidth/2;
-            surf[1, 1] = (float)this.y;                             //0;
-            surf[1, 2] = (float)this.z;                             // -mirrorWidth / 2;
-
-            surf[2, 0] = surf[0, 0];        //mirrorWidth / 2;
-            surf[2, 1] = -surf[0, 1]; //- mirrorHeight / 2;
-            surf[2, 2] = surf[0, 2];                             //-mirrorWidth / 2;
+            surf[2, 0] = surf[0, 0];        
+            surf[2, 1] = -surf[0, 1]; 
+            surf[2, 2] = surf[0, 2];                            
 
             //surf[0, 0] = (float)mirrorWidth / 2;
             //surf[0, 1] = (float)mirrorHeight/2;

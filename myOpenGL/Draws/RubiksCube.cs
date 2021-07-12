@@ -195,7 +195,7 @@ namespace RubikCube.Draws
 
         public void SetShadows(bool isShadows)
         {
-            GL.glDisable(GL.GL_LIGHTING);
+            //GL.glDisable(GL.GL_LIGHTING);
             if (isShadows)
             {
                 for(int i = 0; i< composingCubes.Count; i++)
