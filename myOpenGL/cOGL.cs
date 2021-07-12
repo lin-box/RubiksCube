@@ -107,7 +107,9 @@ namespace OpenGL
             // draw reflected scene for back mirror
             GL.glPushMatrix();
             GL.glScalef(1, 1, -1); //swap on Z axis
-            GL.glTranslated(0, 0, mirrorWidth);   
+            GL.glTranslated(0, 0, mirrorWidth);
+            rightMirrorSurface.Draw();
+            leftMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -115,6 +117,14 @@ namespace OpenGL
             GL.glPushMatrix();
             //GL.glScalef(-1, 1, 1); //swap on Z axis
             GL.glTranslated(mirrorWidth * 2, 0, 0);
+            backMirrorSurface.Draw();
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+
+            // draw reflected back mirror scene for left mirror scene
+            GL.glPushMatrix();
+            GL.glTranslated(mirrorWidth, 0, -mirrorWidth);
+            GL.glScalef(-1, 1, -1); //swap on Z axis
             rubiksCube.Draw();
             GL.glPopMatrix();
 
@@ -132,6 +142,14 @@ namespace OpenGL
             GL.glPushMatrix();
             //GL.glScalef(-1, 1, 1); //swap on Z axis
             GL.glTranslated(-mirrorWidth * 2, 0, 0);
+            backMirrorSurface.Draw();
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+
+            // draw reflected back mirror scene for left mirror scene
+            GL.glPushMatrix();
+            GL.glTranslated(-mirrorWidth, 0, -mirrorWidth);
+            GL.glScalef(-1, 1, -1); //swap on Z axis
             rubiksCube.Draw();
             GL.glPopMatrix();
 

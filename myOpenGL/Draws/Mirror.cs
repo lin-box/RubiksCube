@@ -49,8 +49,8 @@ namespace RubikCube.Draws
             float[,] surf = new float[3, 3];
             if (leftMirror)
             {
-                float cosAngle = (float)(Math.Cos(Math.PI * (this.AngleY) / 180.0));
-                float sinAngle = (float)(Math.Sin(Math.PI * (this.AngleY) / 180.0));
+                float cosAngle = (float)(Math.Cos(Math.PI * (-this.AngleY+180) / 180.0));
+                float sinAngle = (float)(Math.Sin(Math.PI * (-this.AngleY+180) / 180.0));
                 surf[0, 0] = (float)this.x + (float)((-cosAngle * this.mirrorWidth) + 0 + (sinAngle * 0));    // Rotation matrix to Y axis
                 surf[0, 1] = (float)this.y + (float)(0 + -mirrorHeight / 2 + 0);                              // Rotation matrix to Y axis
                 surf[0, 2] = (float)this.z + (float)((-sinAngle * this.mirrorWidth) + 0 + (-cosAngle * 0));   // Rotation matrix to Y axis
