@@ -101,9 +101,9 @@ namespace OpenGL
             // reflection is drawn only where STENCIL buffer value equal to 1
             GL.glStencilFunc(GL.GL_EQUAL, 1, 0xFFFFFFFF);
             GL.glStencilOp(GL.GL_KEEP, GL.GL_KEEP, GL.GL_KEEP); // keep object origenal color
-
             GL.glEnable(GL.GL_STENCIL_TEST);
 
+           
             // draw reflected scene for back mirror
             GL.glPushMatrix();
             GL.glScalef(1, 1, -1); //swap on Z axis
@@ -113,22 +113,35 @@ namespace OpenGL
             rubiksCube.Draw();
             GL.glPopMatrix();
 
-            // draw reflected left mirror scene for right mirror scene
-            GL.glPushMatrix();
-            //GL.glScalef(-1, 1, 1); //swap on Z axis
-            GL.glTranslated(mirrorWidth * 2, 0, 0);
-            backMirrorSurface.Draw();
-            rubiksCube.Draw();
-            GL.glPopMatrix();
 
-            // draw reflected back mirror scene for left mirror scene
+            //   Draw scene in right mirror
+
+            // draw reflected back mirror scene in right mirror stage 1 scene
             GL.glPushMatrix();
             GL.glTranslated(mirrorWidth, 0, -mirrorWidth);
-            GL.glScalef(-1, 1, -1); //swap on Z axis
+            GL.glScalef(-1, 1, -1); //swap on X & Z axis
+            leftMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
 
-            // draw reflected scene for right mirror
+            // draw reflected back mirror scene in right mirror stage 2 scene
+            GL.glPushMatrix();
+            GL.glTranslated(mirrorWidth * 2, 0, -mirrorWidth);
+            GL.glScalef(1, 1, -1); //swap on Z axis
+            rightMirrorSurface.Draw();
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+            
+            // draw reflected left mirror scene in right mirror stage 2 scene
+            GL.glPushMatrix();
+            //GL.glScalef(-1, 1, 1); //swap on X axis
+            GL.glTranslated(mirrorWidth * 2, 0, 0);
+            backMirrorSurface.Draw();
+            rightMirrorSurface.Draw();
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+            
+            // draw reflected scene for right mirror stage 1
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(-mirrorWidth, 0, 0);
@@ -136,25 +149,36 @@ namespace OpenGL
             backMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
-         
 
-            // draw reflected right mirror scene for left mirror scene
-            GL.glPushMatrix();
-            //GL.glScalef(-1, 1, 1); //swap on Z axis
-            GL.glTranslated(-mirrorWidth * 2, 0, 0);
-            backMirrorSurface.Draw();
-            rubiksCube.Draw();
-            GL.glPopMatrix();
 
-            // draw reflected back mirror scene for left mirror scene
+            //   Draw scene in left mirror
+
+            // draw reflected back mirror scene in left mirror stage 1 scene
             GL.glPushMatrix();
             GL.glTranslated(-mirrorWidth, 0, -mirrorWidth);
             GL.glScalef(-1, 1, -1); //swap on Z axis
+            rightMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
 
+            // draw reflected back mirror scene in left mirror stage 2 scene
+            GL.glPushMatrix();
+            GL.glTranslated(-mirrorWidth * 2, 0, -mirrorWidth);
+            GL.glScalef(1, 1, -1); //swap on Z axis
+            leftMirrorSurface.Draw();
+            rubiksCube.Draw();
+            GL.glPopMatrix();
 
-            // draw reflected scene for left mirror
+            // draw reflected right mirror scene in left mirror stage 2 scene
+            GL.glPushMatrix();
+            //GL.glScalef(-1, 1, 1); //swap on X axis
+            GL.glTranslated(-mirrorWidth * 2, 0, 0);
+            backMirrorSurface.Draw();
+            leftMirrorSurface.Draw();
+            rubiksCube.Draw();
+            GL.glPopMatrix();
+
+            // draw reflected scene for left mirror stage 1
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
             GL.glTranslated(mirrorWidth, 0, 0);
@@ -162,6 +186,7 @@ namespace OpenGL
             backMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
+
 
             // really draw wall 
             //( half-transparent ( see its color's alpha byte)))
@@ -438,9 +463,9 @@ namespace OpenGL
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
-            DrawFigures();
+            //DrawFigures();
 
-            //DrawMirrors();
+            DrawMirrors();
 
             GL.glFlush();
 

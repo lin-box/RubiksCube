@@ -24,7 +24,7 @@ namespace RubikCube
 
         public void Animate()
         {
-            int rotateFactor = 5;
+            int rotateFactor = 1;
 
             if (moviment.Axis == Axis.X)
             {
