@@ -38,16 +38,16 @@ namespace OpenGL
 
         public cOGL(Control pb)
         {
-            p=pb;
+            p = pb;
             Width = p.Width;
-            Height = p.Height; 
+            Height = p.Height;
             InitializeGL();
 
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0,false, texture[0]);
-            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0,false, texture[0]);
-            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth*1.5, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0,true, texture[0]);
-            
+            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, false, texture[0]);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.5, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, false, texture[0]);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.5, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, true, texture[0]);
+
         }
 
         ~cOGL()
@@ -55,25 +55,25 @@ namespace OpenGL
             WGL.wglDeleteContext(m_uint_RC);
         }
 
-		uint m_uint_HWND = 0;
+        uint m_uint_HWND = 0;
 
         public uint HWND
-		{
-			get{ return m_uint_HWND; }
-		}
-		
-        uint m_uint_DC   = 0;
+        {
+            get { return m_uint_HWND; }
+        }
+
+        uint m_uint_DC = 0;
 
         public uint DC
-		{
-			get{ return m_uint_DC;}
-		}
-		uint m_uint_RC   = 0;
+        {
+            get { return m_uint_DC; }
+        }
+        uint m_uint_RC = 0;
 
         public uint RC
-		{
-			get{ return m_uint_RC; }
-		}
+        {
+            get { return m_uint_RC; }
+        }
 
         void DrawMirrors()
         {
@@ -103,7 +103,7 @@ namespace OpenGL
             GL.glStencilOp(GL.GL_KEEP, GL.GL_KEEP, GL.GL_KEEP); // keep object origenal color
             GL.glEnable(GL.GL_STENCIL_TEST);
 
-           
+
             // draw reflected scene for back mirror
             GL.glPushMatrix();
             GL.glScalef(1, 1, -1); //swap on Z axis
@@ -131,7 +131,7 @@ namespace OpenGL
             rightMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
-            
+
             // draw reflected left mirror scene in right mirror stage 2 scene
             GL.glPushMatrix();
             //GL.glScalef(-1, 1, 1); //swap on X axis
@@ -140,7 +140,7 @@ namespace OpenGL
             rightMirrorSurface.Draw();
             rubiksCube.Draw();
             GL.glPopMatrix();
-            
+
             // draw reflected scene for right mirror stage 1
             GL.glPushMatrix();
             GL.glScalef(-1, 1, 1); //swap on X axis
@@ -218,7 +218,7 @@ namespace OpenGL
 
         void DrawAxes(Color xColor, Color yColor, Color zColor)
         {
-            GL.glBegin( GL.GL_LINES);
+            GL.glBegin(GL.GL_LINES);
             //x
             GL.glColor3f(xColor.R, xColor.G, xColor.B);
             GL.glVertex3f(-3.0f, 0.0f, 0.0f);
@@ -286,7 +286,7 @@ namespace OpenGL
 
         void MakeShadowMatrix(float[,] points)
         {
-            
+
             //float[] planeCoeff = new float[4];
             float dot;
 
@@ -336,23 +336,19 @@ namespace OpenGL
 
         void DrawLight()
         {
-            //!!!!!!!!!!!!!
-            GL.glPushMatrix();
-            //!!!!!!!!!!!!!
-
             GL.glDisable(GL.GL_STENCIL_TEST);
-            //Draw Light Source
-            GL.glDisable(GL.GL_LIGHTING);
-            GL.glTranslatef(pos[0], pos[1], pos[2]);
+
+            GL.glPushMatrix();
+
             //Yellow Light source
             GL.glColor3f(1, 1, 0);
-            GLUT.glutSolidSphere(0.1, 8, 8);
+            GL.glTranslatef(pos[0], pos[1], pos[2]);
+            GLUT.glutSolidSphere(0.05, 8, 8);
             GL.glTranslatef(-pos[0], -pos[1], -pos[2]);
-            GL.glEnd();
 
-            //main System draw
+            float[] light_position = { pos[0], pos[1], pos[2] };
+            GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_position);
             GL.glEnable(GL.GL_LIGHTING);
-
             GL.glPopMatrix();
         }
 
@@ -405,17 +401,18 @@ namespace OpenGL
             //!!!!!!!!!!!!!
             GL.glDisable(GL.GL_STENCIL_TEST);
         }
+
         void DrawFigures()
         {
             DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
             DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
             DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
-           
+
             DrawLight();
             GL.glEnable(GL.GL_LIGHTING);
             DrawObjects(false);
             DrawShadowsOnSurface(backMirrorSurface);
-            
+
             DrawLight();
             GL.glEnable(GL.GL_LIGHTING);
             DrawObjects(false);
@@ -436,7 +433,6 @@ namespace OpenGL
             GL.glPopMatrix();
         }
 
-        
         public void Draw()
         {
             //Shadows
@@ -445,35 +441,33 @@ namespace OpenGL
             pos[2] = ScrollValue[12];
             pos[3] = 1.0f;
             //Shadows
-            
 
             if (m_uint_DC == 0 || m_uint_RC == 0)
                 return;
 
             GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT | GL.GL_STENCIL_BUFFER_BIT);
-            
+
             GL.glLoadIdentity();
 
             GLU.gluLookAt(ScrollValue[1], 2, 10, 0, 0, 0, 0, 1, 0);
-            
-           
+
             GL.glTranslated(0, 0, -8);
-         
-            GL.glRotated(20, 1, 0, 0);
+
+            //GL.glRotated(20, 1, 0, 0);
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
-            //DrawFigures();
+            DrawFigures();
 
-            DrawMirrors();
+            //DrawMirrors();
 
             GL.glFlush();
 
             WGL.wglSwapBuffers(m_uint_DC);
         }
 
-		protected virtual void InitializeGL()
-		{
+        protected virtual void InitializeGL()
+        {
             m_uint_HWND = (uint)p.Handle.ToInt32();
             m_uint_DC = WGL.GetDC(m_uint_HWND);
 
@@ -532,7 +526,7 @@ namespace OpenGL
         }
 
         public void initRenderingGL()
-		{
+        {
             if (m_uint_DC == 0 || m_uint_RC == 0)
                 return;
             if (this.Width == 0 || this.Height == 0)
@@ -560,10 +554,10 @@ namespace OpenGL
             //save the current MODELVIEW Matrix (now it is Identity)
             //GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
 
-            InitTexture("IMG\\1.bmp");
+            //InitTexture("IMG\\1.bmp"); //LIGHT_FIX_CHANGE
         }
 
-        public uint[] texture;      // texture
+        public uint[] texture = new uint[1];      // texture //LIGHT_FIX_CHANGE
 
         void InitTexture(string imageBMPfile) // Update from P2
         {
@@ -597,4 +591,3 @@ namespace OpenGL
     }
 
 }
-

@@ -14,6 +14,7 @@ namespace RubikCube.Draws
         Color insideColor;
         public FaceCube<Color> shadowsFaceColors;
         public List<FaceCube<Color>> prevFaceColors;
+        bool isPrevColorShade;
         private readonly object syncLock = new object();
 
         public int AngleX, AngleY, AngleZ;
@@ -25,17 +26,19 @@ namespace RubikCube.Draws
             insideColor = Color.Black;
             shadowsFaceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
             prevFaceColors = new List<FaceCube<Color>>();
+            isPrevColorShade = false;
 
             /* Drow 3*3*3 black cubes so the user 
              * wont see blank holes between the colored cubes */
-            double blockSpace = .66;
+            double blockSpace = 1.1;
             for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
                 for (double y = -blockSpace; y <= blockSpace; y += blockSpace)
                 {
                     for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
-                        composingCubes.Add(new Cube(.33, x, y, z));
+                        composingCubes.Add(new Cube(.55f, x, y, z));
+                        // half of 1.1 so we get a full black cube
                     }
                 }
             }
@@ -43,7 +46,7 @@ namespace RubikCube.Draws
             /* Drow 3*3*3 colored cubes
              * with block that bigger than the black 
              * and color area that is smaller then the black area */
-            blockSpace = .73;
+            blockSpace = 1.32;
 
             for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
@@ -52,7 +55,7 @@ namespace RubikCube.Draws
                     for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
                         var cubeColor = this.GenerateCubeColor(x, y, z);
-                        composingCubes.Add(new Cube(.32, x, y, z, cubeColor));
+                        composingCubes.Add(new Cube(.60f, x, y, z, cubeColor));
                     }
                 }
             }
@@ -189,7 +192,13 @@ namespace RubikCube.Draws
             AdjustRotation();
             foreach (var item in composingCubes)
             {
+                GL.glPushMatrix();
+                GL.glTranslated(0, 0, -21);
+                GL.glTranslated(0, -3.5f, 0);
                 item.Draw();
+                GL.glTranslated(0, 0, +21);
+                GL.glTranslated(0, +3.5f, 0);
+                GL.glPopMatrix();
             }
         }
 
@@ -197,11 +206,15 @@ namespace RubikCube.Draws
         {
             if (isShadows)
             {
-                for(int i = 0; i< composingCubes.Count; i++)
+                if (!isPrevColorShade)
                 {
-                    FaceCube<Color> tempFaceColors = composingCubes[i].faceColors;
-                    composingCubes[i].faceColors = shadowsFaceColors;
-                    prevFaceColors[i] = tempFaceColors;
+                    for (int i = 0; i < composingCubes.Count; i++)
+                    {
+                        FaceCube<Color> tempFaceColors = composingCubes[i].faceColors;
+                        composingCubes[i].faceColors = shadowsFaceColors;
+                        prevFaceColors[i] = tempFaceColors;
+                    }
+                    isPrevColorShade = true;
                 }
             }
             else
@@ -210,6 +223,7 @@ namespace RubikCube.Draws
                 {
                     composingCubes[i].faceColors = prevFaceColors[i];
                 }
+                isPrevColorShade = false;
             }
         }
 
