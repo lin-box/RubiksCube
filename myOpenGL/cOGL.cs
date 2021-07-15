@@ -12,8 +12,8 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
-        double mirrorHeight = 8;
-        double mirrorWidth = 6;
+        double mirrorHeight = 12;
+        double mirrorWidth = 9;
 
         const int x = 0;
         const int y = 1;
@@ -343,7 +343,7 @@ namespace OpenGL
             //Yellow Light source
             GL.glColor3f(1, 1, 0);
             GL.glTranslatef(pos[0], pos[1], pos[2]);
-            GLUT.glutSolidSphere(0.05, 8, 8);
+            GLUT.glutSolidSphere(0.1, 8, 8);
             GL.glTranslatef(-pos[0], -pos[1], -pos[2]);
 
             float[] light_position = { pos[0], pos[1], pos[2] };
@@ -451,9 +451,9 @@ namespace OpenGL
 
             GLU.gluLookAt(ScrollValue[1], 2, 10, 0, 0, 0, 0, 1, 0);
 
-            GL.glTranslated(0, 0, -8);
+            GL.glTranslated(0, -3f, -15);
 
-            GL.glRotated(20, 1, 0, 0);
+            //GL.glRotated(20, 1, 0, 0);
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
@@ -554,7 +554,7 @@ namespace OpenGL
             //save the current MODELVIEW Matrix (now it is Identity)
             //GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
 
-            //InitTexture("IMG\\1.bmp"); //LIGHT_FIX_CHANGE
+            //InitTexture("IMG\\1.bmp"); //LIGHT_FIX_CHANGE, get advice from moshe
         }
 
         public uint[] texture = new uint[1];      // texture //LIGHT_FIX_CHANGE

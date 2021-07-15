@@ -210,11 +210,12 @@ namespace myOpenGL
             // hScrollBar12
             // 
             this.hScrollBar12.Location = new System.Drawing.Point(569, 441);
-            this.hScrollBar12.Maximum = 200;
+            this.hScrollBar12.Maximum = 250;
+            this.hScrollBar12.Minimum = 50;
             this.hScrollBar12.Name = "hScrollBar12";
             this.hScrollBar12.Size = new System.Drawing.Size(143, 17);
             this.hScrollBar12.TabIndex = 34;
-            this.hScrollBar12.Value = 143;
+            this.hScrollBar12.Value = 150;
             this.hScrollBar12.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
             // 
             // hScrollBar11
@@ -224,17 +225,18 @@ namespace myOpenGL
             this.hScrollBar11.Name = "hScrollBar11";
             this.hScrollBar11.Size = new System.Drawing.Size(143, 17);
             this.hScrollBar11.TabIndex = 33;
-            this.hScrollBar11.Value = 99;
+            this.hScrollBar11.Value = 100;
             this.hScrollBar11.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
             // 
             // hScrollBar13
             // 
             this.hScrollBar13.Location = new System.Drawing.Point(569, 465);
-            this.hScrollBar13.Maximum = 200;
+            this.hScrollBar13.Maximum = 350;
+            this.hScrollBar13.Minimum = -100;
             this.hScrollBar13.Name = "hScrollBar13";
             this.hScrollBar13.Size = new System.Drawing.Size(143, 17);
             this.hScrollBar13.TabIndex = 32;
-            this.hScrollBar13.Value = 150;
+            this.hScrollBar13.Value = 250;
             this.hScrollBar13.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
             // 
             // hScrollBar2
