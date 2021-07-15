@@ -404,22 +404,20 @@ namespace OpenGL
 
         void DrawFigures()
         {
+            DrawLight();
+
             DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
             DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
             DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
 
-            DrawLight();
-            GL.glEnable(GL.GL_LIGHTING);
             DrawObjects(false);
             DrawShadowsOnSurface(backMirrorSurface);
 
             DrawLight();
-            GL.glEnable(GL.GL_LIGHTING);
             DrawObjects(false);
             DrawShadowsOnSurface(rightMirrorSurface);
 
             DrawLight();
-            GL.glEnable(GL.GL_LIGHTING);
             DrawObjects(false);
             DrawShadowsOnSurface(leftMirrorSurface);
 
