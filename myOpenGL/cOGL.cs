@@ -453,7 +453,7 @@ namespace OpenGL
 
             GL.glTranslated(0, 0, -8);
 
-            //GL.glRotated(20, 1, 0, 0);
+            GL.glRotated(20, 1, 0, 0);
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
