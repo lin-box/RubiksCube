@@ -37,8 +37,8 @@ namespace RubikCube.Draws
             this.leftMirror = leftMirror;
 
             //make the surface transparent  
-            GL.glEnable(GL.GL_BLEND); 
             GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+            GL.glEnable(GL.GL_BLEND); 
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture);
            
@@ -98,8 +98,10 @@ namespace RubikCube.Draws
         public void DrawAsWall(float[] colorArray, float[] minusArray) //, float[] minusArray
         {
 
-            GL.glPushMatrix();
+            GL.glDisable(GL.GL_TEXTURE_2D);
 
+            GL.glPushMatrix();
+            
             doRotations();
             GL.glBegin(GL.GL_QUADS);
 
@@ -113,6 +115,8 @@ namespace RubikCube.Draws
             GL.glEnd();
 
             GL.glPopMatrix();
+
+            GL.glEnable(GL.GL_TEXTURE_2D);
         }
 
 

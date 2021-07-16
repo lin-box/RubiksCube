@@ -24,6 +24,7 @@ namespace OpenGL
         public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
+        public uint[] texture = new uint[1];      // texture //LIGHT_FIX_CHANGE
         public float[] ScrollValue = new float[14];
         float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
@@ -42,11 +43,12 @@ namespace OpenGL
             Width = p.Width;
             Height = p.Height;
             InitializeGL();
+            InitTextures();
 
             rubiksCube = new RubiksCube();
             backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, false, texture[0]);
-            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.5, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, false, texture[0]);
-            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.5, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, true, texture[0]);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, false, texture[0]);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, true, texture[0]);
 
         }
 
@@ -194,12 +196,12 @@ namespace OpenGL
             GL.glDepthMask((byte)GL.GL_FALSE);
             backMirrorSurface.Draw();
 
-            if (ScrollValue[1] < (3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[1] > -(3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            if (ScrollValue[1] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[1] > -(4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
             {
                 rightMirrorSurface.Draw(); //rightMinusArray
                 leftMirrorSurface.Draw(); //leftMinusArray
             }
-            else if (ScrollValue[1] < (3 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            else if (ScrollValue[1] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
             {
                 leftMirrorSurface.DrawAsWall(leftWallColorArray, zeroArray); //, leftMinusArray
                 rightMirrorSurface.Draw(); //rightMinusArray
@@ -234,10 +236,11 @@ namespace OpenGL
             GL.glEnd();
         }
 
-        // Reduces a normal vector specified as a set of three coordinates,
-        // to a unit normal vector of length one.
         void ReduceToUnit(float[] vector)
         {
+            // Reduces a normal vector specified as a set of three coordinates,
+            // to a unit normal vector of length one.
+
             float length;
 
             // Calculate the length of the vector		
@@ -257,10 +260,10 @@ namespace OpenGL
             vector[2] /= length;
         }
 
-
-        // Points p1, p2, & p3 specified in counter clock-wise order
         void calcNormal(float[,] v, float[] outp)
         {
+            // Points p1, p2, & p3 specified in counter clock-wise order
+
             float[] v1 = new float[3];
             float[] v2 = new float[3];
 
@@ -282,7 +285,6 @@ namespace OpenGL
             // Normalize the vector (shorten length to one)
             ReduceToUnit(outp);
         }
-
 
         void MakeShadowMatrix(float[,] points)
         {
@@ -332,7 +334,6 @@ namespace OpenGL
             cubeXform[11] = 0.0f - pos[3] * planeCoeff[2];
             cubeXform[15] = dot - pos[3] * planeCoeff[3];
         }
-        //Shadows
 
         void DrawLight()
         {
@@ -449,15 +450,15 @@ namespace OpenGL
 
             GLU.gluLookAt(ScrollValue[1], 2, 10, 0, 0, 0, 0, 1, 0);
 
-            GL.glTranslated(0, -3f, -15);
+            GL.glTranslated(0, -1f, -12);
 
-            //GL.glRotated(20, 1, 0, 0);
+            GL.glRotated(20, 1, 0, 0);
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
-            DrawFigures();
+            //DrawFigures();
 
-            //DrawMirrors();
+            DrawMirrors();
 
             GL.glFlush();
 
@@ -551,13 +552,14 @@ namespace OpenGL
             GL.glMatrixMode(GL.GL_MODELVIEW);
             //save the current MODELVIEW Matrix (now it is Identity)
             //GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
-
-            //InitTexture("IMG\\1.bmp"); //LIGHT_FIX_CHANGE, get advice from moshe
         }
 
-        public uint[] texture = new uint[1];      // texture //LIGHT_FIX_CHANGE
+        void InitTextures()
+        {
+            InitTexture("IMG\\1.bmp"); 
+        }
 
-        void InitTexture(string imageBMPfile) // Update from P2
+        void InitTexture(string imageBMPfile)
         {
             GL.glEnable(GL.GL_TEXTURE_2D);
 
