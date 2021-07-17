@@ -21,9 +21,10 @@ namespace RubikCube.Draws
         public int AngleX = 0;
         public int AngleY = 0;
         public int AngleZ = 0;
-        public uint texture;
+        public uint texture1;
+        public uint texture2;
         public bool leftMirror;
-        public Mirror(double mirrorHeight, double mirrorWidth, double x, double y, double z, int AngleX, int AngleY, int AngleZ, bool leftMirror, uint texture)   
+        public Mirror(double mirrorHeight, double mirrorWidth, double x, double y, double z, int AngleX, int AngleY, int AngleZ, bool leftMirror, uint[] texture)   
         {
             this.mirrorHeight = mirrorHeight;
             this.mirrorWidth = mirrorWidth;
@@ -33,15 +34,13 @@ namespace RubikCube.Draws
             this.AngleX = AngleX;
             this.AngleY = AngleY;
             this.AngleZ = AngleZ;
-            this.texture = texture;
+            this.texture1 = texture[0];
+            this.texture2 = texture[2];
             this.leftMirror = leftMirror;
 
             //make the surface transparent  
             GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
             GL.glEnable(GL.GL_BLEND); 
-            GL.glEnable(GL.GL_TEXTURE_2D);
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture);
-           
         }
 
         public float[,] getSurf()
@@ -97,8 +96,9 @@ namespace RubikCube.Draws
 
         public void DrawAsWall(float[] colorArray, float[] minusArray) //, float[] minusArray
         {
-
-            GL.glDisable(GL.GL_TEXTURE_2D);
+            //GL.glEnable(GL.GL_LIGHTING);
+            GL.glEnable(GL.GL_TEXTURE_2D);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture2);
 
             GL.glPushMatrix();
             
@@ -106,23 +106,27 @@ namespace RubikCube.Draws
             GL.glBegin(GL.GL_QUADS);
 
             GL.glColor4d(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-
+            GL.glTexCoord2d(0, 0);
             GL.glVertex3d(mirrorWidth + minusArray[0], mirrorHeight / 2 + minusArray[1], 0 + minusArray[2]);
+            GL.glTexCoord2d(1, 0);
             GL.glVertex3d(0 + minusArray[0], mirrorHeight / 2 + minusArray[1], 0 + minusArray[2]);
+            GL.glTexCoord2d(1, 1);
             GL.glVertex3d(0 + minusArray[0], -mirrorHeight / 2 + minusArray[1], 0 + minusArray[2]);
+            GL.glTexCoord2d(0, 1);
             GL.glVertex3d(mirrorWidth + minusArray[0], -mirrorHeight / 2 + minusArray[1], 0 + minusArray[2]);
 
             GL.glEnd();
 
             GL.glPopMatrix();
 
-            //+++GL.glEnable(GL.GL_TEXTURE_2D);
+            GL.glDisable(GL.GL_TEXTURE_2D);
+            //GL.glDisable(GL.GL_LIGHTING);
         }
 
         public void Draw() //float[] minumArray
         {
             GL.glEnable(GL.GL_TEXTURE_2D);
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture1);
 
             GL.glPushMatrix();
 
@@ -141,14 +145,15 @@ namespace RubikCube.Draws
             GL.glVertex3d(0, -mirrorHeight / 2, 0);
             GL.glTexCoord2d(0, 1);
             GL.glVertex3d(mirrorWidth, -mirrorHeight / 2, 0);
-
-            GL.glDisable(GL.GL_TEXTURE_2D);
+            
             GL.glEnd();
 
         //    GL.glEnable(GL.GL_LIGHTING);
 
             GL.glPopMatrix();
- 
+
+            GL.glDisable(GL.GL_TEXTURE_2D);
+
         }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
