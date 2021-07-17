@@ -5,6 +5,13 @@ using System.Windows.Forms;
 using RubikCube;
 using RubikCube.Draws;
 
+/**
+ *1.
+ * 
+ * 
+ * 
+ */
+
 namespace OpenGL
 {
     class cOGL
@@ -359,7 +366,7 @@ namespace OpenGL
             GL.glPushMatrix();
             //!!!!!!!!!!!!!
 
-            GL.glDisable(GL.GL_LIGHTING);
+            //GL.glDisable(GL.GL_LIGHTING);
 
             // we want to cut the shadow that is not on this surface
             GL.glEnable(GL.GL_STENCIL_TEST);
@@ -411,15 +418,12 @@ namespace OpenGL
             DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
             DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
 
+            DrawLight();
+
             DrawObjects(false);
+
             DrawShadowsOnSurface(backMirrorSurface);
-
-            DrawLight();
-            DrawObjects(false);
             DrawShadowsOnSurface(rightMirrorSurface);
-
-            DrawLight();
-            DrawObjects(false);
             DrawShadowsOnSurface(leftMirrorSurface);
 
         }
