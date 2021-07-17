@@ -119,9 +119,10 @@ namespace RubikCube.Draws
             GL.glEnable(GL.GL_TEXTURE_2D);
         }
 
-
         public void Draw() //float[] minumArray
         {
+            GL.glEnable(GL.GL_TEXTURE_2D);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture);
 
             GL.glPushMatrix();
 

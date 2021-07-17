@@ -79,7 +79,6 @@ namespace OpenGL
 
         void DrawMirrors()
         {
-
             //only wall, draw only to STENCIL buffer
             GL.glEnable(GL.GL_STENCIL_TEST);
             GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
@@ -476,11 +475,13 @@ namespace OpenGL
 
             GLU.gluLookAt(ScrollValue[1], 2, 10, 0, 0, 0, 0, 1, 0);
 
-            GL.glTranslated(0, -1f, -12);
+            GL.glTranslated(0, 0, -20);
+
+            DrawBackground();
 
             GL.glRotated(20, 1, 0, 0);
 
-            DrawBackground();
+            GL.glTranslated(0, 2, 8);
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
