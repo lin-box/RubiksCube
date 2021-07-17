@@ -592,7 +592,7 @@ namespace OpenGL
         void GenerateTextures()
         {
             GL.glGenTextures(3, texture);
-            string[] imagesName = { "IMG\\1.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall1.bmp" };
+            string[] imagesName = { "IMG\\1.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall3.bmp" };
             for (int i = 0; i < 3; i++)
             {
                 Bitmap image = new Bitmap(imagesName[i]);
