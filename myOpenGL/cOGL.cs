@@ -24,7 +24,7 @@ namespace OpenGL
         public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
-        public uint[] texture = new uint[1];      // texture //LIGHT_FIX_CHANGE
+        public uint[] texture = new uint[3];      // texture : [0] = mirror, [1] = bakground, [2] = ..
         public float[] ScrollValue = new float[14];
         float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
@@ -432,6 +432,32 @@ namespace OpenGL
             GL.glPopMatrix();
         }
 
+        void DrawBackground()
+        {
+            GL.glDisable(GL.GL_BLEND);
+            GL.glTranslated(0, 0f, -5);
+
+            GL.glEnable(GL.GL_TEXTURE_2D);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[1]);
+            GL.glBegin(GL.GL_QUADS);
+
+            //GL.glColor3f(Color.Red.R, Color.Red.G, Color.Red.B);
+
+            GL.glTexCoord2f(0,0);
+            GL.glVertex3f(-20, -25, 0);
+            GL.glTexCoord2f(0, 1);
+            GL.glVertex3f(-20, 25, 0);
+            GL.glTexCoord2f(1, 1);
+            GL.glVertex3f(20, 25, 0);
+            GL.glTexCoord2f(1, 0);
+            GL.glVertex3f(20, -25, 0);
+
+            GL.glEnd();
+            GL.glDisable(GL.GL_TEXTURE_2D);
+            GL.glTranslated(0, 0f, 5);
+            GL.glEnable(GL.GL_BLEND);
+        }
+
         public void Draw()
         {
             //Shadows
@@ -453,6 +479,8 @@ namespace OpenGL
             GL.glTranslated(0, -1f, -12);
 
             GL.glRotated(20, 1, 0, 0);
+
+            DrawBackground();
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
@@ -556,7 +584,52 @@ namespace OpenGL
 
         void InitTextures()
         {
-            InitTexture("IMG\\1.bmp"); 
+            // InitTexture("IMG\\1.bmp");
+            GenerateTextures();
+        }
+
+        void GenerateTextures()
+        {
+            GL.glGenTextures(3, texture);
+            string[] imagesName = { "IMG\\1.bmp", "IMG\\blackspace.bmp", "IMG\\1.bmp" };
+            for (int i = 0; i < 3; i++)
+            {
+                Bitmap image = new Bitmap(imagesName[i]);
+                image.RotateFlip(RotateFlipType.RotateNoneFlipY); //Y axis in Windows is directed downwards, while in OpenGL-upwards
+                System.Drawing.Imaging.BitmapData bitmapdata;
+                Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
+
+                bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+                GL.glBindTexture(GL.GL_TEXTURE_2D, texture[i]);
+                //2D for XYZ
+                //The level-of-detail number. Level 0 is the base image level
+                //The number of color components in the texture. 
+                //Must be 1, 2, 3, or 4, or one of the following 
+                //    symbolic constants: 
+                //                GL_ALPHA, GL_ALPHA4, 
+                //                GL_ALPHA8, GL_ALPHA12, GL_ALPHA16, GL_LUMINANCE, GL_LUMINANCE4, 
+                //                GL_LUMINANCE8, GL_LUMINANCE12, GL_LUMINANCE16, GL_LUMINANCE_ALPHA, 
+                //                GL_LUMINANCE4_ALPHA4, GL_LUMINANCE6_ALPHA2, GL_LUMINANCE8_ALPHA8, 
+                //                GL_LUMINANCE12_ALPHA4, GL_LUMINANCE12_ALPHA12, GL_LUMINANCE16_ALPHA16, 
+                //                GL_INTENSITY, GL_INTENSITY4, GL_INTENSITY8, GL_INTENSITY12, 
+                //                GL_INTENSITY16, GL_R3_G3_B2, GL_RGB, GL_RGB4, GL_RGB5, GL_RGB8, 
+                //                GL_RGB10, GL_RGB12, GL_RGB16, GL_RGBA, GL_RGBA2, GL_RGBA4, GL_RGB5_A1, 
+                //                GL_RGBA8, GL_RGB10_A2, GL_RGBA12, or GL_RGBA16.
+
+
+                GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,
+                                                              //The width of the border. Must be either 0 or 1.
+                                                              //The format of the pixel data
+                                                              //The data type of the pixel data
+                                                              //A pointer to the image data in memory
+                                                              0, GL.GL_BGR_EXT, GL.GL_UNSIGNED_byte, bitmapdata.Scan0);
+                GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, (int)GL.GL_LINEAR);
+                GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, (int)GL.GL_LINEAR);
+
+                image.UnlockBits(bitmapdata);
+                image.Dispose();
+            }
         }
 
         void InitTexture(string imageBMPfile)
