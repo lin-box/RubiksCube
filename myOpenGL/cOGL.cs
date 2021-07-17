@@ -1,9 +1,30 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using RubikCube;
 using RubikCube.Draws;
+
+/**
+ * חובה
+ *1. לחצני רדיו לחדרים
+ *2. להוסיף את הקוד של קיוב מפ כחדר
+ *3. נורמלים לקירות של צל
+ *4. לסדר פקדים במסך לפי חדרים
+ *5. להוסיף טקסט ללחצנים
+ *6.
+ *
+ *רצוי
+ *1. בליינד לצל
+ *2. להוסיף חומר לקוביה
+ *3. קירות מתחלפים בקיוב מפ לפי משהו..
+ *4.
+ * 
+ * 
+ *
+ * 
+ * 
+ */
 
 namespace OpenGL
 {
@@ -359,7 +380,7 @@ namespace OpenGL
             GL.glPushMatrix();
             //!!!!!!!!!!!!!
 
-            GL.glDisable(GL.GL_LIGHTING);
+            //GL.glDisable(GL.GL_LIGHTING);
 
             // we want to cut the shadow that is not on this surface
             GL.glEnable(GL.GL_STENCIL_TEST);
@@ -411,15 +432,12 @@ namespace OpenGL
             DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
             DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
 
+            DrawLight();
+
             DrawObjects(false);
+
             DrawShadowsOnSurface(backMirrorSurface);
-
-            DrawLight();
-            DrawObjects(false);
             DrawShadowsOnSurface(rightMirrorSurface);
-
-            DrawLight();
-            DrawObjects(false);
             DrawShadowsOnSurface(leftMirrorSurface);
 
         }
