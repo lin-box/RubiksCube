@@ -46,7 +46,8 @@ namespace OpenGL
         public RubiksCube rubiksCube;
 
         public uint[] texture = new uint[3];      // texture : [0] = mirror, [1] = bakground, [2] = ..
-        public float[] ScrollValue = new float[14];
+        public float[] ScrollValue = new float[4];
+        public bool[] radioButtonChecked = new bool[3];
         float[] backWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
         float[] rightWallColorArray = new float[4]  { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
@@ -216,12 +217,12 @@ namespace OpenGL
             GL.glDepthMask((byte)GL.GL_FALSE);
             backMirrorSurface.Draw();
 
-            if (ScrollValue[1] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[1] > -(4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            if (ScrollValue[0] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[0] > -(4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
             {
                 rightMirrorSurface.Draw(); //rightMinusArray
                 leftMirrorSurface.Draw(); //leftMinusArray
             }
-            else if (ScrollValue[1] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            else if (ScrollValue[0] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
             {
                 leftMirrorSurface.DrawAsWall(leftWallColorArray, zeroArray); //, leftMinusArray
                 rightMirrorSurface.Draw(); //rightMinusArray
@@ -479,9 +480,9 @@ namespace OpenGL
         public void Draw()
         {
             //Shadows
-            pos[0] = ScrollValue[10];
-            pos[1] = ScrollValue[11];
-            pos[2] = ScrollValue[12];
+            pos[0] = ScrollValue[1];
+            pos[1] = ScrollValue[2];
+            pos[2] = ScrollValue[3];
             pos[3] = 1.0f;
             //Shadows
 
@@ -492,7 +493,7 @@ namespace OpenGL
 
             GL.glLoadIdentity();
 
-            GLU.gluLookAt(ScrollValue[1], 2, 10, 0, 0, 0, 0, 1, 0);
+            GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
 
             GL.glTranslated(0, 0, -20);
 
@@ -504,9 +505,17 @@ namespace OpenGL
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
-            DrawFigures();
+            if (radioButtonChecked[0])
+            {
+                rubiksCube.SetShadows(false);
+                DrawMirrors();
+            }
+                
+            else if (radioButtonChecked[1])
+                DrawFigures();
 
-            //DrawMirrors();
+            //else     //put here cube map function call
+
 
             GL.glFlush();
 
