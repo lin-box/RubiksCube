@@ -336,6 +336,7 @@ namespace OpenGL
 
         void DrawLight()
         {
+            GL.glDisable(GL.GL_TEXTURE_2D);
             GL.glDisable(GL.GL_STENCIL_TEST);
 
             GL.glPushMatrix();
@@ -485,9 +486,9 @@ namespace OpenGL
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
-            //DrawFigures();
+            DrawFigures();
 
-            DrawMirrors();
+            //DrawMirrors();
 
             GL.glFlush();
 
@@ -585,14 +586,13 @@ namespace OpenGL
 
         void InitTextures()
         {
-            // InitTexture("IMG\\1.bmp");
             GenerateTextures();
         }
 
         void GenerateTextures()
         {
             GL.glGenTextures(3, texture);
-            string[] imagesName = { "IMG\\1.bmp", "IMG\\blackspace.bmp", "IMG\\1.bmp" };
+            string[] imagesName = { "IMG\\3.bmp", "IMG\\bluespace.bmp", "IMG\\1.bmp" };
             for (int i = 0; i < 3; i++)
             {
                 Bitmap image = new Bitmap(imagesName[i]);
@@ -633,35 +633,6 @@ namespace OpenGL
             }
         }
 
-        void InitTexture(string imageBMPfile)
-        {
-            GL.glEnable(GL.GL_TEXTURE_2D);
-
-            texture = new uint[1];		// storage for texture
-
-            Bitmap image = new Bitmap(imageBMPfile);
-            image.RotateFlip(RotateFlipType.RotateNoneFlipY); //Y axis in Windows is directed downwards, while in OpenGL-upwards
-            System.Drawing.Imaging.BitmapData bitmapdata;
-            Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
-
-            bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-
-            GL.glGenTextures(1, texture);
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[0]);
-            //  VN-in order to use System.Drawing.Imaging.BitmapData Scan0 I've added overloaded version to
-            //  OpenGL.cs
-            //  [DllImport(GL_DLL, EntryPoint = "glTexImage2D")]
-            //  public static extern void glTexImage2D(uint target, int level, int internalformat, int width, int height, int border, uint format, uint type, IntPtr pixels);
-            GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,
-                0, GL.GL_BGR_EXT, GL.GL_UNSIGNED_byte, bitmapdata.Scan0);
-
-            GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, (int)GL.GL_LINEAR);		// Linear Filtering
-            GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, (int)GL.GL_LINEAR);		// Linear Filtering
-
-            image.UnlockBits(bitmapdata);
-            image.Dispose();
-        }
     }
 
 }
