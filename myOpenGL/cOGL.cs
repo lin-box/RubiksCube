@@ -26,9 +26,9 @@ namespace OpenGL
 
         public uint[] texture = new uint[3];      // texture : [0] = mirror, [1] = bakground, [2] = ..
         public float[] ScrollValue = new float[14];
-        float[] backWallColorArray = new float[4] { 0.9f, 0.9f, 0.5f, 1f };
-        float[] leftWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
-        float[] rightWallColorArray = new float[4] { 0.8f, 0.9f, 0.6f, 1f };
+        float[] backWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
+        float[] leftWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
+        float[] rightWallColorArray = new float[4]  { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
         float[] backMinusArray = new float[3] { 0f, 0.0f, -0.01f };
         float[] leftMinusArray = new float[3] { 0f, 0f, 0.01f };
         float[] rightMinusArray = new float[3] { 0f, 0f, -0.01f };
@@ -46,9 +46,9 @@ namespace OpenGL
             InitTextures();
 
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, false, texture[0]);
-            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, false, texture[0]);
-            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, true, texture[0]);
+            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, false, texture);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, false, texture);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, true, texture);
 
         }
 
@@ -79,7 +79,6 @@ namespace OpenGL
 
         void DrawMirrors()
         {
-
             //only wall, draw only to STENCIL buffer
             GL.glEnable(GL.GL_STENCIL_TEST);
             GL.glStencilOp(GL.GL_REPLACE, GL.GL_REPLACE, GL.GL_REPLACE); // change stencil according to the object color
@@ -476,17 +475,19 @@ namespace OpenGL
 
             GLU.gluLookAt(ScrollValue[1], 2, 10, 0, 0, 0, 0, 1, 0);
 
-            GL.glTranslated(0, -1f, -12);
-
-            GL.glRotated(20, 1, 0, 0);
+            GL.glTranslated(0, 0, -20);
 
             DrawBackground();
 
+            GL.glRotated(20, 1, 0, 0);
+
+            GL.glTranslated(0, 2, 8);
+
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
-            //DrawFigures();
+            DrawFigures();
 
-            DrawMirrors();
+            //DrawMirrors();
 
             GL.glFlush();
 
@@ -591,7 +592,7 @@ namespace OpenGL
         void GenerateTextures()
         {
             GL.glGenTextures(3, texture);
-            string[] imagesName = { "IMG\\1.bmp", "IMG\\blackspace.bmp", "IMG\\1.bmp" };
+            string[] imagesName = { "IMG\\1.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall1.bmp" };
             for (int i = 0; i < 3; i++)
             {
                 Bitmap image = new Bitmap(imagesName[i]);
