@@ -180,7 +180,7 @@ namespace myOpenGL
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {/*
+        {
             int display_mod = 3;
             switch (display_mod)
             {
@@ -226,7 +226,6 @@ namespace myOpenGL
                     }
                     break;
             }
-           */
         }
     }
 }

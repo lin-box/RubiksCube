@@ -59,6 +59,7 @@ namespace OpenGL
         float[] cubeXform = new float[16];
         public float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
         public int viewAngle = 70;
+        int i = 1;
 
         public cOGL(Control pb)
         {
@@ -482,7 +483,7 @@ namespace OpenGL
 
         void DrawTexturedCube()
         {
-            float big = 1.0f;
+            float big = 8.0f;
             float small = big;
 
             // front
@@ -568,26 +569,32 @@ namespace OpenGL
 
         void DrawRoom()
         {
-
             GL.glPushMatrix();
             
-            GL.glTranslatef(0.0f, 0.0f, -20.4f);
-            //update_cube_map_prespective();
-            GL.glTranslatef(0.0f, 0.0f, +20.4f);
+            GL.glTranslatef(0.0f, 0.0f, -5.4f);
+            update_cube_map_prespective();
+            GL.glTranslatef(0.0f, 0.0f, +5.4f);
 
             GL.glLoadIdentity();
 
-            //GL.glTranslatef(0.0f, 0.0f, -20.4f);
-            //update_cube_map_rotations();
-            //GL.glTranslatef(0.0f, 0.0f, +20.4f);
+            GL.glTranslatef(0.0f, 0.0f, -5.4f);
+            update_cube_map_rotations();
+            GL.glTranslatef(0.0f, 0.0f, +5.4f);
 
             GL.glPopMatrix();
             GL.glLoadIdentity();
 
             //GL.glEnable(GL.GL_LIGHTING);
-            GL.glTranslatef(0.0f, 0.0f, -7.4f);
+            GL.glTranslatef(0.0f, 0.0f, -15.4f);
+
+            DrawLight();
             DrawObjects(false);
-            GL.glTranslatef(0.0f, 0.0f, +7.4f);
+            DrawLight();
+            DrawObjects(false);
+            DrawLight();
+            DrawObjects(false);
+
+            GL.glTranslatef(0.0f, 0.0f, +15.4f);
             //GL.glDisable(GL.GL_LIGHTING);
 
         }
@@ -620,11 +627,17 @@ namespace OpenGL
 
             //DrawAxes(Color.Red, Color.Green, Color.Blue);  
 
-            DrawFigures();
-
+            //DrawFigures();
             //DrawMirrors();
 
-            //DrawRoom();
+            if (i == 1)
+            {
+                //DrawFigures();
+                i += 1;
+            }
+
+            DrawRoom();
+            
             //DrawObjects(false);
 
 
