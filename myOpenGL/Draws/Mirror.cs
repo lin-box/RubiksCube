@@ -83,7 +83,7 @@ namespace RubikCube.Draws
 
         public void DrawAsWall(float[] colorArray, float[] minusArray) //, float[] minusArray
         {
-            //GL.glEnable(GL.GL_LIGHTING);
+            
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture2);
 
@@ -107,7 +107,7 @@ namespace RubikCube.Draws
             GL.glPopMatrix();
 
             GL.glDisable(GL.GL_TEXTURE_2D);
-            //GL.glDisable(GL.GL_LIGHTING);
+           
         }
 
         public void Draw() //float[] minumArray
@@ -117,8 +117,6 @@ namespace RubikCube.Draws
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture1);
 
             GL.glPushMatrix();
-
-        //    GL.glDisable(GL.GL_LIGHTING);
 
             doRotations();
 
@@ -135,8 +133,6 @@ namespace RubikCube.Draws
             GL.glVertex3d(mirrorWidth, -mirrorHeight / 2, 0);
             
             GL.glEnd();
-
-        //    GL.glEnable(GL.GL_LIGHTING);
 
             GL.glPopMatrix();
 

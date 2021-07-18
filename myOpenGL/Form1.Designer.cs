@@ -45,10 +45,29 @@ namespace myOpenGL
             this.timerRepaint = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.hScrollBar12 = new System.Windows.Forms.HScrollBar();
-            this.hScrollBar11 = new System.Windows.Forms.HScrollBar();
-            this.hScrollBar13 = new System.Windows.Forms.HScrollBar();
+            this.hScrollBar3 = new System.Windows.Forms.HScrollBar();
             this.hScrollBar2 = new System.Windows.Forms.HScrollBar();
+            this.hScrollBar4 = new System.Windows.Forms.HScrollBar();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -63,7 +82,7 @@ namespace myOpenGL
             // 
             // btnThirdXDown
             // 
-            this.btnThirdXDown.Location = new System.Drawing.Point(693, 302);
+            this.btnThirdXDown.Location = new System.Drawing.Point(699, 245);
             this.btnThirdXDown.Name = "btnThirdXDown";
             this.btnThirdXDown.Size = new System.Drawing.Size(30, 23);
             this.btnThirdXDown.TabIndex = 29;
@@ -73,7 +92,7 @@ namespace myOpenGL
             // 
             // btnSecondXDown
             // 
-            this.btnSecondXDown.Location = new System.Drawing.Point(657, 302);
+            this.btnSecondXDown.Location = new System.Drawing.Point(663, 245);
             this.btnSecondXDown.Name = "btnSecondXDown";
             this.btnSecondXDown.Size = new System.Drawing.Size(30, 23);
             this.btnSecondXDown.TabIndex = 28;
@@ -83,7 +102,7 @@ namespace myOpenGL
             // 
             // btnThirdYRight
             // 
-            this.btnThirdYRight.Location = new System.Drawing.Point(725, 215);
+            this.btnThirdYRight.Location = new System.Drawing.Point(731, 158);
             this.btnThirdYRight.Name = "btnThirdYRight";
             this.btnThirdYRight.Size = new System.Drawing.Size(28, 23);
             this.btnThirdYRight.TabIndex = 27;
@@ -93,7 +112,7 @@ namespace myOpenGL
             // 
             // btnFirstYRight
             // 
-            this.btnFirstYRight.Location = new System.Drawing.Point(725, 273);
+            this.btnFirstYRight.Location = new System.Drawing.Point(731, 216);
             this.btnFirstYRight.Name = "btnFirstYRight";
             this.btnFirstYRight.Size = new System.Drawing.Size(28, 23);
             this.btnFirstYRight.TabIndex = 26;
@@ -103,7 +122,7 @@ namespace myOpenGL
             // 
             // btnSecondYRight
             // 
-            this.btnSecondYRight.Location = new System.Drawing.Point(725, 244);
+            this.btnSecondYRight.Location = new System.Drawing.Point(731, 187);
             this.btnSecondYRight.Name = "btnSecondYRight";
             this.btnSecondYRight.Size = new System.Drawing.Size(28, 23);
             this.btnSecondYRight.TabIndex = 25;
@@ -113,7 +132,7 @@ namespace myOpenGL
             // 
             // btnThirdYLeft
             // 
-            this.btnThirdYLeft.Location = new System.Drawing.Point(591, 215);
+            this.btnThirdYLeft.Location = new System.Drawing.Point(597, 158);
             this.btnThirdYLeft.Name = "btnThirdYLeft";
             this.btnThirdYLeft.Size = new System.Drawing.Size(28, 23);
             this.btnThirdYLeft.TabIndex = 24;
@@ -123,7 +142,7 @@ namespace myOpenGL
             // 
             // btnFirstYLeft
             // 
-            this.btnFirstYLeft.Location = new System.Drawing.Point(591, 273);
+            this.btnFirstYLeft.Location = new System.Drawing.Point(597, 216);
             this.btnFirstYLeft.Name = "btnFirstYLeft";
             this.btnFirstYLeft.Size = new System.Drawing.Size(28, 23);
             this.btnFirstYLeft.TabIndex = 23;
@@ -133,7 +152,7 @@ namespace myOpenGL
             // 
             // btnFirstXDown
             // 
-            this.btnFirstXDown.Location = new System.Drawing.Point(621, 302);
+            this.btnFirstXDown.Location = new System.Drawing.Point(627, 245);
             this.btnFirstXDown.Name = "btnFirstXDown";
             this.btnFirstXDown.Size = new System.Drawing.Size(30, 23);
             this.btnFirstXDown.TabIndex = 22;
@@ -143,7 +162,7 @@ namespace myOpenGL
             // 
             // btnSecondYLeft
             // 
-            this.btnSecondYLeft.Location = new System.Drawing.Point(591, 244);
+            this.btnSecondYLeft.Location = new System.Drawing.Point(597, 187);
             this.btnSecondYLeft.Name = "btnSecondYLeft";
             this.btnSecondYLeft.Size = new System.Drawing.Size(28, 23);
             this.btnSecondYLeft.TabIndex = 21;
@@ -153,7 +172,7 @@ namespace myOpenGL
             // 
             // btnThirdXUp
             // 
-            this.btnThirdXUp.Location = new System.Drawing.Point(693, 186);
+            this.btnThirdXUp.Location = new System.Drawing.Point(699, 129);
             this.btnThirdXUp.Name = "btnThirdXUp";
             this.btnThirdXUp.Size = new System.Drawing.Size(30, 23);
             this.btnThirdXUp.TabIndex = 20;
@@ -163,7 +182,7 @@ namespace myOpenGL
             // 
             // btnSecondXUp
             // 
-            this.btnSecondXUp.Location = new System.Drawing.Point(657, 186);
+            this.btnSecondXUp.Location = new System.Drawing.Point(663, 129);
             this.btnSecondXUp.Name = "btnSecondXUp";
             this.btnSecondXUp.Size = new System.Drawing.Size(30, 23);
             this.btnSecondXUp.TabIndex = 19;
@@ -173,7 +192,7 @@ namespace myOpenGL
             // 
             // btnFirstXUp
             // 
-            this.btnFirstXUp.Location = new System.Drawing.Point(621, 186);
+            this.btnFirstXUp.Location = new System.Drawing.Point(627, 129);
             this.btnFirstXUp.Name = "btnFirstXUp";
             this.btnFirstXUp.Size = new System.Drawing.Size(30, 23);
             this.btnFirstXUp.TabIndex = 18;
@@ -189,7 +208,7 @@ namespace myOpenGL
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(695, 365);
+            this.button1.Location = new System.Drawing.Point(127, 20);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(28, 23);
             this.button1.TabIndex = 30;
@@ -199,7 +218,7 @@ namespace myOpenGL
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(639, 365);
+            this.button2.Location = new System.Drawing.Point(55, 20);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(28, 23);
             this.button2.TabIndex = 31;
@@ -207,61 +226,221 @@ namespace myOpenGL
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // hScrollBar12
+            // hScrollBar3
             // 
-            this.hScrollBar12.Location = new System.Drawing.Point(604, 441);
-            this.hScrollBar12.Maximum = 250;
-            this.hScrollBar12.Minimum = 50;
-            this.hScrollBar12.Name = "hScrollBar12";
-            this.hScrollBar12.Size = new System.Drawing.Size(143, 17);
-            this.hScrollBar12.TabIndex = 34;
-            this.hScrollBar12.Value = 150;
-            this.hScrollBar12.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
-            // 
-            // hScrollBar11
-            // 
-            this.hScrollBar11.Location = new System.Drawing.Point(604, 415);
-            this.hScrollBar11.Maximum = 200;
-            this.hScrollBar11.Name = "hScrollBar11";
-            this.hScrollBar11.Size = new System.Drawing.Size(143, 17);
-            this.hScrollBar11.TabIndex = 33;
-            this.hScrollBar11.Value = 100;
-            this.hScrollBar11.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
-            // 
-            // hScrollBar13
-            // 
-            this.hScrollBar13.Location = new System.Drawing.Point(604, 465);
-            this.hScrollBar13.Maximum = 350;
-            this.hScrollBar13.Minimum = -100;
-            this.hScrollBar13.Name = "hScrollBar13";
-            this.hScrollBar13.Size = new System.Drawing.Size(143, 17);
-            this.hScrollBar13.TabIndex = 32;
-            this.hScrollBar13.Value = 250;
-            this.hScrollBar13.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            this.hScrollBar3.Location = new System.Drawing.Point(52, 65);
+            this.hScrollBar3.Maximum = 250;
+            this.hScrollBar3.Minimum = 50;
+            this.hScrollBar3.Name = "hScrollBar3";
+            this.hScrollBar3.Size = new System.Drawing.Size(143, 17);
+            this.hScrollBar3.TabIndex = 34;
+            this.hScrollBar3.Value = 150;
+            this.hScrollBar3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
             // 
             // hScrollBar2
             // 
-            this.hScrollBar2.LargeChange = 2;
-            this.hScrollBar2.Location = new System.Drawing.Point(604, 118);
+            this.hScrollBar2.AccessibleName = "";
+            this.hScrollBar2.Location = new System.Drawing.Point(52, 30);
             this.hScrollBar2.Maximum = 200;
             this.hScrollBar2.Name = "hScrollBar2";
             this.hScrollBar2.Size = new System.Drawing.Size(143, 17);
-            this.hScrollBar2.SmallChange = 2;
-            this.hScrollBar2.TabIndex = 32;
+            this.hScrollBar2.TabIndex = 33;
+            this.hScrollBar2.Tag = "";
             this.hScrollBar2.Value = 100;
             this.hScrollBar2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            // 
+            // hScrollBar4
+            // 
+            this.hScrollBar4.Location = new System.Drawing.Point(52, 98);
+            this.hScrollBar4.Maximum = 350;
+            this.hScrollBar4.Minimum = -100;
+            this.hScrollBar4.Name = "hScrollBar4";
+            this.hScrollBar4.Size = new System.Drawing.Size(143, 17);
+            this.hScrollBar4.TabIndex = 32;
+            this.hScrollBar4.Value = 250;
+            this.hScrollBar4.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.LargeChange = 2;
+            this.hScrollBar1.Location = new System.Drawing.Point(52, 25);
+            this.hScrollBar1.Maximum = 200;
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(143, 17);
+            this.hScrollBar1.SmallChange = 2;
+            this.hScrollBar1.TabIndex = 32;
+            this.hScrollBar1.Value = 100;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarScroll);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(56, 25);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(82, 17);
+            this.radioButton1.TabIndex = 35;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Mirrors room";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButtonCheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(56, 50);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(95, 17);
+            this.radioButton2.TabIndex = 35;
+            this.radioButton2.Text = "Shadows room";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButtonCheckedChanged);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(56, 75);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(99, 17);
+            this.radioButton3.TabIndex = 35;
+            this.radioButton3.Text = "Cube map room";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButtonCheckedChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.hScrollBar2);
+            this.groupBox1.Controls.Add(this.hScrollBar3);
+            this.groupBox1.Controls.Add(this.hScrollBar4);
+            this.groupBox1.Location = new System.Drawing.Point(572, 410);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 130);
+            this.groupBox1.TabIndex = 36;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Light postion";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 102);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Z Axis";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "X Axis";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(36, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Y Axis";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.radioButton1);
+            this.groupBox2.Controls.Add(this.radioButton3);
+            this.groupBox2.Controls.Add(this.radioButton2);
+            this.groupBox2.Location = new System.Drawing.Point(572, 14);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 100);
+            this.groupBox2.TabIndex = 37;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Room options";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Location = new System.Drawing.Point(572, 280);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 54);
+            this.groupBox3.TabIndex = 38;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Mirror/Surface rotate";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(162, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Open";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 25);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(33, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Close";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(650, 168);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 13);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "RobikCube";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(646, 188);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(69, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Row/Column";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(660, 212);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(39, 13);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Rotate";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.hScrollBar1);
+            this.groupBox4.Location = new System.Drawing.Point(572, 345);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(200, 54);
+            this.groupBox4.TabIndex = 39;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "LookAt X Axis";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.hScrollBar2);
-            this.Controls.Add(this.hScrollBar12);
-            this.Controls.Add(this.hScrollBar11);
-            this.Controls.Add(this.hScrollBar13);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnThirdXDown);
             this.Controls.Add(this.btnSecondXDown);
             this.Controls.Add(this.btnThirdYRight);
@@ -280,8 +459,16 @@ namespace myOpenGL
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -302,10 +489,25 @@ namespace myOpenGL
         private System.Windows.Forms.Timer timerRepaint;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.HScrollBar hScrollBar12;
-        private System.Windows.Forms.HScrollBar hScrollBar11;
-        private System.Windows.Forms.HScrollBar hScrollBar13;
+        private System.Windows.Forms.HScrollBar hScrollBar3;
         private System.Windows.Forms.HScrollBar hScrollBar2;
+        private System.Windows.Forms.HScrollBar hScrollBar4;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }
 

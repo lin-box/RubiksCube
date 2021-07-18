@@ -23,17 +23,18 @@ namespace myOpenGL
             InitializeComponent();
             cGL = new cOGL(panel1);
 
+            radioButtonCheckedChanged(radioButton1, null);
+
             //apply the bars values as cGL.ScrollValue[..] properties 
             //!!!
-
-            hScrollBarScroll(hScrollBar2, null);
+            hScrollBarScroll(hScrollBar1, null);
 
 
             // initialize ScrollValue array
 
-            cGL.ScrollValue[10] = (hScrollBar11.Value - 100) / 10.0f;
-            cGL.ScrollValue[11] = (hScrollBar12.Value - 100) / 10.0f;
-            cGL.ScrollValue[12] = (hScrollBar13.Value - 100) / 10.0f;
+            cGL.ScrollValue[1] = (hScrollBar2.Value - 100) / 10.0f;
+            cGL.ScrollValue[2] = (hScrollBar3.Value - 100) / 10.0f;
+            cGL.ScrollValue[3] = (hScrollBar4.Value - 100) / 10.0f;
         }
 
         // happens when the window is re-rendered.
@@ -171,7 +172,7 @@ namespace myOpenGL
 
         private void hScrollBarScroll(object sender, ScrollEventArgs e)
         {
-            //cGL.intOptionC = 0;
+            
             HScrollBar hb = (HScrollBar)sender;
             int n = int.Parse(hb.Name.Substring(10));
             cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
@@ -227,5 +228,34 @@ namespace myOpenGL
                     break;
             }
         }
+
+        private void radioButtonCheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rd = (RadioButton)sender;
+            int n = int.Parse(rd.Name.Substring(11));
+            cGL.radioButtonChecked[n - 1] = rd.Checked;
+            if (n == 1)
+            {
+                groupBox1.Enabled = false;  //light
+                groupBox3.Enabled = true;   //surface rotate
+                groupBox4.Enabled = true;  //LookAt X Axis
+            }
+            else if (n == 2)
+            {
+                groupBox1.Enabled = true;   //light
+                groupBox3.Enabled = true;   //surface rotate
+                groupBox4.Enabled = true;  //LookAt X Axis
+            }
+            else 
+            {
+                groupBox1.Enabled = false;  //light
+                groupBox3.Enabled = false;  //surface rotate
+                groupBox4.Enabled = false;  //LookAt X Axis
+            }
+
+            if (e != null)
+                cGL.Draw();
+        }
+
     }
 }
