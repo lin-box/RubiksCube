@@ -571,21 +571,21 @@ namespace OpenGL
         {
             GL.glPushMatrix();
             
-            GL.glTranslatef(0.0f, 0.0f, -5.4f);
+            GL.glTranslatef(0.0f, 0.0f, -7.0f);
             update_cube_map_prespective();
-            GL.glTranslatef(0.0f, 0.0f, +5.4f);
+            GL.glTranslatef(0.0f, 0.0f, +7.0f);
 
             GL.glLoadIdentity();
 
-            GL.glTranslatef(0.0f, 0.0f, -5.4f);
+            GL.glTranslatef(0.0f, 0.0f, -7.0f);
             update_cube_map_rotations();
-            GL.glTranslatef(0.0f, 0.0f, +5.4f);
+            GL.glTranslatef(0.0f, 0.0f, +7.0f);
 
             GL.glPopMatrix();
             GL.glLoadIdentity();
 
             //GL.glEnable(GL.GL_LIGHTING);
-            GL.glTranslatef(0.0f, 0.0f, -15.4f);
+            GL.glTranslatef(0.0f, 0.0f, -14.4f);
 
             DrawLight();
             DrawObjects(false);
@@ -594,9 +594,8 @@ namespace OpenGL
             DrawLight();
             DrawObjects(false);
 
-            GL.glTranslatef(0.0f, 0.0f, +15.4f);
+            GL.glTranslatef(0.0f, 0.0f, +14.4f);
             //GL.glDisable(GL.GL_LIGHTING);
-
         }
 
         public void Draw()
