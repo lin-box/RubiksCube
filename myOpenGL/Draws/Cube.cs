@@ -88,7 +88,7 @@ namespace RubikCube.Draws
             double[] v7 = { +this.size + X, -this.size + Y, -this.size + Z };
             double[] v8 = { +this.size + X, -this.size + Y, +this.size + Z };
 
-            byte a = 50;
+            byte a = 120;
 
             //Back
             GL.glNormal3d((calcNormal(v1, v2, v6))[0], (calcNormal(v1, v2, v6))[1], (calcNormal(v1, v2, v6))[2]);
