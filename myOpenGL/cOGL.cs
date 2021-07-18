@@ -430,17 +430,21 @@ namespace OpenGL
         {
             DrawLight();
 
-            //DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
-            //DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
-            //DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
+            DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
+            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
+            DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
 
             DrawLight();
-
             DrawObjects(false);
+            DrawShadowsOnSurface(backMirrorSurface);
 
-           // DrawShadowsOnSurface(backMirrorSurface);
-           // DrawShadowsOnSurface(rightMirrorSurface);
-           /// DrawShadowsOnSurface(leftMirrorSurface);
+            DrawLight();
+            DrawObjects(false);
+            DrawShadowsOnSurface(rightMirrorSurface);
+
+            DrawLight();
+            DrawObjects(false);
+            DrawShadowsOnSurface(leftMirrorSurface);
 
         }
 
