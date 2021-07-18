@@ -739,7 +739,7 @@ namespace OpenGL
                 return;
 
             GL.glShadeModel(GL.GL_SMOOTH);
-            GL.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+            GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             GL.glClearDepth(1.0f);
 
             GL.glEnable(GL.GL_LIGHT0);
