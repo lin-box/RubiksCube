@@ -178,5 +178,55 @@ namespace myOpenGL
             if (e != null)
                 cGL.Draw();
         }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {/*
+            int display_mod = 3;
+            switch (display_mod)
+            {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                    switch (e.KeyChar)
+                    {
+                        case 'x':
+                            cGL.cubemapXYZAngles[0] -= 5;
+                            cGL.rubiksCube.Rotate(-5, 0, 0);
+                            cGL.Draw();
+                            break;
+                        case 'X':
+                            cGL.cubemapXYZAngles[0] += 5;
+                            cGL.rubiksCube.Rotate(5, 0, 0);
+                            cGL.Draw();
+                            break;
+                        case 'y':
+                            cGL.cubemapXYZAngles[1] -= 5;
+                            cGL.rubiksCube.Rotate(0, -5, 0);
+                            cGL.Draw();
+                            break;
+                        case 'Y':
+                            cGL.cubemapXYZAngles[1] += 5;
+                            cGL.rubiksCube.Rotate(0, 5, 0);
+                            cGL.Draw();
+                            break;
+                        case 'z':
+                            cGL.cubemapXYZAngles[2] -= 5;
+                            cGL.rubiksCube.Rotate(0, 0, -5);
+                            cGL.Draw();
+                            break;
+                        case 'Z':
+                            cGL.cubemapXYZAngles[2] += 5;
+                            cGL.rubiksCube.Rotate(0, 0, 5);
+                            cGL.Draw();
+                            break;
+                    }
+                    break;
+            }
+           */
+        }
     }
 }

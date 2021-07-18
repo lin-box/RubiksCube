@@ -40,7 +40,6 @@ namespace RubikCube.Draws
 
             //make the surface transparent  
             GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-            GL.glEnable(GL.GL_BLEND); 
         }
 
         public float[,] getSurf()
@@ -68,20 +67,8 @@ namespace RubikCube.Draws
             surf[1, 2] = (float)this.z;                             
 
             surf[2, 0] = surf[0, 0];        
-            surf[2, 1] = -surf[0, 1]; 
-            surf[2, 2] = surf[0, 2];                            
-
-            //surf[0, 0] = (float)mirrorWidth / 2;
-            //surf[0, 1] = (float)mirrorHeight/2;
-            //surf[0, 2] = (float)-mirrorWidth / 2;
-            //
-            //surf[1, 0] = (float)-mirrorWidth/2;
-            //surf[1, 1] = (float)0;
-            //surf[1, 2] = (float)-mirrorWidth / 2;
-            //
-            //surf[2, 0] = (float)mirrorWidth / 2;
-            //surf[2, 1] = (float)-mirrorHeight / 2;
-            //surf[2, 2] = (float)-mirrorWidth / 2;
+            surf[2, 1] = -surf[0, 1];
+            surf[2, 2] = surf[0, 2];
 
             return surf;
         }
@@ -125,6 +112,7 @@ namespace RubikCube.Draws
 
         public void Draw() //float[] minumArray
         {
+            GL.glEnable(GL.GL_BLEND);
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture1);
 
@@ -153,6 +141,7 @@ namespace RubikCube.Draws
             GL.glPopMatrix();
 
             GL.glDisable(GL.GL_TEXTURE_2D);
+            GL.glDisable(GL.GL_BLEND);
 
         }
 

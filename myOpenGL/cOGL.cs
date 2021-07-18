@@ -45,7 +45,7 @@ namespace OpenGL
         public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
-        public uint[] texture = new uint[3];      // texture : [0] = mirror, [1] = bakground, [2] = ..
+        public uint[] texture = new uint[9];      // texture : [0] = mirror, [1] = bakground, [2] = ..
         public float[] ScrollValue = new float[14];
         float[] backWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
@@ -57,6 +57,8 @@ namespace OpenGL
         float[] planeCoeff = { 1, 1, 1, 1 };
         public float[] pos = new float[4];
         float[] cubeXform = new float[16];
+        public float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
+        public int viewAngle = 70;
 
         public cOGL(Control pb)
         {
@@ -428,17 +430,17 @@ namespace OpenGL
         {
             DrawLight();
 
-            DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
-            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
-            DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
+            //DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
+            //DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
+            //DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
 
             DrawLight();
 
             DrawObjects(false);
 
-            DrawShadowsOnSurface(backMirrorSurface);
-            DrawShadowsOnSurface(rightMirrorSurface);
-            DrawShadowsOnSurface(leftMirrorSurface);
+           // DrawShadowsOnSurface(backMirrorSurface);
+           // DrawShadowsOnSurface(rightMirrorSurface);
+           /// DrawShadowsOnSurface(leftMirrorSurface);
 
         }
 
@@ -452,14 +454,12 @@ namespace OpenGL
 
         void DrawBackground()
         {
-            GL.glDisable(GL.GL_BLEND);
+            //GL.glDisable(GL.GL_BLEND);
             GL.glTranslated(0, 0f, -5);
 
             GL.glEnable(GL.GL_TEXTURE_2D);
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture[1]);
             GL.glBegin(GL.GL_QUADS);
-
-            //GL.glColor3f(Color.Red.R, Color.Red.G, Color.Red.B);
 
             GL.glTexCoord2f(0,0);
             GL.glVertex3f(-20, -25, 0);
@@ -473,7 +473,119 @@ namespace OpenGL
             GL.glEnd();
             GL.glDisable(GL.GL_TEXTURE_2D);
             GL.glTranslated(0, 0f, 5);
-            GL.glEnable(GL.GL_BLEND);
+            //GL.glEnable(GL.GL_BLEND);
+        }
+
+        void DrawTexturedCube()
+        {
+            float big = 1.0f;
+            float small = big;
+
+            // front
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[3]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, -big, big);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, -big, big);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(big, big, big);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-big, big, big);
+            GL.glEnd();
+            // back
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[4]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(small, -small, -small);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(-small, small, -small);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(small, small, -small);
+            GL.glEnd();
+            // left
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[5]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-big, -big, big);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(-big, big, big);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
+            GL.glEnd();
+            // right
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[6]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(big, -big, big);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(small, small, -small);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(big, big, big);
+            GL.glEnd();
+            // top
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[7]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, big, big);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, big, big);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(small, small, -small);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
+            GL.glEnd();
+            // bottom
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[8]);
+            GL.glBegin(GL.GL_QUADS);
+            GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
+            GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
+            GL.glTexCoord2f(1.0f, 1.0f); GL.glVertex3f(big, -big, big);
+            GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-big, -big, big);
+            GL.glEnd();
+        }
+
+        public void update_cube_map_rotations()
+        {
+            GL.glTranslatef(0.0f, 0.0f, -1.4f);
+
+            GL.glRotatef(cubemapXYZAngles[0], 1.0f, 0.0f, 0.0f);
+            GL.glRotatef(cubemapXYZAngles[1], 0.0f, 1.0f, 0.0f);
+            GL.glRotatef(cubemapXYZAngles[2], 0.0f, 0.0f, 1.0f);
+
+            GL.glDisable(GL.GL_LIGHTING);
+            GL.glDisable(GL.GL_TEXTURE_2D);
+
+            //DrawBounds();
+
+            GL.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+            GL.glEnable(GL.GL_TEXTURE_2D);
+            DrawTexturedCube();
+            GL.glColor4f(1.0f, 1.0f, 1.0f, 1);
+            GL.glDisable(GL.GL_TEXTURE_2D);
+        }
+
+        public void update_cube_map_prespective()
+        {
+            GL.glMatrixMode(GL.GL_PROJECTION);
+            GL.glLoadIdentity();
+
+            GLU.gluPerspective(viewAngle, (float)Width / (float)Height, 0.45f, 30.0f);
+
+            GL.glMatrixMode(GL.GL_MODELVIEW);
+            GL.glLoadIdentity();
+        }
+
+        void DrawRoom()
+        {
+
+            GL.glPushMatrix();
+            
+            GL.glTranslatef(0.0f, 0.0f, -20.4f);
+            //update_cube_map_prespective();
+            GL.glTranslatef(0.0f, 0.0f, +20.4f);
+
+            GL.glLoadIdentity();
+
+            //GL.glTranslatef(0.0f, 0.0f, -20.4f);
+            //update_cube_map_rotations();
+            //GL.glTranslatef(0.0f, 0.0f, +20.4f);
+
+            GL.glPopMatrix();
+            GL.glLoadIdentity();
+
+            //GL.glEnable(GL.GL_LIGHTING);
+            GL.glTranslatef(0.0f, 0.0f, -7.4f);
+            DrawObjects(false);
+            GL.glTranslatef(0.0f, 0.0f, +7.4f);
+            //GL.glDisable(GL.GL_LIGHTING);
+
         }
 
         public void Draw()
@@ -496,7 +608,7 @@ namespace OpenGL
 
             GL.glTranslated(0, 0, -20);
 
-            DrawBackground();
+            //DrawBackground();
 
             GL.glRotated(20, 1, 0, 0);
 
@@ -507,6 +619,10 @@ namespace OpenGL
             DrawFigures();
 
             //DrawMirrors();
+
+            //DrawRoom();
+            //DrawObjects(false);
+
 
             GL.glFlush();
 
@@ -609,9 +725,10 @@ namespace OpenGL
 
         void GenerateTextures()
         {
-            GL.glGenTextures(3, texture);
-            string[] imagesName = { "IMG\\3.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall3.bmp" };
-            for (int i = 0; i < 3; i++)
+            GL.glGenTextures(9, texture);
+            string[] imagesName = { "IMG\\3.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall3.bmp",
+            "IMG\\green.bmp","IMG\\blue.bmp", "IMG\\orange.bmp","IMG\\red.bmp","IMG\\white.bmp","IMG\\yellow.bmp"};
+            for (int i = 0; i < 9; i++)
             {
                 Bitmap image = new Bitmap(imagesName[i]);
                 image.RotateFlip(RotateFlipType.RotateNoneFlipY); //Y axis in Windows is directed downwards, while in OpenGL-upwards
@@ -651,35 +768,6 @@ namespace OpenGL
             }
         }
 
-        void InitTexture(string imageBMPfile)
-        {
-            GL.glEnable(GL.GL_TEXTURE_2D);
-
-            texture = new uint[1];		// storage for texture
-
-            Bitmap image = new Bitmap(imageBMPfile);
-            image.RotateFlip(RotateFlipType.RotateNoneFlipY); //Y axis in Windows is directed downwards, while in OpenGL-upwards
-            System.Drawing.Imaging.BitmapData bitmapdata;
-            Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
-
-            bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-
-            GL.glGenTextures(1, texture);
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[0]);
-            //  VN-in order to use System.Drawing.Imaging.BitmapData Scan0 I've added overloaded version to
-            //  OpenGL.cs
-            //  [DllImport(GL_DLL, EntryPoint = "glTexImage2D")]
-            //  public static extern void glTexImage2D(uint target, int level, int internalformat, int width, int height, int border, uint format, uint type, IntPtr pixels);
-            GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,
-                0, GL.GL_BGR_EXT, GL.GL_UNSIGNED_byte, bitmapdata.Scan0);
-
-            GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, (int)GL.GL_LINEAR);		// Linear Filtering
-            GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, (int)GL.GL_LINEAR);		// Linear Filtering
-
-            image.UnlockBits(bitmapdata);
-            image.Dispose();
-        }
     }
 
 }
