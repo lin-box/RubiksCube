@@ -172,7 +172,6 @@ namespace myOpenGL
 
         private void hScrollBarScroll(object sender, ScrollEventArgs e)
         {
-            
             HScrollBar hb = (HScrollBar)sender;
             int n = int.Parse(hb.Name.Substring(10));
             cGL.ScrollValue[n - 1] = (hb.Value - 100) / 10.0f;
@@ -182,16 +181,11 @@ namespace myOpenGL
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            int display_mod = 3;
-            switch (display_mod)
+            switch (cGL.mode)
             {
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-                case 3:
+                case 0: // mirror state
+                case 1: // shadow state
+                case 2: // room state
                     switch (e.KeyChar)
                     {
                         case 'x':
@@ -234,19 +228,19 @@ namespace myOpenGL
             RadioButton rd = (RadioButton)sender;
             int n = int.Parse(rd.Name.Substring(11));
             cGL.radioButtonChecked[n - 1] = rd.Checked;
-            if (n == 1)
+            if (n == 1) // mirrors state
             {
                 groupBox1.Enabled = false;  //light
                 groupBox3.Enabled = true;   //surface rotate
                 groupBox4.Enabled = true;  //LookAt X Axis
             }
-            else if (n == 2)
+            else if (n == 2) // shadow state
             {
                 groupBox1.Enabled = true;   //light
                 groupBox3.Enabled = true;   //surface rotate
                 groupBox4.Enabled = true;  //LookAt X Axis
             }
-            else 
+            else // room state
             {
                 groupBox1.Enabled = false;  //light
                 groupBox3.Enabled = false;  //surface rotate

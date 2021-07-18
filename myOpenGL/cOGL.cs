@@ -33,8 +33,8 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
-        double mirrorHeight = 12;
-        double mirrorWidth = 9;
+        double mirrorHeight = 9;
+        double mirrorWidth = 6.9;
 
         const int x = 0;
         const int y = 1;
@@ -48,9 +48,9 @@ namespace OpenGL
         public uint[] texture = new uint[9];      // texture : [0] = mirror, [1] = bakground, [2] = ..
         public float[] ScrollValue = new float[4];
         public bool[] radioButtonChecked = new bool[3];
-        float[] backWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
-        float[] leftWallColorArray = new float[4]   { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
-        float[] rightWallColorArray = new float[4]  { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
+        float[] backWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
+        float[] leftWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
+        float[] rightWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
         float[] backMinusArray = new float[3] { 0f, 0.0f, -0.01f };
         float[] leftMinusArray = new float[3] { 0f, 0f, 0.01f };
         float[] rightMinusArray = new float[3] { 0f, 0f, -0.01f };
@@ -60,6 +60,9 @@ namespace OpenGL
         float[] cubeXform = new float[16];
         public float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
         public int viewAngle = 70;
+        public int mode = 0, last_mode = 0;
+        int[] CubeRoomTextureNumbers = { 3, 4, 5, 6, 7, 8 };
+        int[] mirrorRoomTextureNumbers = { 1,1,1,1,1,1 };
 
         public cOGL(Control pb)
         {
@@ -466,7 +469,7 @@ namespace OpenGL
             GL.glBindTexture(GL.GL_TEXTURE_2D, texture[1]);
             GL.glBegin(GL.GL_QUADS);
 
-            GL.glTexCoord2f(0,0);
+            GL.glTexCoord2f(0, 0);
             GL.glVertex3f(-20, -25, 0);
             GL.glTexCoord2f(0, 1);
             GL.glVertex3f(-20, 25, 0);
@@ -481,13 +484,10 @@ namespace OpenGL
             //GL.glEnable(GL.GL_BLEND);
         }
 
-        void DrawTexturedCube()
+        void DrawTexturedCube(int [] imageNumbers, float big, float small)
         {
-            float big = 8.0f;
-            float small = big;
-
             // front
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[3]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[0]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, -big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, -big, big);
@@ -495,7 +495,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-big, big, big);
             GL.glEnd();
             // back
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[4]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[1]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
@@ -503,7 +503,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(small, small, -small);
             GL.glEnd();
             // left
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[5]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[2]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-big, -big, big);
@@ -511,7 +511,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
             GL.glEnd();
             // right
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[6]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[3]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(big, -big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
@@ -519,7 +519,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(big, big, big);
             GL.glEnd();
             // top
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[7]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[4]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, big, big);
@@ -527,7 +527,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
             GL.glEnd();
             // bottom
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[8]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[5]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
@@ -536,7 +536,7 @@ namespace OpenGL
             GL.glEnd();
         }
 
-        public void update_cube_map_rotations()
+        public void update_cube_map_rotations(int[] textureNumbers, float big, float small)
         {
             GL.glTranslatef(0.0f, 0.0f, -1.4f);
 
@@ -551,7 +551,7 @@ namespace OpenGL
 
             GL.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
             GL.glEnable(GL.GL_TEXTURE_2D);
-            DrawTexturedCube();
+            DrawTexturedCube(textureNumbers, big, small);
             GL.glColor4f(1.0f, 1.0f, 1.0f, 1);
             GL.glDisable(GL.GL_TEXTURE_2D);
         }
@@ -567,45 +567,49 @@ namespace OpenGL
             GL.glLoadIdentity();
         }
 
-        void DrawRoom()
+        void DrawRoom(int[] textureNumbers, float zBack = 7, float big = 15, float small = 15)
         {
             GL.glPushMatrix();
-            
-            GL.glTranslatef(0.0f, 0.0f, -7.0f);
+
+            GL.glTranslatef(0.0f, 0.0f, -zBack);
             update_cube_map_prespective();
-            GL.glTranslatef(0.0f, 0.0f, +7.0f);
+            GL.glTranslatef(0.0f, 0.0f, +zBack);
 
             GL.glLoadIdentity();
 
-            GL.glTranslatef(0.0f, 0.0f, -7.0f);
-            update_cube_map_rotations();
-            GL.glTranslatef(0.0f, 0.0f, +7.0f);
+            GL.glTranslatef(0.0f, 0.0f, -zBack);
+            update_cube_map_rotations(textureNumbers, big, small);
+            GL.glTranslatef(0.0f, 0.0f, +zBack);
 
             GL.glPopMatrix();
             GL.glLoadIdentity();
-
-            //GL.glEnable(GL.GL_LIGHTING);
-            GL.glTranslatef(0.0f, 0.0f, -14.4f);
-
-            DrawLight();
-            DrawObjects(false);
-            DrawLight();
-            DrawObjects(false);
-            DrawLight();
-            DrawObjects(false);
-
-            GL.glTranslatef(0.0f, 0.0f, +14.4f);
-            //GL.glDisable(GL.GL_LIGHTING);
         }
 
         public void Draw()
         {
+            if (radioButtonChecked[0])
+            {
+                mode = 0;
+            }
+            else if (radioButtonChecked[1])
+            {
+                mode = 1;
+            }
+            else
+            {
+                mode = 2;
+            }
+
+            if (last_mode != mode)
+            {
+                initRenderingGL();
+            }
+
             //Shadows
             pos[0] = ScrollValue[1];
             pos[1] = ScrollValue[2];
             pos[2] = ScrollValue[3];
             pos[3] = 1.0f;
-            //Shadows
 
             if (m_uint_DC == 0 || m_uint_RC == 0)
                 return;
@@ -616,33 +620,49 @@ namespace OpenGL
 
             GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
 
-            GL.glTranslated(0, 0, -20);
-
-            //DrawBackground();
-
-            GL.glRotated(20, 1, 0, 0);
-
-            GL.glTranslated(0, 2, 8);
-
-            //DrawAxes(Color.Red, Color.Green, Color.Blue);  
-
-            if (radioButtonChecked[0])
+            if (mode == 0)
             {
+                DrawRoom(mirrorRoomTextureNumbers, 7, 15, 15);
+                
+                GL.glTranslatef(0.0f, 0.0f, -14.0f);
+                GL.glRotated(20, 1, 0, 0);
+
                 rubiksCube.SetShadows(false);
                 DrawMirrors();
+
+                GL.glTranslatef(0.0f, 0.0f, +14.0f);
             }
-            else if (radioButtonChecked[1])
+            else if (mode == 1)
             {
+                DrawRoom(mirrorRoomTextureNumbers, 7, 15, 15);
+                
+                GL.glTranslatef(0.0f, 0.0f, -14.0f);
+                GL.glRotated(20, 1, 0, 0);
+
                 DrawFigures();
+
+                GL.glTranslatef(0.0f, 0.0f, +14.0f);
             }
             else
             {
-                DrawRoom();
+                DrawRoom(CubeRoomTextureNumbers, 7, 8, 8);
+                
+                GL.glTranslatef(0.0f, 0.0f, -14.4f);
+                GL.glRotated(20, 1, 0, 0);
+
+                // draw3 times because of a bug
+                DrawLight();
+                DrawObjects(false);
+                DrawLight();
+                DrawObjects(false);
+                DrawLight();
+                DrawObjects(false);
+
+                GL.glTranslatef(0.0f, 0.0f, +14.4f);
             }
-            }
+            last_mode = mode;
 
             GL.glFlush();
-
             WGL.wglSwapBuffers(m_uint_DC);
         }
 
@@ -719,8 +739,8 @@ namespace OpenGL
             GL.glEnable(GL.GL_LIGHT0);
             GL.glEnable(GL.GL_COLOR_MATERIAL);
             GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE); // GL.GL_AMBIENT_AND_DIFFUSE / GL.GL_SHININESS
-            //GL.glMateriali(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, 100);
-            //GL.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, pos); //GL.GL_POSITION , GL.GL_SPECULAR , GL.GL_SPOT_DIRECTION , GL.GL_DIFFUSE
+                                                                                 //GL.glMateriali(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, 100);
+                                                                                 //GL.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, pos); //GL.GL_POSITION , GL.GL_SPECULAR , GL.GL_SPOT_DIRECTION , GL.GL_DIFFUSE
 
             GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
@@ -784,7 +804,5 @@ namespace OpenGL
                 image.Dispose();
             }
         }
-
     }
-
 }
