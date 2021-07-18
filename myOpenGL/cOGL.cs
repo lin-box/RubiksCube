@@ -73,10 +73,9 @@ namespace OpenGL
             InitTextures();
 
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, false, texture);
-            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, false, texture);
-            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, true, texture);
-
+            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, 1, texture);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, 2, texture);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, 0, texture);
         }
 
         ~cOGL()
@@ -581,11 +580,23 @@ namespace OpenGL
         {
             GL.glPushMatrix();
 
-           // GL.glTranslatef(0.0f, 0.0f, -zBack);
-           // update_cube_map_prespective();
-           // GL.glTranslatef(0.0f, 0.0f, +zBack);
+            GL.glTranslatef(0.0f, 0.0f, -zBack);
+            update_cube_map_prespective();
+            GL.glTranslatef(0.0f, 0.0f, +zBack);
 
-           //GL.glLoadIdentity();
+            GL.glLoadIdentity();
+
+            GL.glTranslatef(0.0f, 0.0f, -zBack);
+            update_cube_map_rotations(textureNumbers, big, small);
+            GL.glTranslatef(0.0f, 0.0f, +zBack);
+
+            GL.glPopMatrix();
+            GL.glLoadIdentity();
+        }
+
+        void DrawBackground(int[] textureNumbers, float zBack = 7, float big = 15, float small = 15)
+        {
+            GL.glPushMatrix();
 
             GL.glTranslatef(0.0f, 0.0f, -zBack);
             update_cube_map_rotations(textureNumbers, big, small);
@@ -628,11 +639,9 @@ namespace OpenGL
 
             GL.glLoadIdentity();
 
-            //GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
-
             if (mode == 0)
             {
-                DrawRoom(mirrorRoomTextureNumbers, 15, 30, 30);
+                DrawBackground(mirrorRoomTextureNumbers, 15, 30, 30);
                 
                 GL.glTranslatef(0.0f, -2.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
@@ -642,11 +651,11 @@ namespace OpenGL
                 rubiksCube.SetShadows(false);
                 DrawMirrors();
 
-                //GL.glTranslatef(0.0f, 0.0f, +8.0f);
+                GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             else if (mode == 1)
             {
-                DrawRoom(mirrorRoomTextureNumbers, 15, 30, 30);
+                DrawBackground(mirrorRoomTextureNumbers, 15, 30, 30);
 
                 GL.glTranslatef(0.0f, -2.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
@@ -655,14 +664,13 @@ namespace OpenGL
 
                 DrawFigures();
 
-                //GL.glTranslatef(0.0f, 0.0f, +14.0f);
+                GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             else
             {
-
                 DrawRoom(CubeRoomTextureNumbers, 7, 8, 8);
                 
-                GL.glTranslatef(0.0f, 0.0f, -14.4f);
+                GL.glTranslatef(0.0f, 0.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
 
                 // draw3 times because of a bug
@@ -673,7 +681,7 @@ namespace OpenGL
                 DrawLight();
                 DrawObjects(false);
 
-                //GL.glTranslatef(0.0f, 0.0f, +14.4f);
+                GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             last_mode = mode;
 
