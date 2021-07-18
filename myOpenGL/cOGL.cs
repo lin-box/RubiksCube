@@ -34,7 +34,7 @@ namespace OpenGL
         int Width;
         int Height;
         double mirrorHeight = 12;
-        double mirrorWidth = 9;
+        double mirrorWidth = 10.5;
 
         const int x = 0;
         const int y = 1;
@@ -455,8 +455,17 @@ namespace OpenGL
         void DrawObjects(bool isForShades)
         {
             GL.glPushMatrix();
+            if (isForShades)
+            {
+                GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+                GL.glEnable(GL.GL_BLEND);
+            }
             rubiksCube.SetShadows(isForShades);
             rubiksCube.Draw();
+            if (isForShades)
+            {
+                GL.glDisable(GL.GL_BLEND);
+            }
             GL.glPopMatrix();
         }
 
@@ -739,7 +748,7 @@ namespace OpenGL
                 return;
 
             GL.glShadeModel(GL.GL_SMOOTH);
-            GL.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+            GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             GL.glClearDepth(1.0f);
 
             GL.glEnable(GL.GL_LIGHT0);

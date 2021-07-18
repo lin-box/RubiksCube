@@ -25,7 +25,7 @@ namespace RubikCube.Draws
             pendingAnimation = new Queue<Animation>();
             composingCubes = new List<Cube>();
             insideColor = Color.Black;
-            shadowsFaceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
+            shadowsFaceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
             prevFaceColors = new List<FaceCube<Color>>();
             isPrevColorShade = false;
 
