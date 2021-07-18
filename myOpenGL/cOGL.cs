@@ -7,9 +7,9 @@ using RubikCube.Draws;
 
 /**
  * חובה
- *1. לחצני רדיו לחדרים
- *2. להוסיף את הקוד של קיוב מפ כחדר
- *3. נורמלים לקירות של צל
+ *1. לחצני רדיו לחדריםV
+ *2. להוסיף את הקוד של קיוב מפ כחדרV
+ *3. נורמלים לקירות של צל----
  *4. לסדר פקדים במסך לפי חדרים
  *5. להוסיף טקסט ללחצנים
  *6.
@@ -33,8 +33,8 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
-        double mirrorHeight = 9;
-        double mirrorWidth = 6.9;
+        double mirrorHeight = 12;
+        double mirrorWidth = 9;
 
         const int x = 0;
         const int y = 1;
@@ -540,6 +540,7 @@ namespace OpenGL
         {
             GL.glTranslatef(0.0f, 0.0f, -1.4f);
 
+            GL.glRotatef(ScrollValue[0], 0.0f, -1.0f, 0.0f);
             GL.glRotatef(cubemapXYZAngles[0], 1.0f, 0.0f, 0.0f);
             GL.glRotatef(cubemapXYZAngles[1], 0.0f, 1.0f, 0.0f);
             GL.glRotatef(cubemapXYZAngles[2], 0.0f, 0.0f, 1.0f);
@@ -618,19 +619,21 @@ namespace OpenGL
 
             GL.glLoadIdentity();
 
-            GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
+            //GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
 
             if (mode == 0)
             {
-                DrawRoom(mirrorRoomTextureNumbers, 7, 15, 15);
+                DrawRoom(CubeRoomTextureNumbers, 7, 15, 15);
                 
-                GL.glTranslatef(0.0f, 0.0f, -14.0f);
+                GL.glTranslatef(0.0f, -2.0f, -5.0f);
                 GL.glRotated(20, 1, 0, 0);
+
+                GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
 
                 rubiksCube.SetShadows(false);
                 DrawMirrors();
 
-                GL.glTranslatef(0.0f, 0.0f, +14.0f);
+                //GL.glTranslatef(0.0f, 0.0f, +8.0f);
             }
             else if (mode == 1)
             {
@@ -639,9 +642,11 @@ namespace OpenGL
                 GL.glTranslatef(0.0f, 0.0f, -14.0f);
                 GL.glRotated(20, 1, 0, 0);
 
+                GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
+
                 DrawFigures();
 
-                GL.glTranslatef(0.0f, 0.0f, +14.0f);
+                //GL.glTranslatef(0.0f, 0.0f, +14.0f);
             }
             else
             {
@@ -658,7 +663,7 @@ namespace OpenGL
                 DrawLight();
                 DrawObjects(false);
 
-                GL.glTranslatef(0.0f, 0.0f, +14.4f);
+                //GL.glTranslatef(0.0f, 0.0f, +14.4f);
             }
             last_mode = mode;
 
@@ -733,7 +738,7 @@ namespace OpenGL
                 return;
 
             GL.glShadeModel(GL.GL_SMOOTH);
-            GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+            GL.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
             GL.glClearDepth(1.0f);
 
             GL.glEnable(GL.GL_LIGHT0);
