@@ -7,9 +7,9 @@ using RubikCube.Draws;
 
 /**
  * חובה
- *1. לחצני רדיו לחדרים
- *2. להוסיף את הקוד של קיוב מפ כחדר
- *3. נורמלים לקירות של צל
+ *1. לחצני רדיו לחדריםV
+ *2. להוסיף את הקוד של קיוב מפ כחדרV
+ *3. נורמלים לקירות של צל----
  *4. לסדר פקדים במסך לפי חדרים
  *5. להוסיף טקסט ללחצנים
  *6.
@@ -33,8 +33,8 @@ namespace OpenGL
         Control p;
         int Width;
         int Height;
-        double mirrorHeight = 9;
-        double mirrorWidth = 6.9;
+        double mirrorHeight = 12;
+        double mirrorWidth = 9;
 
         const int x = 0;
         const int y = 1;
@@ -222,12 +222,12 @@ namespace OpenGL
             GL.glDepthMask((byte)GL.GL_FALSE);
             backMirrorSurface.Draw();
 
-            if (ScrollValue[0] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[0] > -(4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            if (ScrollValue[0] < (2.5 + 3.5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))) && ScrollValue[0] > -(2.5 + 3.5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
             {
                 rightMirrorSurface.Draw(); //rightMinusArray
                 leftMirrorSurface.Draw(); //leftMinusArray
             }
-            else if (ScrollValue[0] < (4.5 + 5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
+            else if (ScrollValue[0] < (2.5 + 3.5 * ((-1.0 / 15) * (-90 - rightMirrorSurface.AngleY))))
             {
                 leftMirrorSurface.DrawAsWall(leftWallColorArray, zeroArray); //, leftMinusArray
                 rightMirrorSurface.Draw(); //rightMinusArray
@@ -538,8 +538,9 @@ namespace OpenGL
 
         public void update_cube_map_rotations(int[] textureNumbers, float big, float small)
         {
-            GL.glTranslatef(0.0f, 0.0f, -1.4f);
+            //GL.glTranslatef(0.0f, 0.0f, -1.4f);
 
+            GL.glRotatef(ScrollValue[0], 0.0f, -1.0f, 0.0f);
             GL.glRotatef(cubemapXYZAngles[0], 1.0f, 0.0f, 0.0f);
             GL.glRotatef(cubemapXYZAngles[1], 0.0f, 1.0f, 0.0f);
             GL.glRotatef(cubemapXYZAngles[2], 0.0f, 0.0f, 1.0f);
@@ -571,11 +572,11 @@ namespace OpenGL
         {
             GL.glPushMatrix();
 
-            GL.glTranslatef(0.0f, 0.0f, -zBack);
-            update_cube_map_prespective();
-            GL.glTranslatef(0.0f, 0.0f, +zBack);
+           // GL.glTranslatef(0.0f, 0.0f, -zBack);
+           // update_cube_map_prespective();
+           // GL.glTranslatef(0.0f, 0.0f, +zBack);
 
-            GL.glLoadIdentity();
+           //GL.glLoadIdentity();
 
             GL.glTranslatef(0.0f, 0.0f, -zBack);
             update_cube_map_rotations(textureNumbers, big, small);
@@ -618,33 +619,38 @@ namespace OpenGL
 
             GL.glLoadIdentity();
 
-            GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
+            //GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
 
             if (mode == 0)
             {
-                DrawRoom(mirrorRoomTextureNumbers, 7, 15, 15);
+                DrawRoom(mirrorRoomTextureNumbers, 15, 30, 30);
                 
-                GL.glTranslatef(0.0f, 0.0f, -14.0f);
+                GL.glTranslatef(0.0f, -2.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
+
+                GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
 
                 rubiksCube.SetShadows(false);
                 DrawMirrors();
 
-                GL.glTranslatef(0.0f, 0.0f, +14.0f);
+                //GL.glTranslatef(0.0f, 0.0f, +8.0f);
             }
             else if (mode == 1)
             {
-                DrawRoom(mirrorRoomTextureNumbers, 7, 15, 15);
-                
-                GL.glTranslatef(0.0f, 0.0f, -14.0f);
+                DrawRoom(mirrorRoomTextureNumbers, 15, 30, 30);
+
+                GL.glTranslatef(0.0f, -2.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
+
+                GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
 
                 DrawFigures();
 
-                GL.glTranslatef(0.0f, 0.0f, +14.0f);
+                //GL.glTranslatef(0.0f, 0.0f, +14.0f);
             }
             else
             {
+
                 DrawRoom(CubeRoomTextureNumbers, 7, 8, 8);
                 
                 GL.glTranslatef(0.0f, 0.0f, -14.4f);
@@ -658,7 +664,7 @@ namespace OpenGL
                 DrawLight();
                 DrawObjects(false);
 
-                GL.glTranslatef(0.0f, 0.0f, +14.4f);
+                //GL.glTranslatef(0.0f, 0.0f, +14.4f);
             }
             last_mode = mode;
 
@@ -733,7 +739,7 @@ namespace OpenGL
                 return;
 
             GL.glShadeModel(GL.GL_SMOOTH);
-            GL.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+            GL.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
             GL.glClearDepth(1.0f);
 
             GL.glEnable(GL.GL_LIGHT0);

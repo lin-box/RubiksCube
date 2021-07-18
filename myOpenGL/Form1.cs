@@ -184,7 +184,9 @@ namespace myOpenGL
             switch (cGL.mode)
             {
                 case 0: // mirror state
+                    break;
                 case 1: // shadow state
+                    break;
                 case 2: // room state
                     switch (e.KeyChar)
                     {

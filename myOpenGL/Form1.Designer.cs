@@ -58,8 +58,8 @@ namespace myOpenGL
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -264,7 +264,8 @@ namespace myOpenGL
             // 
             this.hScrollBar1.LargeChange = 2;
             this.hScrollBar1.Location = new System.Drawing.Point(52, 25);
-            this.hScrollBar1.Maximum = 200;
+            this.hScrollBar1.Maximum = 175;
+            this.hScrollBar1.Minimum = 25;
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(143, 17);
             this.hScrollBar1.SmallChange = 2;
@@ -374,15 +375,6 @@ namespace myOpenGL
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Mirror/Surface rotate";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(162, 25);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 13);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Open";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -391,6 +383,15 @@ namespace myOpenGL
             this.label7.Size = new System.Drawing.Size(33, 13);
             this.label7.TabIndex = 2;
             this.label7.Text = "Close";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(162, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Open";
             // 
             // label8
             // 
@@ -459,6 +460,7 @@ namespace myOpenGL
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -466,7 +468,6 @@ namespace myOpenGL
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 

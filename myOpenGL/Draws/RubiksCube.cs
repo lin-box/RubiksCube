@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using OpenGL;
 
+
 namespace RubikCube.Draws
 {
     class RubiksCube : IDraw
@@ -206,6 +207,7 @@ namespace RubikCube.Draws
         {
             if (isShadows)
             {
+
                 if (!isPrevColorShade)
                 {
                     for (int i = 0; i < composingCubes.Count; i++)
