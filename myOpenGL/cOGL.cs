@@ -642,7 +642,7 @@ namespace OpenGL
                 rubiksCube.SetShadows(false);
                 DrawMirrors();
 
-                GL.glTranslatef(0.0f, 0.0f, +8.0f);
+                GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             else if (mode == 1)
             {
@@ -655,13 +655,13 @@ namespace OpenGL
 
                 DrawFigures();
 
-                GL.glTranslatef(0.0f, 0.0f, +14.0f);
+                GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             else
             {
                 DrawRoom(CubeRoomTextureNumbers, 7, 8, 8);
                 
-                GL.glTranslatef(0.0f, 0.0f, -14.4f);
+                GL.glTranslatef(0.0f, 0.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
 
                 // draw3 times because of a bug
@@ -672,7 +672,7 @@ namespace OpenGL
                 DrawLight();
                 DrawObjects(false);
 
-                GL.glTranslatef(0.0f, 0.0f, +14.4f);
+                GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             last_mode = mode;
 
