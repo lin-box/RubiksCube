@@ -25,7 +25,7 @@ namespace RubikCube.Draws
             pendingAnimation = new Queue<Animation>();
             composingCubes = new List<Cube>();
             insideColor = Color.Black;
-            shadowsFaceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
+            shadowsFaceColors = new FaceCube<Color>(Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray, Color.Gray);
             prevFaceColors = new List<FaceCube<Color>>();
             isPrevColorShade = false;
 
@@ -38,7 +38,7 @@ namespace RubikCube.Draws
                 {
                     for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
-                        composingCubes.Add(new Cube(.55f, x, y, z));
+                        //composingCubes.Add(new Cube(.55f, x, y, z));
                         // half of 1.1 so we get a full black cube
                     }
                 }

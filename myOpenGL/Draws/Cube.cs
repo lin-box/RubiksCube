@@ -88,8 +88,14 @@ namespace RubikCube.Draws
             double[] v7 = { +this.size + X, -this.size + Y, -this.size + Z };
             double[] v8 = { +this.size + X, -this.size + Y, +this.size + Z };
 
-            byte a = 120;
+            byte a;
+            byte blend = 0;
+            byte notBlend = 120;
 
+            if (faceColors.Back == Color.Black)
+                a = blend;
+            else
+                a = notBlend;
             //Back
             GL.glNormal3d((calcNormal(v1, v2, v6))[0], (calcNormal(v1, v2, v6))[1], (calcNormal(v1, v2, v6))[2]);
             GL.glColor4ub(faceColors.Back.R, faceColors.Back.G, faceColors.Back.B, a);
@@ -98,6 +104,10 @@ namespace RubikCube.Draws
             GL.glVertex3d(v7[0], v7[1], v7[2]);
             GL.glVertex3d(v6[0], v6[1], v6[2]);
 
+            if (faceColors.Bottom == Color.Black)
+                a = blend;
+            else
+                a = notBlend;
             //Bottom
             GL.glNormal3d(-calcNormal(v8, v5, v7)[0], -calcNormal(v8, v5, v7)[1], -calcNormal(v8, v5, v7)[2]);
             GL.glColor4ub(faceColors.Bottom.R, faceColors.Bottom.G, faceColors.Bottom.B, a);
@@ -106,6 +116,10 @@ namespace RubikCube.Draws
             GL.glVertex3d(v8[0], v8[1], v8[2]);
             GL.glVertex3d(v5[0], v5[1], v5[2]);
 
+            if (faceColors.Left == Color.Black)
+                a = blend;
+            else
+                a = notBlend;
             //Left
             GL.glNormal3d(calcNormal(v4, v1, v5)[0], calcNormal(v4, v1, v5)[1], calcNormal(v4, v1, v5)[2]);
             GL.glColor4ub(faceColors.Left.R, faceColors.Left.G, faceColors.Left.B, a);
@@ -114,6 +128,10 @@ namespace RubikCube.Draws
             GL.glVertex3d(v5[0], v5[1], v5[2]);
             GL.glVertex3d(v6[0], v6[1], v6[2]);
 
+            if (faceColors.Right == Color.Black)
+                a = blend;
+            else
+                a = notBlend;
             //Right
             GL.glNormal3d(calcNormal(v3, v8, v2)[0], calcNormal(v3, v8, v2)[1], calcNormal(v3, v8, v2)[2]);
             GL.glColor4ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B, a);
@@ -122,6 +140,10 @@ namespace RubikCube.Draws
             GL.glVertex3d(v8[0], v8[1], v8[2]);
             GL.glVertex3d(v7[0], v7[1], v7[2]);
 
+            if (faceColors.Top == Color.Black)
+                a = blend;
+            else
+                a = notBlend;
             //Top
             GL.glNormal3d(-calcNormal(v4, v3, v1)[0], -calcNormal(v4, v3, v1)[1], -calcNormal(v4, v3, v1)[2]);
             GL.glColor4ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B, a);
@@ -130,6 +152,10 @@ namespace RubikCube.Draws
             GL.glVertex3d(v3[0], v3[1], v3[2]);
             GL.glVertex3d(v4[0], v4[1], v4[2]);
 
+            if (faceColors.Front == Color.Black)
+                a = blend;
+            else
+                a = notBlend;
             //Front
             GL.glNormal3d(calcNormal(v8, v3, v5)[0], calcNormal(v8, v3, v5)[1], calcNormal(v8, v3, v5)[2]);
             GL.glColor4ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B, a);
