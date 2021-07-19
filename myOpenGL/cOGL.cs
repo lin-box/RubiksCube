@@ -433,22 +433,24 @@ namespace OpenGL
         void DrawFigures()
         {
             DrawLight();
-
             DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
-            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
-            DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
-
-            DrawLight();
             DrawObjects(false);
             DrawShadowsOnSurface(backMirrorSurface);
+            GL.glClear(GL.GL_STENCIL_BUFFER_BIT);
 
+            DrawLight();
+            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
             DrawLight();
             DrawObjects(false);
             DrawShadowsOnSurface(rightMirrorSurface);
+            GL.glClear(GL.GL_STENCIL_BUFFER_BIT);
 
+            DrawLight();
+            DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
             DrawLight();
             DrawObjects(false);
             DrawShadowsOnSurface(leftMirrorSurface);
+            GL.glClear(GL.GL_STENCIL_BUFFER_BIT);
 
         }
 
@@ -457,6 +459,7 @@ namespace OpenGL
             GL.glPushMatrix();
             if (isForShades)
             {
+                GL.glDisable(GL.GL_DEPTH_TEST);
                 GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
                 GL.glEnable(GL.GL_BLEND);
             }
@@ -465,6 +468,7 @@ namespace OpenGL
             if (isForShades)
             {
                 GL.glDisable(GL.GL_BLEND);
+                GL.glEnable(GL.GL_DEPTH_TEST);
             }
             GL.glPopMatrix();
         }
