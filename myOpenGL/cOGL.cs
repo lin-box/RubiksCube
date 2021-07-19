@@ -244,24 +244,6 @@ namespace OpenGL
 
         }
 
-        void DrawAxes(Color xColor, Color yColor, Color zColor)
-        {
-            GL.glBegin(GL.GL_LINES);
-            //x
-            GL.glColor3f(xColor.R, xColor.G, xColor.B);
-            GL.glVertex3f(-3.0f, 0.0f, 0.0f);
-            GL.glVertex3f(3.0f, 0.0f, 0.0f);
-            //y 
-            GL.glColor3f(yColor.R, yColor.G, yColor.B);
-            GL.glVertex3f(0.0f, -3.0f, 0.0f);
-            GL.glVertex3f(0.0f, 3.0f, 0.0f);
-            //z
-            GL.glColor3f(zColor.R, zColor.G, zColor.B);
-            GL.glVertex3f(0.0f, 0.0f, -3.0f);
-            GL.glVertex3f(0.0f, 0.0f, 3.0f);
-            GL.glEnd();
-        }
-
         void ReduceToUnit(float[] vector)
         {
             // Reduces a normal vector specified as a set of three coordinates,
@@ -455,17 +437,17 @@ namespace OpenGL
         void DrawObjects(bool isForShades)
         {
             GL.glPushMatrix();
-            if (isForShades)
-            {
-                GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-                GL.glEnable(GL.GL_BLEND);
-            }
+            //if (isForShades)
+            //{
+            //    GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+            //    GL.glEnable(GL.GL_BLEND);
+            //}
             rubiksCube.SetShadows(isForShades);
             rubiksCube.Draw();
-            if (isForShades)
-            {
-                GL.glDisable(GL.GL_BLEND);
-            }
+            //if (isForShades)
+            //{
+            //    GL.glDisable(GL.GL_BLEND);
+            //}
             GL.glPopMatrix();
         }
 
@@ -618,21 +600,21 @@ namespace OpenGL
             if (mode == 0)
             {
                 DrawBackground(mirrorRoomTextureNumbers, 15, 30, 30);
-                GL.glTranslatef(0.0f, -2.0f, -12.0f);
+                GL.glTranslatef(0.0f, -2.0f, -13.0f);
                 GL.glRotated(20, 1, 0, 0);
                 GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
                 rubiksCube.SetShadows(false);
                 DrawMirrors();
-                GL.glTranslatef(0.0f, 0.0f, +12.0f);
+                GL.glTranslatef(0.0f, 0.0f, +13.0f);
             }
             else if (mode == 1)
             {
                 DrawBackground(mirrorRoomTextureNumbers, 15, 30, 30);
-                GL.glTranslatef(0.0f, -2.0f, -12.0f);
+                GL.glTranslatef(0.0f, -2.0f, -13.0f);
                 GL.glRotated(20, 1, 0, 0);
                 GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
                 DrawFigures();
-                GL.glTranslatef(0.0f, 0.0f, +12.0f);
+                GL.glTranslatef(0.0f, 0.0f, +13.0f);
             }
             else
             {
@@ -722,9 +704,7 @@ namespace OpenGL
 
             GL.glEnable(GL.GL_LIGHT0);
             GL.glEnable(GL.GL_COLOR_MATERIAL);
-            GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE); // GL.GL_AMBIENT_AND_DIFFUSE / GL.GL_SHININESS
-                                                                                 //GL.glMateriali(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, 100);
-                                                                                 //GL.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, pos); //GL.GL_POSITION , GL.GL_SPECULAR , GL.GL_SPOT_DIRECTION , GL.GL_DIFFUSE
+            GL.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE); 
 
             GL.glEnable(GL.GL_DEPTH_TEST);
             GL.glDepthFunc(GL.GL_LEQUAL);
@@ -735,8 +715,7 @@ namespace OpenGL
 
             GLU.gluPerspective(45, ((double)Width) / Height, 1.0, 1000.0);
             GL.glMatrixMode(GL.GL_MODELVIEW);
-            //save the current MODELVIEW Matrix (now it is Identity)
-            //GL.glGetDoublev(GL.GL_MODELVIEW_MATRIX, AccumulatedRotationsTraslations);
+           
         }
 
         void InitTextures()
@@ -759,20 +738,6 @@ namespace OpenGL
                 bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
                 GL.glBindTexture(GL.GL_TEXTURE_2D, texture[i]);
-                //2D for XYZ
-                //The level-of-detail number. Level 0 is the base image level
-                //The number of color components in the texture. 
-                //Must be 1, 2, 3, or 4, or one of the following 
-                //    symbolic constants: 
-                //                GL_ALPHA, GL_ALPHA4, 
-                //                GL_ALPHA8, GL_ALPHA12, GL_ALPHA16, GL_LUMINANCE, GL_LUMINANCE4, 
-                //                GL_LUMINANCE8, GL_LUMINANCE12, GL_LUMINANCE16, GL_LUMINANCE_ALPHA, 
-                //                GL_LUMINANCE4_ALPHA4, GL_LUMINANCE6_ALPHA2, GL_LUMINANCE8_ALPHA8, 
-                //                GL_LUMINANCE12_ALPHA4, GL_LUMINANCE12_ALPHA12, GL_LUMINANCE16_ALPHA16, 
-                //                GL_INTENSITY, GL_INTENSITY4, GL_INTENSITY8, GL_INTENSITY12, 
-                //                GL_INTENSITY16, GL_R3_G3_B2, GL_RGB, GL_RGB4, GL_RGB5, GL_RGB8, 
-                //                GL_RGB10, GL_RGB12, GL_RGB16, GL_RGBA, GL_RGBA2, GL_RGBA4, GL_RGB5_A1, 
-                //                GL_RGBA8, GL_RGB10_A2, GL_RGBA12, or GL_RGBA16.
 
 
                 GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,

@@ -1,15 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+
 using System.Windows.Forms;
 using OpenGL;
-using System.Runtime.InteropServices;
-//3D model b1
-using Milkshape;
-//3D model e
+
+
 using RubikCube;
 
 namespace myOpenGL
@@ -47,11 +41,6 @@ namespace myOpenGL
         private void panel1_Resize(object sender, EventArgs e)
         {
             cGL.OnResize();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -235,18 +224,21 @@ namespace myOpenGL
                 groupBox1.Enabled = false;  //light
                 groupBox3.Enabled = true;   //surface rotate
                 groupBox4.Enabled = true;  //LookAt X Axis
+                label5.Enabled = false;     // cubemap rotations
             }
             else if (n == 2) // shadow state
             {
                 groupBox1.Enabled = true;   //light
                 groupBox3.Enabled = true;   //surface rotate
                 groupBox4.Enabled = true;  //LookAt X Axis
+                label5.Enabled = false;     // cubemap rotations
             }
             else // room state
             {
                 groupBox1.Enabled = false;  //light
                 groupBox3.Enabled = false;  //surface rotate
                 groupBox4.Enabled = false;  //LookAt X Axis
+                label5.Enabled = true;     // cubemap rotations
             }
 
             if (e != null)

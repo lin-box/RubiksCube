@@ -193,13 +193,7 @@ namespace RubikCube.Draws
             AdjustRotation();
             foreach (var item in composingCubes)
             {
-                //GL.glPushMatrix();
-                //GL.glTranslated(0, 0, -21);
-                //GL.glTranslated(0, -3.5f, 0);
-                item.Draw();
-                //GL.glTranslated(0, 0, +21);
-                //GL.glTranslated(0, +3.5f, 0);
-                //GL.glPopMatrix();
+                item.Draw(); 
             }
         }
 
