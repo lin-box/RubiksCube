@@ -92,7 +92,6 @@ namespace RubikCube.Draws
 
             //Back
             GL.glNormal3d((calcNormal(v1, v2, v6))[0], (calcNormal(v1, v2, v6))[1], (calcNormal(v1, v2, v6))[2]);
-            //GL.glColor3ub(faceColors.Back.R, faceColors.Back.G, faceColors.Back.B);
             GL.glColor4ub(faceColors.Back.R, faceColors.Back.G, faceColors.Back.B, a);
             GL.glVertex3d(v1[0], v1[1], v1[2]);
             GL.glVertex3d(v2[0], v2[1], v2[2]);
@@ -101,7 +100,6 @@ namespace RubikCube.Draws
 
             //Bottom
             GL.glNormal3d(-calcNormal(v8, v5, v7)[0], -calcNormal(v8, v5, v7)[1], -calcNormal(v8, v5, v7)[2]);
-            //GL.glColor3ub(faceColors.Bottom.R, faceColors.Bottom.G, faceColors.Bottom.B);
             GL.glColor4ub(faceColors.Bottom.R, faceColors.Bottom.G, faceColors.Bottom.B, a);
             GL.glVertex3d(v6[0], v6[1], v6[2]);
             GL.glVertex3d(v7[0], v7[1], v7[2]);
@@ -110,7 +108,6 @@ namespace RubikCube.Draws
 
             //Left
             GL.glNormal3d(calcNormal(v4, v1, v5)[0], calcNormal(v4, v1, v5)[1], calcNormal(v4, v1, v5)[2]);
-            //GL.glColor3ub(faceColors.Left.R, faceColors.Left.G, faceColors.Left.B);
             GL.glColor4ub(faceColors.Left.R, faceColors.Left.G, faceColors.Left.B, a);
             GL.glVertex3d(v1[0], v1[1], v1[2]);
             GL.glVertex3d(v4[0], v4[1], v4[2]);
@@ -119,7 +116,6 @@ namespace RubikCube.Draws
 
             //Right
             GL.glNormal3d(calcNormal(v3, v8, v2)[0], calcNormal(v3, v8, v2)[1], calcNormal(v3, v8, v2)[2]);
-            //GL.glColor3ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B);
             GL.glColor4ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B, a);
             GL.glVertex3d(v2[0], v2[1], v2[2]);
             GL.glVertex3d(v3[0], v3[1], v3[2]);
@@ -128,7 +124,6 @@ namespace RubikCube.Draws
 
             //Top
             GL.glNormal3d(-calcNormal(v4, v3, v1)[0], -calcNormal(v4, v3, v1)[1], -calcNormal(v4, v3, v1)[2]);
-            //GL.glColor3ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B);
             GL.glColor4ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B, a);
             GL.glVertex3d(v1[0], v1[1], v1[2]);
             GL.glVertex3d(v2[0], v2[1], v2[2]);
@@ -137,7 +132,6 @@ namespace RubikCube.Draws
 
             //Front
             GL.glNormal3d(calcNormal(v8, v3, v5)[0], calcNormal(v8, v3, v5)[1], calcNormal(v8, v3, v5)[2]);
-            //GL.glColor3ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B);
             GL.glColor4ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B, a);
             GL.glVertex3d(v4[0], v4[1], v4[2]);
             GL.glVertex3d(v3[0], v3[1], v3[2]);
