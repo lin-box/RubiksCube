@@ -531,10 +531,8 @@ namespace OpenGL
             GL.glRotatef(cubemapXYZAngles[1], 0.0f, 1.0f, 0.0f);
             GL.glRotatef(cubemapXYZAngles[2], 0.0f, 0.0f, 1.0f);
 
-            GL.glDisable(GL.GL_LIGHTING);
+            //GL.glDisable(GL.GL_LIGHTING);
             GL.glDisable(GL.GL_TEXTURE_2D);
-
-            //DrawBounds();
 
             GL.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
             GL.glEnable(GL.GL_TEXTURE_2D);
@@ -620,45 +618,30 @@ namespace OpenGL
             if (mode == 0)
             {
                 DrawBackground(mirrorRoomTextureNumbers, 15, 30, 30);
-                
                 GL.glTranslatef(0.0f, -2.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
-
                 GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
-
                 rubiksCube.SetShadows(false);
                 DrawMirrors();
-
                 GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             else if (mode == 1)
             {
                 DrawBackground(mirrorRoomTextureNumbers, 15, 30, 30);
-
                 GL.glTranslatef(0.0f, -2.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
-
                 GLU.gluLookAt(ScrollValue[0], 2, 10, 0, 0, 0, 0, 1, 0);
-
                 DrawFigures();
-
                 GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             else
             {
                 DrawRoom(CubeRoomTextureNumbers, 7, 8, 8);
-                
                 GL.glTranslatef(0.0f, 0.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
-
-                // draw3 times because of a bug
-                DrawLight();
                 DrawObjects(false);
-                DrawLight();
                 DrawObjects(false);
-                DrawLight();
                 DrawObjects(false);
-
                 GL.glTranslatef(0.0f, 0.0f, +12.0f);
             }
             last_mode = mode;
