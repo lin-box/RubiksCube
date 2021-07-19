@@ -235,18 +235,21 @@ namespace myOpenGL
                 groupBox1.Enabled = false;  //light
                 groupBox3.Enabled = true;   //surface rotate
                 groupBox4.Enabled = true;  //LookAt X Axis
+                label5.Enabled = false;     // cubemap rotations
             }
             else if (n == 2) // shadow state
             {
                 groupBox1.Enabled = true;   //light
                 groupBox3.Enabled = true;   //surface rotate
                 groupBox4.Enabled = true;  //LookAt X Axis
+                label5.Enabled = false;     // cubemap rotations
             }
             else // room state
             {
                 groupBox1.Enabled = false;  //light
                 groupBox3.Enabled = false;  //surface rotate
                 groupBox4.Enabled = false;  //LookAt X Axis
+                label5.Enabled = true;     // cubemap rotations
             }
 
             if (e != null)
