@@ -244,5 +244,13 @@ namespace myOpenGL
                 cGL.Draw();
         }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            if (cb.Checked)
+                cGL.isShowLightSource = true;
+            else
+                cGL.isShowLightSource = false;
+        }
     }
 }

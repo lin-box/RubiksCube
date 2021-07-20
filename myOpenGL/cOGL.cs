@@ -49,6 +49,7 @@ namespace OpenGL
 
         public float[] ScrollValue = new float[4];
         public bool[] radioButtonChecked = new bool[3];
+        public bool isShowLightSource = false;
         float[] backWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
         float[] rightWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
@@ -352,12 +353,13 @@ namespace OpenGL
 
             //Yellow Light source
             // Enable this to draw the light source
-            /*
-            GL.glColor3f(1, 1, 0);
-            GL.glTranslatef(pos[0], pos[1], pos[2]);
-            GLUT.glutSolidSphere(0.1, 8, 8);
-            GL.glTranslatef(-pos[0], -pos[1], -pos[2]);
-            */
+            if (isShowLightSource)
+            {
+                GL.glColor3f(1, 1, 0);
+                GL.glTranslatef(pos[0], pos[1], pos[2]);
+                GLUT.glutSolidSphere(0.1, 8, 8);
+                GL.glTranslatef(-pos[0], -pos[1], -pos[2]);
+            }
 
             float[] light_position = { pos[0], pos[1], pos[2] };
             GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_position);

@@ -65,8 +65,9 @@ namespace myOpenGL
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -314,6 +315,7 @@ namespace myOpenGL
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
@@ -445,6 +447,15 @@ namespace myOpenGL
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Keyboard Controll";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(2, 43);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(199, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Press X,x,Y,y,Z,z to control the cubemap";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -454,14 +465,16 @@ namespace myOpenGL
             this.label4.TabIndex = 5;
             this.label4.Text = "Press A,D,W,S to rotate the whole cube";
             // 
-            // label5
+            // checkBox1
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(2, 43);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(199, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Press X,x,Y,y,Z,z to control the cubemap";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(86, 0);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(86, 17);
+            this.checkBox1.TabIndex = 37;
+            this.checkBox1.Text = "Light Source";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // Form1
             // 
@@ -547,6 +560,7 @@ namespace myOpenGL
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
