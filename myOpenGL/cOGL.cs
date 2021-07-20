@@ -631,7 +631,6 @@ namespace OpenGL
                 DrawRoom(CubeRoomTextureNumbers, 7, 8, 8);
                 GL.glTranslatef(0.0f, 0.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
-                GL.glRotated(5*8, 0, 1, 0);
                 DrawObjects(false);
                 DrawObjects(false);
                 DrawObjects(false);
