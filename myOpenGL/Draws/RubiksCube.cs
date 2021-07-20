@@ -13,7 +13,6 @@ namespace RubikCube.Draws
         Queue<Animation> pendingAnimation;
         Animation current;
         Color insideColor;
-        public FaceCube<Color> shadowsFaceColors;
         public List<FaceCube<Color>> prevFaceColors;
         bool isPrevColorShade;
         private readonly object syncLock = new object();
@@ -25,7 +24,6 @@ namespace RubikCube.Draws
             pendingAnimation = new Queue<Animation>();
             composingCubes = new List<Cube>();
             insideColor = Color.Black;
-            shadowsFaceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
             prevFaceColors = new List<FaceCube<Color>>();
             isPrevColorShade = false;
 
@@ -201,14 +199,11 @@ namespace RubikCube.Draws
         {
             if (isShadows)
             {
-
                 if (!isPrevColorShade)
                 {
                     for (int i = 0; i < composingCubes.Count; i++)
                     {
-                        FaceCube<Color> tempFaceColors = composingCubes[i].faceColors;
-                        composingCubes[i].faceColors = shadowsFaceColors;
-                        prevFaceColors[i] = tempFaceColors;
+                        composingCubes[i].isShadowState = true;
                     }
                     isPrevColorShade = true;
                 }
@@ -217,7 +212,7 @@ namespace RubikCube.Draws
             {
                 for (int i = 0; i < composingCubes.Count; i++)
                 {
-                    composingCubes[i].faceColors = prevFaceColors[i];
+                    composingCubes[i].isShadowState = false;
                 }
                 isPrevColorShade = false;
             }

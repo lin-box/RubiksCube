@@ -425,32 +425,17 @@ namespace OpenGL
 
             DrawLight();
             DrawObjects(false);
+
             DrawShadowsOnSurface(backMirrorSurface);
-
-            DrawLight();
-            DrawObjects(false);
             DrawShadowsOnSurface(rightMirrorSurface);
-
-            DrawLight();
-            DrawObjects(false);
             DrawShadowsOnSurface(leftMirrorSurface);
-
         }
 
         void DrawObjects(bool isForShades)
         {
             GL.glPushMatrix();
-            //if (isForShades)
-            //{
-            //    GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-            //    GL.glEnable(GL.GL_BLEND);
-            //}
             rubiksCube.SetShadows(isForShades);
             rubiksCube.Draw();
-            //if (isForShades)
-            //{
-            //    GL.glDisable(GL.GL_BLEND);
-            //}
             GL.glPopMatrix();
         }
 
