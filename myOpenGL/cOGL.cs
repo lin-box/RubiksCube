@@ -417,18 +417,26 @@ namespace OpenGL
 
         void DrawFigures()
         {
+            // Draw back wall and cube shadow on it
             DrawLight();
-
             DrawShadableWall(backMirrorSurface, backWallColorArray, backMinusArray);
-            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
-            DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
-
-            DrawLight();
-            DrawObjects(false);
-
             DrawShadowsOnSurface(backMirrorSurface);
+            GL.glClear(GL.GL_STENCIL_BUFFER_BIT);
+
+            // Draw right wall and cube shadow on it
+            DrawLight();
+            DrawShadableWall(rightMirrorSurface, rightWallColorArray, rightMinusArray);
             DrawShadowsOnSurface(rightMirrorSurface);
+            GL.glClear(GL.GL_STENCIL_BUFFER_BIT);
+
+            // Draw left wall and cube shadow on it
+            DrawLight();
+            DrawShadableWall(leftMirrorSurface, leftWallColorArray, leftMinusArray);
             DrawShadowsOnSurface(leftMirrorSurface);
+            GL.glClear(GL.GL_STENCIL_BUFFER_BIT);
+
+            // Draw real cube
+            DrawObjects(false);
         }
 
         void DrawObjects(bool isForShades)
