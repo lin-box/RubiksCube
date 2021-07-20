@@ -735,10 +735,10 @@ namespace OpenGL
 
         void GenerateTextures()
         {
-            GL.glGenTextures(9, Textures.texture);
+            GL.glGenTextures(10, Textures.texture);
             string[] imagesName = { "IMG\\3.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall3.bmp",
-            "IMG\\green.bmp","IMG\\blue.bmp", "IMG\\orange.bmp","IMG\\red.bmp","IMG\\white.bmp","IMG\\yellow.bmp"};
-            for (int i = 0; i < 9; i++)
+            "IMG\\green.bmp","IMG\\blue.bmp", "IMG\\orange.bmp","IMG\\red.bmp","IMG\\white.bmp","IMG\\yellow.bmp", "IMG\\env.bmp"};
+            for (int i = 0; i < 10; i++)
             {
                 Bitmap image = new Bitmap(imagesName[i]);
                 image.RotateFlip(RotateFlipType.RotateNoneFlipY); //Y axis in Windows is directed downwards, while in OpenGL-upwards
