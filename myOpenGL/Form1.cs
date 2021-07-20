@@ -17,7 +17,7 @@ namespace myOpenGL
             InitializeComponent();
             cGL = new cOGL(panel1);
 
-            radioButtonCheckedChanged(radioButton1, null);
+            radioButtonCheckedChanged(radioButton3, null);
 
             //apply the bars values as cGL.ScrollValue[..] properties 
             //!!!
