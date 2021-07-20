@@ -28,6 +28,7 @@ namespace OpenGL
         public float[] ScrollValue = new float[4];
         public bool[] radioButtonChecked = new bool[3];
         public bool isShowLightSource = false;
+        public bool isRealisticShadow = false;
         float[] backWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
         float[] leftWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
         float[] rightWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.8f, 0.9f, 0.6f, 1f };
@@ -426,20 +427,23 @@ namespace OpenGL
         void DrawObjects(bool isForShades)
         {
             GL.glPushMatrix();
-            // enable this for blend shadow
-            //if (isForShades)
-            //{
-            //    GL.glDisable(GL.GL_DEPTH_TEST);
-            //    GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-            //    GL.glEnable(GL.GL_BLEND);
-            //}
-            rubiksCube.SetShadows(isForShades);
-            rubiksCube.Draw();
-            //if (isForShades)
-            //{
-            //    GL.glDisable(GL.GL_BLEND);
-            //    GL.glEnable(GL.GL_DEPTH_TEST);
-            //}
+            if(isRealisticShadow && isForShades)
+            {
+                GL.glDisable(GL.GL_DEPTH_TEST);
+                GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+                GL.glEnable(GL.GL_BLEND);
+
+                rubiksCube.SetShadows(isForShades);
+                rubiksCube.Draw();
+
+                GL.glDisable(GL.GL_BLEND);
+                GL.glEnable(GL.GL_DEPTH_TEST);
+            }
+            else
+            {
+                rubiksCube.SetShadows(isForShades);
+                rubiksCube.Draw();
+            }
             GL.glPopMatrix();
         }
 

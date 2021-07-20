@@ -252,5 +252,14 @@ namespace myOpenGL
             else
                 cGL.isShowLightSource = false;
         }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            if (cb.Checked)
+                cGL.isRealisticShadow = true;
+            else
+                cGL.isRealisticShadow = false;
+        }
     }
 }

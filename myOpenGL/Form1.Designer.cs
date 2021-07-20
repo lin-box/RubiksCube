@@ -68,6 +68,7 @@ namespace myOpenGL
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -233,7 +234,7 @@ namespace myOpenGL
             // 
             // hScrollBar3
             // 
-            this.hScrollBar3.Location = new System.Drawing.Point(52, 65);
+            this.hScrollBar3.Location = new System.Drawing.Point(52, 74);
             this.hScrollBar3.Maximum = 250;
             this.hScrollBar3.Minimum = 50;
             this.hScrollBar3.Name = "hScrollBar3";
@@ -245,7 +246,7 @@ namespace myOpenGL
             // hScrollBar2
             // 
             this.hScrollBar2.AccessibleName = "";
-            this.hScrollBar2.Location = new System.Drawing.Point(52, 30);
+            this.hScrollBar2.Location = new System.Drawing.Point(52, 46);
             this.hScrollBar2.Maximum = 200;
             this.hScrollBar2.Name = "hScrollBar2";
             this.hScrollBar2.Size = new System.Drawing.Size(143, 17);
@@ -256,7 +257,7 @@ namespace myOpenGL
             // 
             // hScrollBar4
             // 
-            this.hScrollBar4.Location = new System.Drawing.Point(52, 98);
+            this.hScrollBar4.Location = new System.Drawing.Point(52, 101);
             this.hScrollBar4.Maximum = 350;
             this.hScrollBar4.Minimum = -100;
             this.hScrollBar4.Name = "hScrollBar4";
@@ -268,7 +269,7 @@ namespace myOpenGL
             // hScrollBar1
             // 
             this.hScrollBar1.LargeChange = 2;
-            this.hScrollBar1.Location = new System.Drawing.Point(52, 25);
+            this.hScrollBar1.Location = new System.Drawing.Point(52, 22);
             this.hScrollBar1.Maximum = 175;
             this.hScrollBar1.Minimum = 25;
             this.hScrollBar1.Name = "hScrollBar1";
@@ -315,6 +316,7 @@ namespace myOpenGL
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox2);
             this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
@@ -332,7 +334,7 @@ namespace myOpenGL
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(86, 0);
+            this.checkBox1.Location = new System.Drawing.Point(85, 10);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(86, 17);
             this.checkBox1.TabIndex = 37;
@@ -343,7 +345,7 @@ namespace myOpenGL
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 102);
+            this.label3.Location = new System.Drawing.Point(6, 105);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 0;
@@ -352,7 +354,7 @@ namespace myOpenGL
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 30);
+            this.label1.Location = new System.Drawing.Point(6, 46);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 0;
@@ -361,7 +363,7 @@ namespace myOpenGL
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 69);
+            this.label2.Location = new System.Drawing.Point(6, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 0;
@@ -476,6 +478,17 @@ namespace myOpenGL
             this.label4.TabIndex = 5;
             this.label4.Text = "Press A,D,W,S to rotate the whole cube";
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(85, 27);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(108, 17);
+            this.checkBox2.TabIndex = 38;
+            this.checkBox2.Text = "Realistic Shadow";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -561,6 +574,7 @@ namespace myOpenGL
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 
