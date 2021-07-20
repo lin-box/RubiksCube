@@ -6,28 +6,6 @@ using RubikCube;
 using RubikCube.Draws;
 using myOpenGL;
 
-/**
- * חובה
- *1. להוסיף טקסט לסיבוב בקיוב מפ
- *2. להוסיף טקסט לסיבוב הקוביה
- *3. לנסות לסדר את מהירות הסיבוב של הקוביה בין כל החדרים
- *4. 
- *5. 
- *6.
- *
- *רצוי
- *1. להוסיף חומר לקוביה
- *2. 
- *3. קירות מתחלפים בקיוב מפ לפי משהו..
- *4. לפתור את הקוביה
- *5.
- * 
- * 
- *
- * 
- * 
- */
-
 namespace OpenGL
 {
     class cOGL
@@ -739,7 +717,7 @@ namespace OpenGL
         void GenerateTextures()
         {
             GL.glGenTextures(10, Textures.texture);
-            string[] imagesName = { "IMG\\3.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall3.bmp",
+            string[] imagesName = { "IMG\\3.bmp", "IMG\\bluespaceN.bmp", "IMG\\spaceship_wall3.bmp",
             "IMG\\green.bmp","IMG\\blue.bmp", "IMG\\orange.bmp","IMG\\red.bmp","IMG\\white.bmp","IMG\\yellow.bmp", "IMG\\env.bmp"};
             for (int i = 0; i < 10; i++)
             {
