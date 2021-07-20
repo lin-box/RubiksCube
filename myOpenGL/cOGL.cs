@@ -436,6 +436,7 @@ namespace OpenGL
             GL.glClear(GL.GL_STENCIL_BUFFER_BIT);
 
             // Draw real cube
+            DrawLight();
             DrawObjects(false);
         }
 
