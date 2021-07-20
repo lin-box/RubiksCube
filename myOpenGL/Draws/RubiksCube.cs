@@ -201,11 +201,9 @@ namespace RubikCube.Draws
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
         {
-           
             this.AngleX += AngleAxisX;
             this.AngleY += AngleAxisY;
             this.AngleZ += AngleAxisZ;
-          
         }
 
         public void Draw()
