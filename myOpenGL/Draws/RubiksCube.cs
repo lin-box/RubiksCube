@@ -27,16 +27,26 @@ namespace RubikCube.Draws
             prevFaceColors = new List<FaceCube<Color>>();
             isPrevColorShade = false;
 
+            //FaceCube<bool> isInsideFaceColors = new FaceCube<bool>(false, false, false, false, false, false);
+
+            /*
+             isInsideFaceColors.Top = isInsideFaceColors.Bottom = isInsideFaceColors.Right = isInsideFaceColors.Left = 
+                            isInsideFaceColors.Front = isInsideFaceColors.Back = false;
+             */
+
             /* Drow 3*3*3 black cubes so the user 
              * wont see blank holes between the colored cubes */
             double blockSpace = 1.1;
+            var internalCubeColor = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
             for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
                 for (double y = -blockSpace; y <= blockSpace; y += blockSpace)
                 {
                     for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
-                        composingCubes.Add(new Cube(.55f, x, y, z));
+                        FaceCube<bool> isInsideFaceColors = new FaceCube<bool>(true, true, true, true, true, true);
+                        //var cubeColor = this.GenerateCubeColor(x, y, z, internalCubeColor, ref isInsideFaceColors);
+                        //composingCubes.Add(new Cube(.55f, x, y, z, isInsideFaceColors, false));
                         // half of 1.1 so we get a full black cube
                     }
                 }
@@ -46,15 +56,16 @@ namespace RubikCube.Draws
              * with block that bigger than the black 
              * and color area that is smaller then the black area */
             blockSpace = 1.32;
-
             for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
                 for (double y = -blockSpace; y <= blockSpace; y += blockSpace)
                 {
                     for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
-                        var cubeColor = this.GenerateCubeColor(x, y, z);
-                        composingCubes.Add(new Cube(.60f, x, y, z, cubeColor));
+                        var outerCubeColor = new FaceCube<Color>(Color.Green, Color.Blue, Color.White, Color.Yellow, Color.Orange, Color.Red);
+                        FaceCube<bool> isInsideFaceColors = new FaceCube<bool>(false, false, false, false, false, false);
+                        var cubeColor = this.GenerateCubeColor(x, y, z, outerCubeColor, ref isInsideFaceColors);
+                        composingCubes.Add(new Cube(.60f, x, y, z, cubeColor, isInsideFaceColors, false));
                     }
                 }
             }
@@ -65,48 +76,60 @@ namespace RubikCube.Draws
             }
         }
 
-        private FaceCube<Color> GenerateCubeColor(double x, double y, double z)
+        private FaceCube<Color> GenerateCubeColor(double x, double y, double z, FaceCube<Color> everyCubeDefaultFaceColor, ref FaceCube<bool> isInsideFaceColors)
         {
-            var cubeColor = new FaceCube<Color>(Color.Green, Color.Blue, Color.White, Color.Yellow, Color.Orange, Color.Red);
+            var cubeColor = everyCubeDefaultFaceColor;
 
             if (x < 0)
             {
                 cubeColor.Right = insideColor;
+                isInsideFaceColors.Right = true;
             }
             if (x == 0)
             {
                 cubeColor.Left = insideColor;
                 cubeColor.Right = insideColor;
+                isInsideFaceColors.Left = true;
+                isInsideFaceColors.Right = true;
             }
             if (x > 0)
             {
                 cubeColor.Left = insideColor;
+                isInsideFaceColors.Left = true;
             }
             if (y < 0)
             {
                 cubeColor.Top = insideColor;
+                isInsideFaceColors.Top = true;
             }
             if (y == 0)
             {
                 cubeColor.Top = insideColor;
                 cubeColor.Bottom = insideColor;
+                isInsideFaceColors.Top = true;
+                isInsideFaceColors.Bottom = true;
             }
             if (y > 0)
             {
                 cubeColor.Bottom = insideColor;
+                isInsideFaceColors.Bottom = true;
             }
             if (z < 0)
             {
                 cubeColor.Front = insideColor;
+                isInsideFaceColors.Front = true;
             }
             if (z == 0)
             {
                 cubeColor.Front = insideColor;
                 cubeColor.Back = insideColor;
+                isInsideFaceColors.Front = true;
+                isInsideFaceColors.Back = true;
             }
             if (z > 0)
             {
                 cubeColor.Back = insideColor;
+                isInsideFaceColors.Back = true;
             }
 
             return cubeColor;
@@ -191,6 +214,13 @@ namespace RubikCube.Draws
             AdjustRotation();
             foreach (var item in composingCubes)
             {
+                // update insideColorArray befaor drawing
+                var outerCubeColor = new FaceCube<Color>(Color.Green, Color.Blue, Color.White, Color.Yellow, Color.Orange, Color.Red);
+                FaceCube<bool> isInsideFaceColors = new FaceCube<bool>(false, false, false, false, false, false);
+                this.GenerateCubeColor(item.X, item.Y, item.Z, outerCubeColor, ref isInsideFaceColors);
+                item.isInsideFaceColors = isInsideFaceColors;
+
+                // draw the cubes
                 item.Draw(); 
             }
         }

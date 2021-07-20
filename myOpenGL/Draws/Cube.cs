@@ -12,13 +12,14 @@ namespace RubikCube.Draws
         public double Z { get; private set; }
 
         public FaceCube<Color> faceColors;
+        public FaceCube<bool> isInsideFaceColors;
         public bool isShadowState;
 
         private int AngleX = 0;
         private int AngleY = 0;
         private int AngleZ = 0;
 
-        public Cube(double size, double X, double Y, double Z, bool isShadowState = false)
+        public Cube(double size, double X, double Y, double Z, FaceCube<bool> isInsideFaceColors, bool isShadowState = false)
         {
             this.size = size;
             this.X = X;
@@ -26,9 +27,10 @@ namespace RubikCube.Draws
             this.Z = Z;
             this.faceColors = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
             this.isShadowState = isShadowState;
+            this.isInsideFaceColors = isInsideFaceColors;
         }
 
-        public Cube(double size, double X, double Y, double Z, FaceCube<Color> faceColors, bool isShadowState = false)
+        public Cube(double size, double X, double Y, double Z, FaceCube<Color> faceColors, FaceCube<bool> isInsideFaceColors, bool isShadowState = false)
         {
             this.size = size;
             this.X = X;
@@ -36,6 +38,7 @@ namespace RubikCube.Draws
             this.Z = Z;
             this.faceColors = faceColors;
             this.isShadowState = isShadowState;
+            this.isInsideFaceColors = isInsideFaceColors;
         }
 
         public void Rotate(int AngleAxisX, int AngleAxisY, int AngleAxisZ)
@@ -62,50 +65,106 @@ namespace RubikCube.Draws
             return normal;
         }
 
-        public void DrawSolidColor(double[] v1, double[] v2, double[] v3, double[] v4, double[] v5, double[] v6, double[] v7, double[] v8, byte a)
+        public void DrawShadowColor(double[] v1, double[] v2, double[] v3, double[] v4, double[] v5, double[] v6, double[] v7, double[] v8, byte totalBlend, byte halfBlend)
         {
             GL.glBegin(GL.GL_QUADS);
 
             // Define the solid color
-            GL.glColor4ub(Color.Black.R, Color.Black.G, Color.Black.B, a);
+            //GL.glColor4ub(Color.Black.R, Color.Black.G, Color.Black.B, a);
 
+            byte a;
+
+            if (isInsideFaceColors.Back == true)
+            {
+                a = totalBlend; // Completely transparent
+            }
+            else
+            {
+                a = halfBlend;  // Transparent as a shadow
+            }
             //Back
             GL.glNormal3d((calcNormal(v1, v2, v6))[0], (calcNormal(v1, v2, v6))[1], (calcNormal(v1, v2, v6))[2]);
+            GL.glColor4ub(faceColors.Back.R, faceColors.Back.G, faceColors.Back.B, a);
             GL.glVertex3d(v1[0], v1[1], v1[2]);
             GL.glVertex3d(v2[0], v2[1], v2[2]);
             GL.glVertex3d(v7[0], v7[1], v7[2]);
             GL.glVertex3d(v6[0], v6[1], v6[2]);
 
+            if (isInsideFaceColors.Bottom == true)
+            {
+                a = totalBlend;
+            }
+            else
+            {
+                a = halfBlend;
+            }
             //Bottom
             GL.glNormal3d(-calcNormal(v8, v5, v7)[0], -calcNormal(v8, v5, v7)[1], -calcNormal(v8, v5, v7)[2]);
+            GL.glColor4ub(faceColors.Bottom.R, faceColors.Bottom.G, faceColors.Bottom.B, a);
             GL.glVertex3d(v6[0], v6[1], v6[2]);
             GL.glVertex3d(v7[0], v7[1], v7[2]);
             GL.glVertex3d(v8[0], v8[1], v8[2]);
             GL.glVertex3d(v5[0], v5[1], v5[2]);
 
+            if (isInsideFaceColors.Left == true)
+            {
+                a = totalBlend;
+            }
+            else
+            {
+                a = halfBlend;
+            }
             //Left
             GL.glNormal3d(calcNormal(v4, v1, v5)[0], calcNormal(v4, v1, v5)[1], calcNormal(v4, v1, v5)[2]);
+            GL.glColor4ub(faceColors.Left.R, faceColors.Left.G, faceColors.Left.B, a);
             GL.glVertex3d(v1[0], v1[1], v1[2]);
             GL.glVertex3d(v4[0], v4[1], v4[2]);
             GL.glVertex3d(v5[0], v5[1], v5[2]);
             GL.glVertex3d(v6[0], v6[1], v6[2]);
 
+            if (isInsideFaceColors.Right == true)
+            {
+                a = totalBlend;
+            }
+            else
+            {
+                a = halfBlend;
+            }
             //Right
             GL.glNormal3d(calcNormal(v3, v8, v2)[0], calcNormal(v3, v8, v2)[1], calcNormal(v3, v8, v2)[2]);
+            GL.glColor4ub(faceColors.Right.R, faceColors.Right.G, faceColors.Right.B, a);
             GL.glVertex3d(v2[0], v2[1], v2[2]);
             GL.glVertex3d(v3[0], v3[1], v3[2]);
             GL.glVertex3d(v8[0], v8[1], v8[2]);
             GL.glVertex3d(v7[0], v7[1], v7[2]);
 
+            if (isInsideFaceColors.Top == true)
+            {
+                a = totalBlend;
+            }
+            else
+            {
+                a = halfBlend;
+            }
             //Top
             GL.glNormal3d(-calcNormal(v4, v3, v1)[0], -calcNormal(v4, v3, v1)[1], -calcNormal(v4, v3, v1)[2]);
+            GL.glColor4ub(faceColors.Top.R, faceColors.Top.G, faceColors.Top.B, a);
             GL.glVertex3d(v1[0], v1[1], v1[2]);
             GL.glVertex3d(v2[0], v2[1], v2[2]);
             GL.glVertex3d(v3[0], v3[1], v3[2]);
             GL.glVertex3d(v4[0], v4[1], v4[2]);
 
+            if (isInsideFaceColors.Front == true)
+            {
+                a = totalBlend;
+            }
+            else
+            {
+                a = halfBlend;
+            }
             //Front
             GL.glNormal3d(calcNormal(v8, v3, v5)[0], calcNormal(v8, v3, v5)[1], calcNormal(v8, v3, v5)[2]);
+            GL.glColor4ub(faceColors.Front.R, faceColors.Front.G, faceColors.Front.B, a);
             GL.glVertex3d(v4[0], v4[1], v4[2]);
             GL.glVertex3d(v3[0], v3[1], v3[2]);
             GL.glVertex3d(v8[0], v8[1], v8[2]);
@@ -114,8 +173,10 @@ namespace RubikCube.Draws
             GL.glEnd();
         }
 
-        public void DrawNotSolidColor(double[] v1, double[] v2, double[] v3, double[] v4, double[] v5, double[] v6, double[] v7, double[] v8, byte a)
+        public void DrawNotSolidColor(double[] v1, double[] v2, double[] v3, double[] v4, double[] v5, double[] v6, double[] v7, double[] v8, byte totalBlend, byte halfBlend)
         {
+            byte a = 60;
+
             GL.glBegin(GL.GL_QUADS);
 
             //Back
@@ -185,15 +246,16 @@ namespace RubikCube.Draws
             double[] v7 = { +this.size + X, -this.size + Y, -this.size + Z };
             double[] v8 = { +this.size + X, -this.size + Y, +this.size + Z };
 
-            byte a = 120;
+            byte totalBlend = 0;
+            byte halfBlend = 150;
 
             if (isShadowState)
             {
-                DrawSolidColor(v1,v2,v3,v4,v5,v6,v7,v8, a);
+                DrawShadowColor(v1,v2,v3,v4,v5,v6,v7,v8, totalBlend, halfBlend);
             }
             else
             {
-                DrawNotSolidColor(v1, v2, v3, v4, v5, v6, v7, v8, a);
+                DrawNotSolidColor(v1, v2, v3, v4, v5, v6, v7, v8, totalBlend, halfBlend);
             }
 
             GL.glPopMatrix();
