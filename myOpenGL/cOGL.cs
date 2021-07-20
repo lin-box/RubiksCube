@@ -351,10 +351,13 @@ namespace OpenGL
             GL.glPushMatrix();
 
             //Yellow Light source
+            // Enable this to draw the light source
+            /*
             GL.glColor3f(1, 1, 0);
             GL.glTranslatef(pos[0], pos[1], pos[2]);
             GLUT.glutSolidSphere(0.1, 8, 8);
             GL.glTranslatef(-pos[0], -pos[1], -pos[2]);
+            */
 
             float[] light_position = { pos[0], pos[1], pos[2] };
             GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_position);
@@ -450,7 +453,6 @@ namespace OpenGL
             //}
             GL.glPopMatrix();
         }
-
 
         void DrawTexturedCube(int [] imageNumbers, float big, float small)
         {
