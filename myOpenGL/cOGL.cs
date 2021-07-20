@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using RubikCube;
 using RubikCube.Draws;
+using myOpenGL;
 
 /**
  * חובה
@@ -46,7 +47,6 @@ namespace OpenGL
         public Mirror leftMirrorSurface;
         public RubiksCube rubiksCube;
 
-        public uint[] texture = new uint[9];      // texture : [0] = mirror, [1] = bakground, [2] = ..
         public float[] ScrollValue = new float[4];
         public bool[] radioButtonChecked = new bool[3];
         float[] backWallColorArray = new float[4] { 1.0f, 1.0f, 1.0f, 1f };    //{ 0.9f, 0.9f, 0.5f, 1f };
@@ -74,9 +74,9 @@ namespace OpenGL
             InitTextures();
 
             rubiksCube = new RubiksCube();
-            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, 1, texture);
-            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, 2, texture);
-            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, 0, texture);
+            backMirrorSurface = new Mirror(mirrorHeight, mirrorWidth, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, 0, 0, 1, Textures.texture);
+            rightMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, 2, Textures.texture);
+            leftMirrorSurface = new Mirror(mirrorHeight, mirrorWidth * 1.3, -mirrorWidth / 2, 0, -mirrorWidth / 2, 0, -90, 0, 0, Textures.texture);
         }
 
         ~cOGL()
@@ -438,6 +438,9 @@ namespace OpenGL
             // Draw real cube
             DrawLight();
             DrawObjects(false);
+
+            // Disable lighting, so light will affect only in thw walls room for creating the shadow
+            GL.glDisable(GL.GL_LIGHTING);
         }
 
         void DrawObjects(bool isForShades)
@@ -462,7 +465,7 @@ namespace OpenGL
         void DrawTexturedCube(int [] imageNumbers, float big, float small)
         {
             // front
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[0]]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures.texture[imageNumbers[0]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, -big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, -big, big);
@@ -470,7 +473,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-big, big, big);
             GL.glEnd();
             // back
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[1]]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures.texture[imageNumbers[1]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
@@ -478,7 +481,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(small, small, -small);
             GL.glEnd();
             // left
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[2]]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures.texture[imageNumbers[2]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(-big, -big, big);
@@ -486,7 +489,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
             GL.glEnd();
             // right
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[3]]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures.texture[imageNumbers[3]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(big, -big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
@@ -494,7 +497,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(big, big, big);
             GL.glEnd();
             // top
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[4]]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures.texture[imageNumbers[4]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-big, big, big);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(big, big, big);
@@ -502,7 +505,7 @@ namespace OpenGL
             GL.glTexCoord2f(0.0f, 1.0f); GL.glVertex3f(-small, small, -small);
             GL.glEnd();
             // bottom
-            GL.glBindTexture(GL.GL_TEXTURE_2D, texture[imageNumbers[5]]);
+            GL.glBindTexture(GL.GL_TEXTURE_2D, Textures.texture[imageNumbers[5]]);
             GL.glBegin(GL.GL_QUADS);
             GL.glTexCoord2f(0.0f, 0.0f); GL.glVertex3f(-small, -small, -small);
             GL.glTexCoord2f(1.0f, 0.0f); GL.glVertex3f(small, -small, -small);
@@ -732,7 +735,7 @@ namespace OpenGL
 
         void GenerateTextures()
         {
-            GL.glGenTextures(9, texture);
+            GL.glGenTextures(9, Textures.texture);
             string[] imagesName = { "IMG\\3.bmp", "IMG\\bluespace.bmp", "IMG\\spaceship_wall3.bmp",
             "IMG\\green.bmp","IMG\\blue.bmp", "IMG\\orange.bmp","IMG\\red.bmp","IMG\\white.bmp","IMG\\yellow.bmp"};
             for (int i = 0; i < 9; i++)
@@ -744,7 +747,7 @@ namespace OpenGL
 
                 bitmapdata = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
-                GL.glBindTexture(GL.GL_TEXTURE_2D, texture[i]);
+                GL.glBindTexture(GL.GL_TEXTURE_2D, Textures.texture[i]);
 
 
                 GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, (int)GL.GL_RGB8, image.Width, image.Height,
