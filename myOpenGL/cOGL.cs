@@ -59,7 +59,7 @@ namespace OpenGL
         float[] planeCoeff = { 1, 1, 1, 1 };
         public float[] pos = new float[4];
         float[] cubeXform = new float[16];
-        public float[] cubemapXYZAngles = new float[3] { 0, 0, 0 }; // cube map
+        public float[] cubemapXYZAngles = new float[3] { 0, 225, 0 }; // cube map: 225 is for seeing the preety green-orange
         public int viewAngle = 70;
         public int mode = 0, last_mode = 0;
         int[] CubeRoomTextureNumbers = { 3, 4, 5, 6, 7, 8 };
@@ -631,6 +631,7 @@ namespace OpenGL
                 DrawRoom(CubeRoomTextureNumbers, 7, 8, 8);
                 GL.glTranslatef(0.0f, 0.0f, -12.0f);
                 GL.glRotated(20, 1, 0, 0);
+                GL.glRotated(5*8, 0, 1, 0);
                 DrawObjects(false);
                 DrawObjects(false);
                 DrawObjects(false);
