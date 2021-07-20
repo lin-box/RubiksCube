@@ -26,21 +26,19 @@ namespace RubikCube.Draws
             insideColor = Color.Black;
             prevFaceColors = new List<FaceCube<Color>>();
             isPrevColorShade = false;
+            double blockSpace;
 
             /* Drow 3*3*3 black cubes so the user 
              * wont see blank holes between the colored cubes */
-            double blockSpace = 1.1;
+            blockSpace = 1.1;
             for (double x = -blockSpace; x <= blockSpace; x += blockSpace)
             {
                 for (double y = -blockSpace; y <= blockSpace; y += blockSpace)
                 {
                     for (double z = -blockSpace; z <= blockSpace; z += blockSpace)
                     {
-                        // FaceCube<bool> isInsideFaceColors = new FaceCube<bool>(true, true, true, true, true, true); // Enable this for not seeing the internal black cubes in the shadow
-                        //var cubeColor = this.GenerateCubeColor(x, y, z, internalCubeColor, ref isInsideFaceColors);
-                        //composingCubes.Add(new Cube(.55f, x, y, z, isInsideFaceColors, false));
-
                         var internalCubeColor = new FaceCube<Color>(Color.Black, Color.Black, Color.Black, Color.Black, Color.Black, Color.Black);
+                        // FaceCube<bool> isInsideFaceColors = new FaceCube<bool>(true, true, true, true, true, true);     // Enable this for not seeing the internal black cubes in the shadow
                         FaceCube<bool> isInsideFaceColors = new FaceCube<bool>(false, false, false, false, false, false);  // Enable this for seeing them in the shadow
                         this.GenerateCubeColor(x, y, z, internalCubeColor, ref isInsideFaceColors);
                         composingCubes.Add(new Cube(.55f, x, y, z, internalCubeColor, isInsideFaceColors, false));
